@@ -22,7 +22,11 @@ development:
   gitlab_shell:
     ssh_port: 2222
   pages:
-    enabled: false
+    enabled: true
+    host: gitlab-example.com
+    port: 80 # Set to 443 if you serve the pages with HTTPS
+    https: false # Set to true if you serve the pages with HTTPS
+    artifacts_server: true
   mattermost:
     enabled: false
     host: 'https://mattermost.example.com'
