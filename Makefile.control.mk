@@ -6,10 +6,22 @@ up: deps
 run: deps
 	docker-compose up
 
+.PHONY: db
+db: deps
+	docker-compose up postgres redis
+
+.PHONY: web
+web: deps
+	docker-compose up workhorse
+
+.PHONY: sidekiq
+sidekiq: deps
+	docker-compose up sidekiq
+
 .PHONY: down
 down:
 	docker-compose kill
-	docker-compose rm --remove-orphans
+	docker-compose rm
 
 .PHONY: destroy
 destroy:
