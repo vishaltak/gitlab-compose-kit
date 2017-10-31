@@ -25,16 +25,9 @@ gitlab-workhorse:
 .PHONY: deps
 deps: build gitaly gitlab-shell gitlab-rails gitlab-workhorse data
 
-.PHONY: run
-run: deps
-	@docker run --rm \
-		-it \
-		-h gitlab-development-kit \
-		-v $(CURDIR)/data:/data \
-		-v $(CURDIR):$(CURDIR) \
-		-w $(CURDIR) \
-		gitlab-v2 \
-		/bin/bash
+.PHONY: setup
+setup: deps
+	docker-compose run sidekiq bash -c 'bundle exec rake db:create && bundle exec rake dev:setup'
 
 .PHONY: up
 up: deps
@@ -43,3 +36,7 @@ up: deps
 .PHONY: down
 down:
 	docker-compose rm -v
+
+.PHONY: shell
+shell:
+	docker-compose run unicorn /bin/bash

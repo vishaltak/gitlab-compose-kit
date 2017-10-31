@@ -15,6 +15,7 @@ URL = "tcp://redis:6379"
 EOF
 
 export PATH="$PWD:$PATH"
+
 ./gitlab-workhorse \
   -authBackend="http://unicorn:8080/" \
   -developmentMode \

@@ -2,7 +2,9 @@
 
 cd /home/git/gitlab-shell
 
-if [[ "$(git describe)" == "$(cat .done || true)" ]]; then
+mkdir -p ~/status
+
+if [[ "$(git describe)" == "$(cat ~/status/gitlab-shell || true)" ]]; then
   exit 0
 fi
 
@@ -18,4 +20,4 @@ sed \
 ./bin/install
 ./bin/compile
 
-git describe > .done
+git describe > ~/status/gitlab-shell

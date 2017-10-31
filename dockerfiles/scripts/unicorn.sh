@@ -1,6 +1,4 @@
 #!/bin/bash
 
-set -xe
-
-/scripts/gitlab-shell.sh
-/scripts/gitlab-config.sh
+cd /home/git/gitlab
+exec bundle exec unicorn
