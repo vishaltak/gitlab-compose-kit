@@ -98,6 +98,21 @@ services:
       - 9999
     working_dir: /home/git/gitaly
     command: [/scripts/gitaly.sh]
+  
+  pages:
+    image: gitlab-v2
+    volumes:
+      - ./data:/home/git
+      - ./gitlab-pages:/home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
+      - ./gitlab-rails/shared/pages:/home/git/gitlab/shared/pages
+    depends_on:
+      - redis
+    expose:
+      - 8989
+    ports:
+      - 8989
+    working_dir: /home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
+    command: [/scripts/gitlab-pages.sh]
 
   registry:
     image: registry:2.4.1

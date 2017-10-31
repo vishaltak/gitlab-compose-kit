@@ -30,13 +30,14 @@ Everything has it's own container:
 - Redis,
 - Webpacks,
 - OpenSSH,
-- Registry
+- Registry,
+- Pages
 
 The containers interact via HTTP/TCP using intra-container networking.
 There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
 
 It still doesn't support:
-- Pages
+- Runner
 
 However, this is super-easy to add now!
 
@@ -118,10 +119,15 @@ $ make destroy
 
 Afterwards you have to run `make setup` again :)
 
-### Author
+## Pages
+
+To access GitLab Pages you have to use HTTP proxy.
+The Pages proxy runs on `http://localhost:8989`.
+
+## Author
 
 Kamil Trzciński, 2017, GitLab
 
-### License
+## License
 
 MIT
