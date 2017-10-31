@@ -29,14 +29,14 @@ Everything has it's own container:
 - PostgreSQL,
 - Redis,
 - Webpacks,
-- OpenSSH
+- OpenSSH,
+- Registry
 
 The containers interact via HTTP/TCP using intra-container networking.
 There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
 
 It still doesn't support:
-- Pages,
-- Registry
+- Pages
 
 However, this is super-easy to add now!
 

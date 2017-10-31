@@ -27,13 +27,13 @@ development:
     enabled: false
     host: 'https://mattermost.example.com'
   registry:
-    # enabled: true
-    # host: registry.example.com
-    # port: 5005
-    # api_url: http://localhost:5000/ # internal address to the registry, will be used by GitLab to directly communicate with API
-    # key: config/registry.key
+    enabled: true
+    host: localhost
+    port: 5000
+    api_url: http://registry:5000/ # internal address to the registry, will be used by GitLab to directly communicate with API
+    key: /home/git/registry-auth.key
+    issuer: gitlab-issuer
     # path: shared/registry
-    # issuer: gitlab-issuer
   repositories:
     storages:
       default:
@@ -45,6 +45,12 @@ development:
       host: webpack
       port: 3808
 EOF
+
+if [[ ! -e /home/git/registry-auth.crt ]]; then
+  openssl req -newkey rsa:2048 -x509 -nodes -days 3560 \
+    -subj "/CN=gitlab.development.kit" \
+    -out /home/git/registry-auth.crt -keyout /home/git/registry-auth.key
+fi
 
 # Workhorse secret has to be 32 bytes
 echo -n 12345678901234567890123456789012 | base64 > .gitlab_workhorse_secret

@@ -99,6 +99,24 @@ services:
     working_dir: /home/git/gitaly
     command: [/scripts/gitaly.sh]
 
+  registry:
+    image: registry:2.4.1
+    volumes:
+      - registry:/registry
+      - ./data:/home/git
+    environment:
+      REGISTRY_LOG_LEVEL: info
+      REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /registry
+      REGISTRY_AUTH_TOKEN_REALM: http://localhost:3000/jwt/auth
+      REGISTRY_AUTH_TOKEN_SERVICE: container_registry
+      REGISTRY_AUTH_TOKEN_ISSUER: gitlab-issuer
+      REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /home/git/registry-auth.crt
+      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+    expose:
+      - 5000
+    ports:
+      - "5000:5000"
+
   postgres:
     image: 'postgres:9-alpine'
     environment:
@@ -121,3 +139,4 @@ services:
 volumes:
   redis:
   postgres:
+  registry:
