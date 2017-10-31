@@ -1,3 +1,5 @@
+export IP_ADDRESS = $(shell hostname -I | cut -d' ' -f1)
+
 all: help
 
 help:

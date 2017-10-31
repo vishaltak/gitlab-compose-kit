@@ -17,7 +17,7 @@ git config --global repack.writeBitmaps true
 /scripts/merge-yaml.rb config/gitlab.yml.example /dev/stdin > config/gitlab.yml <<EOF
 development:
   gitlab:
-    host: localhost
+    host: ${IP_ADDRESS}
     port: 3000
   gitlab_shell:
     ssh_port: 2222
@@ -28,7 +28,7 @@ development:
     host: 'https://mattermost.example.com'
   registry:
     enabled: true
-    host: localhost
+    host: ${IP_ADDRESS}
     port: 5000
     api_url: http://registry:5000/ # internal address to the registry, will be used by GitLab to directly communicate with API
     key: /home/git/registry-auth.key
@@ -63,6 +63,8 @@ sed \
   -e 's|^worker_processes .*$|worker_processes 2|' \
   -e 's|^listen$|# listen|' \
   -e 's|^listen .*$|listen "0.0.0.0:8080", :tcp_nopush => true|' \
+  -e 's|^std|# std|g' \
+  -e 's|^pid|# pid|g' \
   config/unicorn.rb.example > config/unicorn.rb
 
 cat <<EOF > config/resque.yml
