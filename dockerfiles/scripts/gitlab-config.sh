@@ -46,7 +46,8 @@ development:
       port: 3808
 EOF
 
-echo "secret" > .gitlab_workhorse_secret
+# Workhorse secret has to be 32 bytes
+echo -n 12345678901234567890123456789012 | base64 > .gitlab_workhorse_secret
 
 if [[ ! -e config/secrets.yml ]]; then
   cp config/secrets.yml.example config/secrets.yml

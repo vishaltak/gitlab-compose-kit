@@ -7,7 +7,8 @@ set -xe
 cd /home/git/gitlab-workhorse
 make
 
-echo "secret" > .gitlab_workhorse_secret
+# Workhorse secret has to be 32 bytes
+echo -n 12345678901234567890123456789012 | base64 > .gitlab_workhorse_secret
 
 cat <<EOF > config.toml
 [redis]

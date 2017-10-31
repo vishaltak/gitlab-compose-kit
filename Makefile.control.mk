@@ -1,5 +1,9 @@
 .PHONY: up
 up: deps
+	docker-compose up -d
+
+.PHONY: run
+run: deps
 	docker-compose up
 
 .PHONY: down
@@ -11,13 +15,13 @@ down:
 destroy:
 	docker-compose down -v --remove-orphans
 
-.PHONY: background
-background: deps
-	docker-compose up -d
-
 .PHONY: logs
-logs: deps
+logs:
 	docker-compose logs
+
+.PHONY: tail
+tail:
+	docker-compose logs -f
 
 .PHONY: shell
 shell: deps

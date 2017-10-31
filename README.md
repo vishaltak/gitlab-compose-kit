@@ -72,7 +72,15 @@ provision application.
 $ make up
 ```
 
-To reload environment simply Ctrl-C and re-run it again :)
+This will run application in background.
+
+To run it interactively:
+
+```bash
+$ make run
+```
+
+Then, to reload environment simply Ctrl-C and re-run it again :)
 
 **Access GitLab: http://localhost:3000/**
 
