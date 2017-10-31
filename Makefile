@@ -1,4 +1,4 @@
-export IP_ADDRESS = $(shell hostname -I | cut -d' ' -f1)
+export HOST = $(shell hostname -I | cut -d' ' -f1 || echo localhost)
 
 all: help
 

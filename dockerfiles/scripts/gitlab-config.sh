@@ -17,7 +17,7 @@ git config --global repack.writeBitmaps true
 /scripts/merge-yaml.rb config/gitlab.yml.example /dev/stdin > config/gitlab.yml <<EOF
 development:
   gitlab:
-    host: ${IP_ADDRESS}
+    host: ${HOST}
     port: 3000
   gitlab_shell:
     ssh_port: 2222
@@ -28,7 +28,7 @@ development:
     host: 'https://mattermost.example.com'
   registry:
     enabled: true
-    host: ${IP_ADDRESS}
+    host: ${HOST}
     port: 5000
     api_url: http://registry:5000/ # internal address to the registry, will be used by GitLab to directly communicate with API
     key: /home/git/registry-auth.key

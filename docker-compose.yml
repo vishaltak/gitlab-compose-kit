@@ -16,7 +16,7 @@ services:
     environment:
       RAILS_ENV: development
       ENABLE_SPRING: "1"
-      HOST: ${IP_ADDRESS}
+      HOST: ${HOST}
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/gitlab-rails-env.sh]
     command: [/scripts/unicorn.sh]
@@ -34,7 +34,7 @@ services:
     environment:
       RAILS_ENV: development
       ENABLE_SPRING: "1"
-      HOST: ${IP_ADDRESS}
+      HOST: ${HOST}
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/gitlab-rails-env.sh]
     command: [/scripts/sidekiq.sh]
@@ -124,7 +124,7 @@ services:
     environment:
       REGISTRY_LOG_LEVEL: info
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /registry
-      REGISTRY_AUTH_TOKEN_REALM: http://${IP_ADDRESS}:3000/jwt/auth
+      REGISTRY_AUTH_TOKEN_REALM: http://${HOST}:3000/jwt/auth
       REGISTRY_AUTH_TOKEN_SERVICE: container_registry
       REGISTRY_AUTH_TOKEN_ISSUER: gitlab-issuer
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /home/git/registry-auth.crt
@@ -140,7 +140,7 @@ services:
       DOCKER_HOST: tcp://dind:2375
       CI_SERVER_URL: http://workhorse:8181/
       CI_SERVER_TOKEN: SHARED_RUNNER_TOKEN
-      CLONE_URL: http://${IP_ADDRESS}:3000/
+      CLONE_URL: http://${HOST}:3000/
       RUNNER_EXECUTOR: docker
       DOCKER_VOLUMES: '/var/run/docker.sock:/var/run/docker.sock'
       DOCKER_PRIVILEGED: 'true'
