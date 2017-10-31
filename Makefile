@@ -31,11 +31,15 @@ setup: deps
 
 .PHONY: up
 up: deps
-	docker-compose up unicorn
+	docker-compose up
 
 .PHONY: down
 down:
-	docker-compose rm -v
+	docker-compose down
+
+.PHONY: destroy
+destroy:
+	docker-compose down -v --remove-orphans
 
 .PHONY: shell
 shell:

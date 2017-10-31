@@ -67,7 +67,7 @@ production: &production
   encoding: unicode
   database: gitlabhq_production
   pool: 10
-  username: root
+  username: postgres
   password: password
   host: postgres
 

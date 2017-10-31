@@ -28,6 +28,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - gitaly
     environment:
       RAILS_ENV: development
     working_dir: /home/git/gitlab
