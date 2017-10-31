@@ -38,7 +38,7 @@ run: deps
 
 .PHONY: up
 up: deps
-	docker-compose up workhorse
+	docker-compose up unicorn
 
 .PHONY: down
 down:

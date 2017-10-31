@@ -1,24 +1,25 @@
 version: '2'
 services:
-  gitaly:
+  unicorn:
     image: gitlab-v2
     volumes:
       - ./data:/home/git
-      - ./gitaly:/home/git/gitaly
-      - ./gitlab-shell:/home/git/gitlab-shell
-    depends_on:
-      - redis
+      - ./gitlab-rails:/home/git/gitlab
     expose:
-      - 9999
-    command: [/scripts/gitaly.sh]
+      - 8080
+    depends_on:
+      - gitaly
+      - redis
+    command: [/scripts/unicorn.sh]
 
   workhorse:
     image: gitlab-v2
     volumes:
       - ./data:/home/git
+      - ./gitlab-shell:/home/git/gitlab-shell
       - ./gitlab-workhorse:/home/git/gitlab-workhorse
     expose:
-      - 3000
+      - 8181
     depends_on:
       - gitaly
       - redis
@@ -37,6 +38,18 @@ services:
       - 3808
     command: [/scripts/webpack.sh]
 
+  gitaly:
+    image: gitlab-v2
+    volumes:
+      - ./data:/home/git
+      - ./gitaly:/home/git/gitaly
+      - ./gitlab-shell:/home/git/gitlab-shell
+    depends_on:
+      - redis
+    expose:
+      - 9999
+    command: [/scripts/gitaly.sh]
+
   postgres:
     image: 'sameersbn/postgresql:9.4-20'
     restart: always
@@ -54,6 +67,8 @@ services:
     restart: always
     volumes:
     - 'redis:/var/lib/redis'
+    expose:
+    - 6379
     mem_limit: 128M
 
 volumes:

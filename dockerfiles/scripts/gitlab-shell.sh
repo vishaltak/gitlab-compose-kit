@@ -1,8 +1,12 @@
-#!/bin/sh
-
-set -xe
+#!/bin/bash
 
 cd /home/git/gitlab-shell
+
+if [[ "$(git describe)" == "$(cat .done || true)" ]]; then
+  exit 0
+fi
+
+set -xe
 
 sed \
   -e 's|^gitlab_url.*$|gitlab_url: "http://unicorn:8080/"|' \
@@ -14,5 +18,4 @@ sed \
 ./bin/install
 ./bin/compile
 
-echo GitLab Shell configuration:
-cat config.yml
+git describe > .done
