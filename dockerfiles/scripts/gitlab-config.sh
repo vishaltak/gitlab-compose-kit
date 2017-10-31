@@ -4,8 +4,8 @@ set -xe
 
 cd /home/git/gitlab
 
-if ! bundle install --quiet --local --without production mysql sqlite3 --jobs=$(nproc); then
-  bundle install --without production mysql sqlite3 --jobs=$(nproc)
+if ! bundle install --quiet --local --without production --jobs=$(nproc); then
+  bundle install --without production --jobs=$(nproc)
 fi
 
 git config --global core.autocrlf input

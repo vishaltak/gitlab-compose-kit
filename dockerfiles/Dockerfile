@@ -9,6 +9,8 @@ RUN apt-get update -y && \
 RUN npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
 RUN gem install bundler
 
+RUN apt-get install -y libmysqlclient-dev
+
 ARG UID
 ARG GID
 ARG HOME

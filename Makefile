@@ -1,4 +1,8 @@
-all: up
+all: help
+
+help:
+	@echo 'Available targets:'
+	@sed -n 's/^.PHONY: \(.*\)$$/- \1/p' Makefile
 
 .PHONY: build
 build:
@@ -25,9 +29,34 @@ gitlab-workhorse:
 .PHONY: deps
 deps: build gitaly gitlab-shell gitlab-rails gitlab-workhorse data
 
+.PHONY: setup-dev
+setup-dev: deps
+	docker-compose run -e RAILS_ENV=development sidekiq bash -c 'bin/rake db:create && bin/rake dev:setup'
+
+.PHONY: setup-test
+setup-test: deps
+	docker-compose run -e RAILS_ENV=test sidekiq bash -c 'bin/rake db:drop; bin/rake db:create && bin/rake db:setup'
+
 .PHONY: setup
-setup: deps
-	docker-compose run sidekiq bash -c 'bundle exec rake db:create && bundle exec rake dev:setup'
+setup: setup-dev setup-test
+
+.PHONY: update-repos
+update-repos: deps
+	git -C gitaly pull
+	git -C gitlab-rails pull
+	git -C gitlab-shell pull
+	git -C gitlab-workhorse pull
+
+.PHONY: update-dev
+update-dev: update-repos
+	docker-compose run -e RAILS_ENV=development sidekiq bash -c 'bin/rake db:migrate'
+
+.PHONY: update-test
+update-test: update-repos
+	docker-compose run -e RAILS_ENV=test sidekiq bash -c 'bin/rake db:migrate'
+
+.PHONY: update
+update: update-dev update-test
 
 .PHONY: up
 up: deps
@@ -42,5 +71,5 @@ destroy:
 	docker-compose down -v --remove-orphans
 
 .PHONY: shell
-shell:
-	docker-compose run unicorn /bin/bash
+shell: deps
+	docker-compose run sidekiq /bin/bash

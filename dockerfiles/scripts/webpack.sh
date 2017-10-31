@@ -4,4 +4,4 @@ set -xe
 
 cd /home/git/gitlab
 yarn install
-npm run webpack
+exec yarn dev-server

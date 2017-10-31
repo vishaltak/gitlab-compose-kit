@@ -15,6 +15,7 @@ services:
       - webpack
     environment:
       RAILS_ENV: development
+      ENABLE_SPRING: "1"
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/gitlab-rails-env.sh]
     command: [/scripts/unicorn.sh]
@@ -31,6 +32,7 @@ services:
       - gitaly
     environment:
       RAILS_ENV: development
+      ENABLE_SPRING: "1"
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/gitlab-rails-env.sh]
     command: [/scripts/sidekiq.sh]
@@ -43,6 +45,8 @@ services:
       - ./gitlab-workhorse:/home/git/gitlab-workhorse
     expose:
       - 8181
+    ports:
+      - 3000:8181
     depends_on:
       - gitaly
       - redis
