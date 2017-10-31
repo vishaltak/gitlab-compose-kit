@@ -6,7 +6,7 @@ cd /home/git/gitlab-shell
 
 mkdir -p ~/status
 
-rm .gitlab_shell_secret
+rm -f .gitlab_shell_secret
 echo gitlab_shell_secret > .gitlab_shell_secret
 
 if [[ "$(git describe)" == "$(cat ~/status/gitlab-shell || true)" ]]; then
