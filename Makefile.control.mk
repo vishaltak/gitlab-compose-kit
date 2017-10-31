@@ -4,7 +4,12 @@ up: deps
 
 .PHONY: down
 down:
-	docker-compose down
+	docker-compose kill
+	docker-compose rm --remove-orphans
+
+.PHONY: destroy
+destroy:
+	docker-compose down -v --remove-orphans
 
 .PHONY: background
 background: deps
@@ -13,10 +18,6 @@ background: deps
 .PHONY: logs
 logs: deps
 	docker-compose logs
-
-.PHONY: destroy
-destroy:
-	docker-compose down -v --remove-orphans
 
 .PHONY: shell
 shell: deps

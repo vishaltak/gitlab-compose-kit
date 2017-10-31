@@ -1,13 +1,13 @@
-.PHONY: setup-dev
-setup-dev: deps
+.PHONY: create-dev
+create-dev: deps
 	docker-compose run -e RAILS_ENV=development sidekiq bash -c 'bin/rake db:create && bin/rake dev:setup'
 
-.PHONY: setup-test
-setup-test: deps
+.PHONY: create-test
+create-test: deps
 	docker-compose run -e RAILS_ENV=test sidekiq bash -c 'bin/rake db:drop; bin/rake db:create && bin/rake db:setup'
 
-.PHONY: setup
-setup: setup-dev setup-test
+.PHONY: create
+create: create-dev create-test
 
 .PHONY: update-repos
 update-repos: deps

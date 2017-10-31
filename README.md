@@ -60,7 +60,7 @@ git clone https://gitlab.com/ayufan/gitlab-compose-kit.git
 #### 2. Run to setup:
 
 ```bash
-$ make setup
+$ make create
 ```
 
 This will take long minutes to build base docker image, compile all dependencies,
@@ -106,7 +106,6 @@ This will shutdown all containers, releasing all resources.
 
 ```bash
 $ make destroy
-$ rm -rf data/
 ```
 
 Afterwards you have to run `make setup` again :)
