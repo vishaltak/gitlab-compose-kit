@@ -9,14 +9,15 @@ RUN apt-get update -y && \
 RUN npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
 RUN gem install bundler
 
-RUN apt-get install -y libmysqlclient-dev
+RUN apt-get install -y libmysqlclient-dev openssh-server
 
 ARG UID
 ARG GID
 ARG HOME
 
-RUN groupadd -g "$GID" git
+RUN groupadd -g "$GID" git || true
 RUN useradd -g "$GID" -u "$UID" -m -d "/home/git" git
+RUN usermod -p '*' git
 
 USER git
 

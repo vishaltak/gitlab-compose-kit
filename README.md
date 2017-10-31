@@ -11,7 +11,8 @@ It currently supports:
 - GitLab Workhorse,
 - Gitaly,
 - PostgreSQL,
-- Redis.
+- Redis,
+- SSH
 
 It allows to:
 - Run development environment,
@@ -27,12 +28,15 @@ Everything has it's own container:
 - Gitaly,
 - PostgreSQL,
 - Redis,
-- Webpacks.
+- Webpacks,
+- OpenSSH
+
+The containers interact via HTTP/TCP using intra-container networking.
+There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
 
 It still doesn't support:
 - Pages,
-- Registry,
-- SSH
+- Registry
 
 However, this is super-easy to add now!
 

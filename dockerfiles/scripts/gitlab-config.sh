@@ -4,6 +4,8 @@ set -xe
 
 cd /home/git/gitlab
 
+echo gitlab_shell_secret > .gitlab_shell_secret
+
 if ! bundle install --quiet --local --without production --jobs=$(nproc); then
   bundle install --without production --jobs=$(nproc)
 fi
@@ -17,6 +19,8 @@ development:
   gitlab:
     host: localhost
     port: 3000
+  gitlab_shell:
+    ssh_port: 2222
   pages:
     enabled: false
   mattermost:

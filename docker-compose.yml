@@ -46,13 +46,30 @@ services:
     expose:
       - 8181
     ports:
-      - 3000:8181
+      - '3000:8181'
     depends_on:
       - gitaly
       - redis
       - unicorn
     working_dir: /home/git/gitlab-workhorse
     command: [/scripts/workhorse.sh]
+  
+  sshd:
+    image: gitlab-v2
+    volumes:
+      - ./data:/home/git
+      - ./gitlab-shell:/home/git/gitlab-shell
+    expose:
+      - 2222
+    ports:
+      - '2222:2222'
+    depends_on:
+      - gitaly
+      - redis
+      - unicorn
+    working_dir: /home/git
+    user: root
+    command: [/scripts/sshd.sh]
 
   webpack:
     image: gitlab-v2

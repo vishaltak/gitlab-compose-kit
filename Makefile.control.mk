@@ -6,6 +6,14 @@ up: deps
 down:
 	docker-compose down
 
+.PHONY: background
+background: deps
+	docker-compose up -d
+
+.PHONY: logs
+logs: deps
+	docker-compose logs
+
 .PHONY: destroy
 destroy:
 	docker-compose down -v --remove-orphans
