@@ -53,7 +53,7 @@ services:
       - unicorn
     working_dir: /home/git/gitlab-workhorse
     command: [/scripts/workhorse.sh]
-  
+
   sshd:
     image: gitlab-v2
     volumes:
@@ -98,7 +98,7 @@ services:
       - 9999
     working_dir: /home/git/gitaly
     command: [/scripts/gitaly.sh]
-  
+
   pages:
     image: gitlab-v2
     volumes:
