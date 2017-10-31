@@ -12,7 +12,9 @@ It currently supports:
 - Gitaly,
 - PostgreSQL,
 - Redis,
-- SSH
+- SSH,
+- GitLab Pages
+- GitLab Runner
 
 It allows to:
 - Run development environment,
@@ -22,24 +24,25 @@ It allows to:
 How it differs from GitLab Development Kit it uses containers for everything,
 starting from scratch, building minimal container per application.
 Everything has it's own container:
-- Unicorn,
-- Sidekiq,
-- Workhorse,
+- GitLab Unicorn,
+- GitLab Sidekiq,
+- GitLab Workhorse,
 - Gitaly,
 - PostgreSQL,
 - Redis,
 - Webpacks,
 - OpenSSH,
-- Registry,
-- Pages
+- Container Registry,
+- GitLab Pages,
+- GitLab Runner,
+- Nested Docker Engine (for running CI jobs),
 
 The containers interact via HTTP/TCP using intra-container networking.
 There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
 
 It still doesn't support:
-- Runner
-
-However, this is super-easy to add now!
+- Geo
+- and others...
 
 ### Requirements
 

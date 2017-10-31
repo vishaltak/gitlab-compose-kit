@@ -6,8 +6,12 @@ create-dev: deps
 create-test: deps
 	docker-compose run -e RAILS_ENV=test sidekiq bash -c 'bin/rake db:drop; bin/rake db:create && bin/rake db:setup'
 
+.PHONY: create-runner
+create-runner: deps
+	docker-compose run -e RAILS_ENV=development sidekiq bin/rails runner "Ci::Runner.create(is_shared: true, token: 'SHARED_RUNNER_TOKEN')"
+
 .PHONY: create
-create: create-dev create-test
+create: create-dev create-test create-runner
 
 .PHONY: update-repos
 update-repos: deps

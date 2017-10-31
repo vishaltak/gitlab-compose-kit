@@ -132,6 +132,29 @@ services:
     ports:
       - "5000:5000"
 
+  runner:
+    image: gitlab/gitlab-runner:alpine
+    environment:
+      DOCKER_HOST: tcp://dind:2375
+      CI_SERVER_URL: http://workhorse:8181/
+      CI_SERVER_TOKEN: SHARED_RUNNER_TOKEN
+      CLONE_URL: http://workhorse:8181/
+      RUNNER_EXECUTOR: docker
+      DOCKER_VOLUMES: '/var/run/docker.sock:/var/run/docker.sock'
+    depends_on:
+      - dind
+    command: [run-single]
+
+  dind:
+    image: docker:dind
+    volumes:
+      - docker:/var/lib/docker
+    environment:
+      DOCKER_DRIVER: overlay
+    privileged: true
+    expose:
+      - 2375
+
   postgres:
     image: 'postgres:9-alpine'
     environment:
@@ -155,3 +178,4 @@ volumes:
   redis:
   postgres:
   registry:
+  docker:
