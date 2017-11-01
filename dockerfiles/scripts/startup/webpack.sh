@@ -3,5 +3,8 @@
 set -xe
 
 cd /home/git/gitlab
-yarn install --modules-folder /data/cache/node_modules
+mkdir -p /data/cache/node_modules
+ln -sf /data/cache/node_modules || true
+
+yarn install
 exec yarn dev-server
