@@ -30,7 +30,7 @@ fi
 cp /home/git/ssh_host_rsa_key /etc/ssh/ssh_host_rsa_key
 chown root:root /etc/ssh/ssh_host_rsa_key
 chmod 0600 /etc/ssh/ssh_host_rsa_key
-mkdir /run/sshd
+mkdir -p /run/sshd
 
 # SSH login fix. Otherwise user is kicked off after login
 sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
