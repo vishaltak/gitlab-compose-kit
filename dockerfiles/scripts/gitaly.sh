@@ -5,6 +5,13 @@ set -xe
 /scripts/fix-perms.sh
 /scripts/gitlab-shell.sh
 
+# custom paths for gitaly
+export GEM_HOME=/data/cache/gitaly-bundle
+export BUNDLE_PATH="$GEM_HOME"
+export BUNDLE_BIN="$GEM_HOME/bin"
+export BUNDLE_APP_CONFIG="$GEM_HOME"
+export PATH="$BUNDLE_BIN:$PATH"
+
 cd /home/git/gitaly
 make
 
