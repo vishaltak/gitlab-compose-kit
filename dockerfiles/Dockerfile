@@ -15,19 +15,24 @@ ARG UID
 ARG GID
 ARG HOME
 
+# Enable passwordless sudo for users under the "sudo" group
+RUN sed -i -e \
+    's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
+    /etc/sudoers 
+
 RUN groupadd -g "$GID" git || true
-RUN useradd -g "$GID" -u "$UID" -m -d "/home/git" git
+RUN useradd -g "$GID" -G sudo -u "$UID" -m -d "/home/git" git
 RUN usermod -p '*' git
 
 USER git
 
-VOLUME ["/home/git"]
+VOLUME ["/home/git", "/data/cache"]
 
 # install things globally, for great justice
 # and don't create ".bundle" in all our apps
 ENV HOME=/home/git \
-    GEM_HOME=/home/git/bundle \
-    GOPATH=/home/git/go
+    GEM_HOME=/data/cache/bundle \
+    GOPATH=/data/cache/go
 
 ENV BUNDLE_PATH="$GEM_HOME" \
     BUNDLE_BIN="$GEM_HOME/bin" \

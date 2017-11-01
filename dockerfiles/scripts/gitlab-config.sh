@@ -41,8 +41,18 @@ development:
   repositories:
     storages:
       default:
-        path: /home/git/repositories/
+        path: /data/repositories/
         gitaly_address: tcp://gitaly:9999
+  artifacts:
+    enabled: true
+    path: /data/shared/artifacts
+  lfs:
+    enabled: true
+    storage_path: /data/shared/lfs
+  gitlab_ci:
+    builds_path: /data/shared/builds
+  pages:
+    path: /data/shared/pages
   webpack:
     dev_server:
       enabled: true
