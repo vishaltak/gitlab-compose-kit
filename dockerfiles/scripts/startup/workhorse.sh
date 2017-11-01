@@ -2,9 +2,6 @@
 
 set -xe
 
-/scripts/fix-perms.sh
-/scripts/gitlab-shell.sh
-
 cd /home/git/gitlab-workhorse
 make
 

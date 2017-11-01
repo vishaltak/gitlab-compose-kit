@@ -14,7 +14,7 @@ git config --global core.autocrlf input
 git config --global gc.auto 0
 git config --global repack.writeBitmaps true
 
-/scripts/merge-yaml.rb config/gitlab.yml.example /dev/stdin > config/gitlab.yml <<EOF
+/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin > config/gitlab.yml <<EOF
 development:
   gitlab:
     host: ${HOST}

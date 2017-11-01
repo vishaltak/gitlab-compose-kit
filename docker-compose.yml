@@ -21,8 +21,8 @@ services:
       USE_RAILS_SERVER: ${USE_RAILS_SERVER}
       HOST: ${HOST}
     working_dir: /home/git/gitlab
-    entrypoint: [/scripts/gitlab-rails-env.sh]
-    command: [/scripts/unicorn.sh]
+    entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
+    command: [/scripts/startup/unicorn.sh]
 
   sidekiq:
     image: gitlab-v2
@@ -41,8 +41,8 @@ services:
       RAILS_ENV: development
       HOST: ${HOST}
     working_dir: /home/git/gitlab
-    entrypoint: [/scripts/gitlab-rails-env.sh]
-    command: [/scripts/sidekiq.sh]
+    entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
+    command: [/scripts/startup/sidekiq.sh]
 
   spring:
     image: gitlab-v2
@@ -63,7 +63,7 @@ services:
       HOST: ${HOST}
     tty: true
     working_dir: /home/git/gitlab
-    entrypoint: [/scripts/gitlab-rails-env.sh]
+    entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
     command: [cat]
 
   workhorse:
@@ -84,7 +84,8 @@ services:
       - redis
       - unicorn
     working_dir: /home/git/gitlab-workhorse
-    command: [/scripts/workhorse.sh]
+    entrypoint: [/scripts/entrypoint/gitlab-shell-env.sh]
+    command: [/scripts/startup/workhorse.sh]
 
   sshd:
     image: gitlab-v2
@@ -102,7 +103,8 @@ services:
       - unicorn
     working_dir: /home/git
     user: root
-    command: [/scripts/sshd.sh]
+    entrypoint: [/scripts/entrypoint/gitlab-shell-env.sh]
+    command: [/scripts/startup/sshd.sh]
 
   webpack:
     image: gitlab-v2
@@ -118,7 +120,7 @@ services:
     expose:
       - 3808
     working_dir: /home/git/gitlab
-    command: [/scripts/webpack.sh]
+    command: [/scripts/startup/webpack.sh]
 
   gitaly:
     image: gitlab-v2
@@ -133,7 +135,8 @@ services:
     expose:
       - 9999
     working_dir: /home/git/gitaly
-    command: [/scripts/gitaly.sh]
+    entrypoint: [/scripts/entrypoint/gitlab-shell-env.sh]
+    command: [/scripts/startup/gitaly.sh]
 
   pages:
     image: gitlab-v2
@@ -149,7 +152,7 @@ services:
     ports:
       - 8989
     working_dir: /home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
-    command: [/scripts/gitlab-pages.sh]
+    command: [/scripts/startup/pages.sh]
 
   registry:
     image: registry:2.4.1

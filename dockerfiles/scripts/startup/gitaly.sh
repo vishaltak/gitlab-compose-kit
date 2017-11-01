@@ -2,9 +2,6 @@
 
 set -xe
 
-/scripts/fix-perms.sh
-/scripts/gitlab-shell.sh
-
 # custom paths for gitaly
 export GEM_HOME=/data/cache/gitaly-bundle
 export BUNDLE_PATH="$GEM_HOME"

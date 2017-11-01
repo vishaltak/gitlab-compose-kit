@@ -2,9 +2,6 @@
 
 set -xe
 
-su git -c '/scripts/fix-perms.sh'
-su git -c '/scripts/gitlab-shell.sh'
-
 cat <<EOF > /etc/ssh/sshd_config
 AllowUsers git
 AuthenticationMethods publickey
