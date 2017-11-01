@@ -127,6 +127,19 @@ Afterwards you have to run `make setup` again :)
 To access GitLab Pages you have to use HTTP proxy.
 The Pages proxy runs on `http://localhost:8989`.
 
+## Performance
+
+It works great on Linux where the data can be natively shared between filesystems.
+However, it is not so great when using Docker for Mac due to poor filesystem performance.
+Read more about [osxfs-caching](https://docs.docker.com/docker-for-mac/osxfs-caching/#performance-implications-of-host-container-file-system-consistency).
+
+This project tries to store as much as possible on Docker VM.
+The source code is still shared, thus it achieves suboptimal
+performance due to significant overhead.
+
+Running natively will achieve better performance, as there's simply no virtualization overhead.
+This is not a case for Linux, as running in container allows to achieve 99.99% of the host performance.
+
 ## Author
 
 Kamil Trzciński, 2017, GitLab
