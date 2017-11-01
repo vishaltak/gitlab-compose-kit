@@ -30,7 +30,7 @@ VOLUME ["/home/git", "/data/cache"]
 ENV HOME=/home/git \
     GEM_HOME=/data/cache/bundle \
     GOPATH=/data/cache/go \
-    NPM_CONFIG_PREFIX=/data/cache/node_modules \
+    npm_config_prefix=/data/cache/node_modules \
     YARN_CACHE_FOLDER=/data/cache/yarn
 
 ENV BUNDLE_PATH="$GEM_HOME" \
