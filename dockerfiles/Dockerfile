@@ -4,12 +4,10 @@ RUN apt-get update -y && \
     apt-get install -y software-properties-common python-software-properties \
       git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
-      ruby-dev ruby-bundler sudo libsqlite3-dev
+      ruby-dev ruby-bundler sudo libsqlite3-dev libmysqlclient-dev openssh-server
 
 RUN npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
 RUN gem install bundler
-
-RUN apt-get install -y libmysqlclient-dev openssh-server
 
 ARG UID
 ARG GID
@@ -18,7 +16,7 @@ ARG HOME
 # Enable passwordless sudo for users under the "sudo" group
 RUN sed -i -e \
     's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
-    /etc/sudoers 
+    /etc/sudoers
 
 RUN groupadd -g "$GID" git || true
 RUN useradd -g "$GID" -G sudo -u "$UID" -m -d "/home/git" git
