@@ -1,8 +1,10 @@
-## GitLab Development Kit using Docker Compose
+## GitLab Development using Docker Compose
 
 This projects aims to ease GitLab Development,
 by enabling the use of minimal containers / micro-services
 with minimal set of dependencies.
+
+It does not use any of existing [GitLab Development Kit](https://gitlab.com/gitlab-org/gitlab-development-kit/) sources.
 
 ### Features
 
