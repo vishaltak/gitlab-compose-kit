@@ -37,8 +37,8 @@ tail:
 
 .PHONY: shell
 shell: deps
-	docker-compose run sidekiq /bin/bash
+	docker-compose run spring /bin/bash
 
 .PHONY: console
 console: deps
-	docker-compose run sidekiq bundle exec rails console
+	docker-compose run spring bundle exec rails console

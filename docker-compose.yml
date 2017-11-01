@@ -18,7 +18,6 @@ services:
       - webpack
     environment:
       RAILS_ENV: development
-      ENABLE_SPRING: "1"
       HOST: ${HOST}
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/gitlab-rails-env.sh]
@@ -39,11 +38,32 @@ services:
       - gitaly
     environment:
       RAILS_ENV: development
-      ENABLE_SPRING: "1"
       HOST: ${HOST}
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/gitlab-rails-env.sh]
     command: [/scripts/sidekiq.sh]
+
+  spring:
+    image: gitlab-v2
+    volumes:
+      - ./data:/home/git:delegated
+      - ./gitlab-shell:/home/git/gitlab-shell:cached
+      - ./gitlab-rails:/home/git/gitlab:cached
+      - cache:/data/cache
+      - repositories:/data/repositories
+      - shared:/data/shared
+    depends_on:
+      - postgres
+      - redis
+      - gitaly
+    environment:
+      RAILS_ENV: development
+      ENABLE_SPRING: "1"
+      HOST: ${HOST}
+    tty: true
+    working_dir: /home/git/gitlab
+    entrypoint: [/scripts/gitlab-rails-env.sh]
+    command: [cat]
 
   workhorse:
     image: gitlab-v2
