@@ -8,6 +8,12 @@ set -xe
 cd /home/git/gitaly
 make
 
+pushd ruby
+if ! bundle install --quiet --local; then
+  bundle install
+fi
+popd
+
 sed \
   -e 's|^socket_path|# socket_path|' \
   -e 's|^# prometheus_listen_addr|prometheus_listen_addr|' \
