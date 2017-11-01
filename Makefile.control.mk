@@ -12,7 +12,7 @@ db: deps
 
 .PHONY: web
 web: deps
-	docker-compose up workhorse
+	docker-compose up workhorse unicorn
 
 .PHONY: sidekiq
 sidekiq: deps
