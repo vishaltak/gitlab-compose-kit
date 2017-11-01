@@ -18,6 +18,7 @@ services:
       - webpack
     environment:
       RAILS_ENV: development
+      USE_RAILS_SERVER: ${USE_RAILS_SERVER}
       HOST: ${HOST}
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/gitlab-rails-env.sh]
