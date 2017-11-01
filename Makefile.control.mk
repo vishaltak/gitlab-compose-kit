@@ -12,7 +12,7 @@ db: deps
 
 .PHONY: web
 web: deps
-	docker-compose up workhorse unicorn sshd
+	docker-compose up workhorse unicorn sshd webpack
 
 .PHONY: sshd
 sshd: deps
