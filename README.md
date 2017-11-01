@@ -124,6 +124,25 @@ $ make destroy
 
 Afterwards you have to run `make setup` again :)
 
+## User GitLab config
+
+You sometimes want to configure `gitlab-rails/config/gitlab.yml`.
+
+It is super easy. Just edit `./data/gitlab.yml` after setup,
+adding only entries that you need:
+
+```yaml
+development:
+  omniauth:
+    providers:
+      - { name: 'google_oauth2',
+          app_id: 'my-app-id.apps.googleusercontent.com',
+          app_secret: 'my-secret',
+          args: { access_type: 'offline', approval_prompt: '' } }
+```
+
+Then restart `make restart`.
+
 ## Pages
 
 To access GitLab Pages you have to use HTTP proxy.

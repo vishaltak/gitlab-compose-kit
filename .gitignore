@@ -2,4 +2,6 @@
 /gitlab-shell/
 /gitlab-workhorse/
 /gitlab-rails/
+/gitlab-pages/
 /gitaly/
+/tmp/

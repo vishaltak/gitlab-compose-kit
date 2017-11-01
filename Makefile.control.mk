@@ -22,6 +22,10 @@ sshd: deps
 sidekiq: deps
 	docker-compose up sidekiq
 
+.PHONY: restart
+restart: deps
+	docker-compose restart
+
 .PHONY: down
 down:
 	docker-compose kill
