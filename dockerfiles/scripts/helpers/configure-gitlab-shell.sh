@@ -4,12 +4,10 @@ set -xe
 
 cd /home/git/gitlab-shell
 
-mkdir -p ~/status
-
 rm -f .gitlab_shell_secret
 echo gitlab_shell_secret > .gitlab_shell_secret
 
-if [[ "$(git describe)" == "$(cat ~/status/gitlab-shell || true)" ]]; then
+if [[ "$(git describe)" == "$(cat ~/gitlab-shell-done || true)" ]]; then
   exit 0
 fi
 
@@ -25,4 +23,4 @@ sed \
 ./bin/install
 ./bin/compile
 
-git describe > ~/status/gitlab-shell
+git describe > ~/gitlab-shell-done
