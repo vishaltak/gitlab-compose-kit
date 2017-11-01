@@ -11,7 +11,6 @@ RUN gem install bundler
 
 ARG UID
 ARG GID
-ARG HOME
 
 # Enable passwordless sudo for users under the "sudo" group
 RUN sed -i -e \
@@ -30,7 +29,9 @@ VOLUME ["/home/git", "/data/cache"]
 # and don't create ".bundle" in all our apps
 ENV HOME=/home/git \
     GEM_HOME=/data/cache/bundle \
-    GOPATH=/data/cache/go
+    GOPATH=/data/cache/go \
+    NPM_CONFIG_PREFIX=/data/cache/node_modules \
+    YARN_CACHE_FOLDER=/data/cache/yarn
 
 ENV BUNDLE_PATH="$GEM_HOME" \
     BUNDLE_BIN="$GEM_HOME/bin" \
