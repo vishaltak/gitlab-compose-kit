@@ -44,7 +44,7 @@ tail:
 	docker-compose logs -f
 
 .PHONY: spring
-spring:
+spring: deps
 	docker-compose up -d spring
 
 .PHONY: shell
