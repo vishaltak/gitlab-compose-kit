@@ -4,7 +4,8 @@ RUN apt-get update -y && \
     apt-get install -y software-properties-common python-software-properties \
       git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
-      ruby-dev ruby-bundler sudo libsqlite3-dev libmysqlclient-dev openssh-server
+      ruby-dev ruby-bundler sudo libsqlite3-dev libmysqlclient-dev openssh-server \
+      libfontconfig1
 
 RUN npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
 RUN gem install bundler
