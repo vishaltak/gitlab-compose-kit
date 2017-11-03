@@ -1,3 +1,5 @@
+export USE_RAILS_SERVER ?= 0
+
 all: help
 
 help:

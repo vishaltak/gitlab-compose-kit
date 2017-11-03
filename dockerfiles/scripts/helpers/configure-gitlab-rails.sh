@@ -58,6 +58,12 @@ development:
       enabled: true
       host: webpack
       port: 3808
+test:
+  webpack:
+    dev_server:
+      enabled: true
+      host: webpack
+      port: 3808
 EOF
 
 if [[ ! -e /home/git/registry-auth.crt ]]; then

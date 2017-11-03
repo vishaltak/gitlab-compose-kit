@@ -57,9 +57,11 @@ services:
       - postgres
       - redis
       - gitaly
+      - webpack
     environment:
       RAILS_ENV: development
       ENABLE_SPRING: "1"
+      SPEC_OPTS: "--format documentation"
       HOST: ${HOST}
     tty: true
     working_dir: /home/git/gitlab

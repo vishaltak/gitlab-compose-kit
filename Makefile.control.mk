@@ -43,10 +43,14 @@ logs:
 tail:
 	docker-compose logs -f
 
+.PHONY: spring
+spring:
+	docker-compose up -d spring
+
 .PHONY: shell
-shell: deps
-	docker-compose run spring /bin/bash
+shell: spring
+	docker-compose exec spring /bin/bash
 
 .PHONY: console
-console: deps
-	docker-compose run spring bundle exec rails console
+console: spring
+	docker-compose exec spring bundle exec rails console
