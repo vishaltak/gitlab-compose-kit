@@ -54,3 +54,7 @@ shell: spring
 .PHONY: console
 console: spring
 	docker-compose exec spring bundle exec rails console
+
+.PHONY: webpack-compile
+webpack-compile: spring
+	docker-compose exec spring bin/rake webpack:compile
