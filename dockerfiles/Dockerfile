@@ -5,10 +5,11 @@ RUN apt-get update -y && \
       git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
       ruby-dev ruby-bundler sudo libsqlite3-dev libmysqlclient-dev openssh-server \
-      libfontconfig1
+      libfontconfig1 chromium-chromedriver
 
 RUN npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
 RUN gem install bundler
+RUN ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
 ARG UID
 ARG GID
