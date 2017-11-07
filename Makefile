@@ -1,4 +1,4 @@
-export USE_RAILS_SERVER ?= 0
+export USE_RAILS_SERVER ?= 
 
 all: help
 
