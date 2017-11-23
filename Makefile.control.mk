@@ -43,6 +43,10 @@ logs:
 tail:
 	docker-compose logs -f
 
+.PHONY: ps
+ps:
+	docker-compose ps
+
 .PHONY: spring
 spring: deps
 	docker-compose up -d spring
