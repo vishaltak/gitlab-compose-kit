@@ -24,7 +24,7 @@ update-repos: deps
 migrate-dev:
 	docker-compose run -e RAILS_ENV=development spring bash -c 'bin/rake db:migrate'
 
-.PHONY: update-test
+.PHONY: migrate-test
 migrate-test:
 	docker-compose run -e RAILS_ENV=test spring bash -c 'bin/rake db:migrate'
 
