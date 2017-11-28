@@ -1,9 +1,6 @@
 data:
 	mkdir -p data
 
-data/gitlab.yml: data
-	touch data/gitlab.yml
-
 gitaly:
 	git clone https://gitlab.com/gitlab-org/gitaly.git
 
@@ -20,7 +17,7 @@ gitlab-workhorse:
 	git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git
 
 .PHONY: repos
-repos: gitaly gitlab-shell gitlab-pages gitlab-rails gitlab-workhorse data/gitlab.yml
+repos: gitaly gitlab-shell gitlab-pages gitlab-rails gitlab-workhorse data
 
 .PHONY: deps
 deps: build repos

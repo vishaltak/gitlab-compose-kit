@@ -49,21 +49,6 @@ sync {
 
 sync {
   default.rsyncssh,
-  source = "data",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/data",
-  excludeFrom = ".gitignore",
-  exclude = {
-    '.git'
-  },
-  delete = true,
-
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
-}
-
-sync {
-  default.rsyncssh,
   source = "gitaly",
   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitaly",
   excludeFrom = "gitaly/.gitignore",

@@ -21,7 +21,8 @@ It currently supports:
 It allows to:
 - Run development environment,
 - Run tests,
-- Easily teardown and start a new environment.
+- Easily teardown and start a new environment,
+- Run remove environment over SSH.
 
 How it differs from GitLab Development Kit it uses containers for everything,
 starting from scratch, building minimal container per application.
@@ -128,7 +129,7 @@ Afterwards you have to run `make setup` again :)
 
 You sometimes want to configure `gitlab-rails/config/gitlab.yml`.
 
-It is super easy. Just edit `./data/gitlab.yml` after setup,
+It is super easy. Just edit `./gitlab.yml` after setup,
 adding only entries that you need:
 
 ```yaml
@@ -160,6 +161,60 @@ performance due to significant overhead.
 
 Running natively will achieve better performance, as there's simply no virtualization overhead.
 This is not a case for Linux, as running in container allows to achieve 99.99% of the host performance.
+
+## Remote environment
+
+This project can use `lsyncd` to run remote environment.
+
+To configure the use of remote environment define:
+
+```bash
+export SSH_TARGET_DIR=gitlab-compose-kit
+export SSH_TARGET_HOST=root@my-remote-server
+```
+
+### 1. Prepare a remote machine with `rsync`, `docker` and `docker-compose` installed:
+
+```bash
+apt-get install -y rsync docker.io docker-compose
+```
+
+### 2. Prepare and install `lsyncd` on local machine:
+
+```bash
+# Debian/Ubuntu
+apt-get install -y lsyncd
+
+# Mac
+brew install lsyncd
+```
+
+### 3. Ryn sync process
+
+```bash
+make sync
+```
+
+### 4. Wait for inital sync to finish
+
+```
+22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-pages/" finished: 0
+22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-workhorse/" finished: 0
+22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-shell/" finished: 0
+22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/" finished: 0
+22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitaly/" finished: 0
+22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-runner/" finished: 0
+22:58:53 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-rails/" finished: 0
+22:58:54 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/data/" finished: 0
+```
+
+### 5. Setup and develop
+
+You can now use regular commands (locally) to develop everything remotely:
+
+```bash
+make setup
+```
 
 ## Author
 

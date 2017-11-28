@@ -1,47 +1,47 @@
 .PHONY: up
 up: deps
-	docker-compose up -d
+	./scripts/proxy docker-compose up -d
 
 .PHONY: run
 run: deps
-	docker-compose up
+	./scripts/proxy docker-compose up
 
 .PHONY: db
 db: deps
-	docker-compose up postgres redis
+	./scripts/proxy docker-compose up postgres redis
 
 .PHONY: web
 web: deps
-	docker-compose up workhorse unicorn sshd webpack
+	./scripts/proxy docker-compose up workhorse unicorn sshd webpack
 
 .PHONY: sshd
 sshd: deps
-	docker-compose up sshd
+	./scripts/proxy docker-compose up sshd
 
 .PHONY: sidekiq
 sidekiq: deps
-	docker-compose up sidekiq
+	./scripts/proxy docker-compose up sidekiq
 
 .PHONY: restart
 restart: deps
-	docker-compose restart
+	./scripts/proxy docker-compose restart
 
 .PHONY: down
 down:
-	docker-compose kill
-	docker-compose rm
+	./scripts/proxy docker-compose kill
+	./scripts/proxy docker-compose rm
 
 .PHONY: destroy
 destroy:
-	docker-compose down -v --remove-orphans
+	./scripts/proxy docker-compose down -v --remove-orphans
 
 .PHONY: logs
 logs:
-	docker-compose logs
+	./scripts/proxy docker-compose logs
 
 .PHONY: tail
 tail:
-	docker-compose logs -f
+	./scripts/proxy docker-compose logs -f
 
 .PHONY: spring
 spring: deps
