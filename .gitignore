@@ -9,3 +9,4 @@
 /www-gitlab-com
 /.sync.control
 /.env
+/gitlab.yml

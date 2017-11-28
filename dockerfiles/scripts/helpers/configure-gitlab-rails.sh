@@ -14,6 +14,8 @@ git config --global core.autocrlf input
 git config --global gc.auto 0
 git config --global repack.writeBitmaps true
 
+echo "$CUSTOM_CONFIG" > /home/git/gitlab.yml
+
 /scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab.yml > config/gitlab.yml <<EOF
 development:
   gitlab:

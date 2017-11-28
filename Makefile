@@ -1,4 +1,8 @@
-export USE_RAILS_SERVER ?= 
+export USE_RAILS_SERVER ?=
+
+ifeq (,$(wildcard gitlab.yml))
+	$(shell touch gitlab.yml)
+endif
 
 all: help
 

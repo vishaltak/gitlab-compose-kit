@@ -20,6 +20,7 @@ services:
       RAILS_ENV: development
       USE_RAILS_SERVER: ${USE_RAILS_SERVER}
       HOST: ${HOST}
+      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/unicorn.sh]
@@ -40,6 +41,7 @@ services:
     environment:
       RAILS_ENV: development
       HOST: ${HOST}
+      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/sidekiq.sh]
@@ -63,6 +65,7 @@ services:
       ENABLE_SPRING: "1"
       SPEC_OPTS: "--format documentation"
       HOST: ${HOST}
+      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     tty: true
     working_dir: /home/git/gitlab
     entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
