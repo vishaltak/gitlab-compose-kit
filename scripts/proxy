@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [[ -z "$HOST" ]]; then
+  case "$(uname -s)" in
+    Linux)
+      export HOST=$(hostname -I | cut -d' ' -f1)
+      ;;
+
+    Darwin)
+      export HOST=$(ipconfig getifaddr en0 || ipconfig getifaddr en1 || ipconfig getifaddr en2)
+      ;;
+  esac
+fi
+
+if [[ -z "$HOST" ]]; then
+  echo "Could not detect IP address. Consider setting this as an environment variable: export HOST=<my-ip-address>"
+  exit 1
+fi
+
+exec "$@"

@@ -45,16 +45,16 @@ tail:
 
 .PHONY: spring
 spring: deps
-	docker-compose up -d spring
+	./scripts/proxy docker-compose up -d spring
 
 .PHONY: shell
 shell: spring
-	docker-compose exec spring /bin/bash
+	./scripts/proxy docker-compose exec spring /bin/bash
 
 .PHONY: console
 console: spring
-	docker-compose exec spring bundle exec rails console
+	./scripts/proxy docker-compose exec spring bundle exec rails console
 
 .PHONY: webpack-compile
 webpack-compile: spring
-	docker-compose exec spring bin/rake webpack:compile
+	./scripts/proxy docker-compose exec spring bin/rake webpack:compile
