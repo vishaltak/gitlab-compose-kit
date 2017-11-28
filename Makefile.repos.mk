@@ -19,11 +19,14 @@ gitlab-rails:
 gitlab-workhorse:
 	git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git
 
+.PHONY: repos
+repos: gitaly gitlab-shell gitlab-pages gitlab-rails gitlab-workhorse data/gitlab.yml
+
 .PHONY: deps
-deps: build gitaly gitlab-shell gitlab-pages gitlab-rails gitlab-workhorse data/gitlab.yml
+deps: build repos
 
 .PHONY: update-repos
-update-repos: deps
+update-repos: repos
 	git -C gitaly pull
 	git -C gitlab-rails pull
 	git -C gitlab-shell pull

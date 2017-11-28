@@ -8,3 +8,4 @@
 /tmp
 /www-gitlab-com
 /.sync.control
+/.env

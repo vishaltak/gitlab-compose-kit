@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -n "$SSH_TARGET_HOST" ]]; then
+  echo "Using remote mode!"
+  exec ./scripts/ssh "cd" "$SSH_TARGET_DIR" "&&" exec ./scripts/proxy "$@"
+fi
+
 if [[ -z "$HOST" ]]; then
   case "$(uname -s)" in
     Linux)

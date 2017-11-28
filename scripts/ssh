@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [[ -z "$SSH_TARGET_HOST" ]]; then
+  echo "Missing SSH_TARGET_HOST"
+  exit 1
+fi
+
+exec ssh \
+  -o ControlMaster=auto \
+  -o ControlPath=.sync.control \
+  -o ControlPersist=5m \
+  -o Port="${SSH_TARGET_PORT-22}" \
+  "$SSH_TARGET_HOST" \
+  "$@"
