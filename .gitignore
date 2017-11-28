@@ -1,7 +1,10 @@
-/data/
-/gitlab-shell/
-/gitlab-workhorse/
-/gitlab-rails/
-/gitlab-pages/
-/gitaly/
-/tmp/
+/data
+/gitlab-shell
+/gitlab-workhorse
+/gitlab-rails
+/gitlab-pages
+/gitlab-runner
+/gitaly
+/tmp
+/www-gitlab-com
+/.sync.control

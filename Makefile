@@ -10,3 +10,4 @@ include Makefile.host.mk
 include Makefile.deps.mk
 include Makefile.env.mk
 include Makefile.control.mk
+include Makefile.sync.mk
