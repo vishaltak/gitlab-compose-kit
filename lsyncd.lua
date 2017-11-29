@@ -43,8 +43,10 @@ base_config = {
   prepare = function(config, level)
     default.prepare(config, level + 1)
 
+    config.name = config.source
     config.targetdir = os.getenv("SSH_TARGET_DIR") .. "/" .. config.source
     config.excludeFrom = config.source .. "/.gitignore"
+    config.delay = 1
   end
 }
 
