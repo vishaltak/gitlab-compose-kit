@@ -38,57 +38,50 @@ base_config = {
       ControlPersist = "5m",
       port = os.getenv("SSH_TARGET_PORT")
     }
-  }
+  },
+
+  prepare = function(config, level)
+    default.prepare(config, level + 1)
+
+    config.targetdir = os.getenv("SSH_TARGET_DIR") .. "/" .. config.source
+    config.excludeFrom = config.source .. "/.gitignore"
+  end
 }
 
 root_sync = sync {
   base_config,
   source = ".",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/.",
-  excludeFrom = ".gitignore"
 }
 root_sync.rmExclude("/gitlab.yml")
 
 sync {
   base_config,
   source = "gitaly",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitaly",
-  excludeFrom = "gitaly/.gitignore",
 }
 
 sync {
   base_config,
   source = "gitlab-pages",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-pages",
-  excludeFrom = "gitlab-pages/.gitignore",
 }
 
 if os.getenv("ENABLE_GITLAB_RUNNER") then
   sync {
     base_config,
     source = "gitlab-runner",
-    targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-runner",
-    excludeFrom = "gitlab-runner/.gitignore",
   }
 end
 
 sync {
   base_config,
   source = "gitlab-rails",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-rails",
-  excludeFrom = "gitlab-rails/.gitignore",
 }
 
 sync {
   base_config,
   source = "gitlab-shell",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-shell",
-  excludeFrom = "gitlab-shell/.gitignore",
 }
 
 sync {
   base_config,
   source = "gitlab-workhorse",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-workhorse",
-  excludeFrom = "gitlab-workhorse/.gitignore",
 }
