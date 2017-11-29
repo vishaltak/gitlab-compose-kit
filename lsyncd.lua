@@ -13,128 +13,88 @@ end
 
 settings {
   nodaemon = true,
-  delay = 1,
+  -- delay = 1,
 }
 
-host_config = os.getenv("SSH_TARGET_HOST")
-rsync_config = {
-  archive = true,
-  compress = true,
-  whole_file = false
-}
+base_config = {
+  default.rsyncssh,
+  exclude = {
+    '.git'
+  },
+  delete = true,
 
-ssh_config = {
-  options = {
-    ControlMaster = "auto",
-    ControlPath = ".sync.control",
-    ControlPersist = "5m",
-    port = os.getenv("SSH_TARGET_PORT")
+  host = os.getenv("SSH_TARGET_HOST"),
+  rsync = {
+    archive = true,
+    compress = true,
+    whole_file = false,
+    binary = "/usr/local/bin/rsync"
+  },
+
+  ssh = {
+    options = {
+      ControlMaster = "auto",
+      ControlPath = ".sync.control",
+      ControlPersist = "5m",
+      port = os.getenv("SSH_TARGET_PORT")
+    }
   }
 }
 
-sync {
-  default.rsyncssh,
+root_sync = sync {
+  base_config,
   source = ".",
   targetdir = os.getenv("SSH_TARGET_DIR") .. "/.",
-  excludeFrom = ".gitignore",
-  exclude = {
-    '.git'
-  },
-  delete = true,
-
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
+  excludeFrom = ".gitignore"
 }
+root_sync.rmExclude("/gitlab.yml")
 
 sync {
-  default.rsyncssh,
+  base_config,
   source = "gitaly",
   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitaly",
   excludeFrom = "gitaly/.gitignore",
-  exclude = {
-    '.git'
-  },
-  delete = true,
-
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
 }
 
 sync {
-  default.rsyncssh,
+  base_config,
   source = "gitlab-pages",
   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-pages",
   excludeFrom = "gitlab-pages/.gitignore",
-  exclude = {
-    '.git'
-  },
-  delete = true,
-
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
 }
 
-sync {
-  default.rsyncssh,
-  source = "gitlab-runner",
-  targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-runner",
-  excludeFrom = "gitlab-runner/.gitignore",
-  exclude = {
-    '.git'
-  },
-  delete = true,
+-- sync {
+--   default.rsyncssh,
+--   source = "gitlab-runner",
+--   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-runner",
+--   excludeFrom = "gitlab-runner/.gitignore",
+--   exclude = {
+--     '.git'
+--   },
+--   delete = true,
 
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
-}
+--   host = host_config,
+--   rsync = rsync_config,
+--   ssh = ssh_config
+-- }
 
 sync {
-  default.rsyncssh,
+  base_config,
   source = "gitlab-rails",
   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-rails",
   excludeFrom = "gitlab-rails/.gitignore",
-  exclude = {
-    '.git'
-  },
-  delete = true,
-
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
 }
 
 sync {
-  default.rsyncssh,
+  base_config,
   source = "gitlab-shell",
   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-shell",
   excludeFrom = "gitlab-shell/.gitignore",
-  exclude = {
-    '.git'
-  },
-  delete = true,
-
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
 }
 
 sync {
-  default.rsyncssh,
+  base_config,
   source = "gitlab-workhorse",
   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-workhorse",
   excludeFrom = "gitlab-workhorse/.gitignore",
-  exclude = {
-    '.git',
-    '/.gitlab_workhorse_secret',
-    '/config.toml'
-  },
-  delete = true,
-
-  host = host_config,
-  rsync = rsync_config,
-  ssh = ssh_config
 }
