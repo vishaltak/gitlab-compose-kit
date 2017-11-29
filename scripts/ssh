@@ -5,7 +5,7 @@ if [[ -z "$SSH_TARGET_HOST" ]]; then
   exit 1
 fi
 
-exec ssh \
+exec ssh -t \
   -o ControlMaster=auto \
   -o ControlPath=.sync.control \
   -o ControlPersist=5m \
