@@ -5,22 +5,24 @@ set -xe
 cd /home/git/gitlab-shell
 
 rm -f .gitlab_shell_secret
-echo gitlab_shell_secret > .gitlab_shell_secret
+echo gitlab_shell_secret > /home/git/shell-secret
 
-if [[ "$(git describe)" == "$(cat ~/gitlab-shell-done || true)" ]]; then
+if [[ "$(git describe)" == "$(cat /home/git/gitlab-shell-done || true)" ]]; then
   exit 0
 fi
 
 set -xe
 
-sed \
-  -e 's|^gitlab_url.*$|gitlab_url: "http://unicorn:8080/"|' \
-  -e 's|^# host.*$|host: redis|' \
-  -e 's|^# port: 6379.*$|port: 6379|' \
-  -e 's|^socket:|# socket:|' \
-  -e 's|^# listen_addr|listen_addr = "|' config.yml.example > config.yml
+/scripts/helpers/merge-yaml.rb config.yml.example > config.yml <<EOF
+gitlab_url: "http://unicorn:8080/"
+secret_file: /home/git/shell-secret
+redis:
+  host: redis
+  port: 6379
+  socket: nil
+EOF
 
 ./bin/install
 ./bin/compile
 
-git describe > ~/gitlab-shell-done
+git describe > /home/git/gitlab-shell-done
