@@ -4,7 +4,7 @@ set -xe
 
 cd /home/git/gitlab
 
-echo gitlab_shell_secret > .gitlab_shell_secret
+echo gitlab_shell_secret > /home/git/shell-secret
 
 if ! bundle install --quiet --local --without production --jobs=$(nproc); then
   bundle install --without production --jobs=$(nproc)
@@ -14,15 +14,18 @@ git config --global core.autocrlf input
 git config --global gc.auto 0
 git config --global repack.writeBitmaps true
 
-echo "$CUSTOM_CONFIG" > /home/git/gitlab.yml
+echo "$CUSTOM_CONFIG" > /home/git/gitlab-custom.yml
 
-/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab.yml > config/gitlab.yml <<EOF
+/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab-custom.yml > /home/git/gitlab.yml <<EOF
 development:
   gitlab:
     host: ${HOST}
     port: 3000
   gitlab_shell:
     ssh_port: 2222
+    secret_file: /home/git/shell-secret
+  workhorse:
+    secret_file: /home/git/workhorse-secret
   pages:
     enabled: true
     host: gitlab-example.com
@@ -69,7 +72,7 @@ if [[ ! -e /home/git/registry-auth.crt ]]; then
 fi
 
 # Workhorse secret has to be 32 bytes
-echo -n 12345678901234567890123456789012 | base64 > .gitlab_workhorse_secret
+echo -n 12345678901234567890123456789012 | base64 > /home/git/workhorse-secret
 
 if [[ ! -e config/secrets.yml ]]; then
   cp config/secrets.yml.example config/secrets.yml

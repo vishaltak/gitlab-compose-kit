@@ -24,6 +24,6 @@ sed \
   -e 's|^# prometheus_listen_addr|prometheus_listen_addr|' \
   -e 's|^# listen_addr.*|listen_addr = "0.0.0.0:9999"|' \
   -e 's|^path .*|path = "/data/repositories"|' \
-  config.toml.example > /data/gitaly-config.toml
+  config.toml.example > /home/git/gitaly-config.toml
 
-./gitaly /data/gitaly-config.toml
+./gitaly /home/git/gitaly-config.toml
