@@ -16,7 +16,7 @@ git config --global repack.writeBitmaps true
 
 echo "$CUSTOM_CONFIG" > /home/git/gitlab-custom.yml
 
-/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab-custom.yml > /home/git/gitlab.yml <<EOF
+/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab-custom.yml > config/gitlab.yml <<EOF
 development:
   gitlab:
     host: ${HOST}

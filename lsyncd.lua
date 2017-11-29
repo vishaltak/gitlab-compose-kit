@@ -56,34 +56,35 @@ root_sync = sync {
 }
 root_sync.rmExclude("/gitlab.yml")
 
-sync {
+gitaly_sync = sync {
   base_config,
   source = "gitaly",
 }
 
-sync {
+pages_sync = sync {
   base_config,
   source = "gitlab-pages",
 }
 
 if os.getenv("ENABLE_GITLAB_RUNNER") then
-  sync {
+  runner_sync = sync {
     base_config,
     source = "gitlab-runner",
   }
 end
 
-sync {
+rails_sync = sync {
   base_config,
   source = "gitlab-rails",
 }
 
-sync {
+shell_sync = sync {
   base_config,
   source = "gitlab-shell",
 }
+shell_sync.rmExclude(".git")
 
-sync {
+workhorse_sync = sync {
   base_config,
   source = "gitlab-workhorse",
 }
