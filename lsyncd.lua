@@ -63,20 +63,14 @@ sync {
   excludeFrom = "gitlab-pages/.gitignore",
 }
 
--- sync {
---   default.rsyncssh,
---   source = "gitlab-runner",
---   targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-runner",
---   excludeFrom = "gitlab-runner/.gitignore",
---   exclude = {
---     '.git'
---   },
---   delete = true,
-
---   host = host_config,
---   rsync = rsync_config,
---   ssh = ssh_config
--- }
+if os.getenv("ENABLE_GITLAB_RUNNER") then
+  sync {
+    base_config,
+    source = "gitlab-runner",
+    targetdir = os.getenv("SSH_TARGET_DIR") .. "/gitlab-runner",
+    excludeFrom = "gitlab-runner/.gitignore",
+  }
+end
 
 sync {
   base_config,
