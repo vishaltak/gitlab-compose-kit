@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 if [[ -n "$SSH_TARGET_HOST" ]]; then
   echo "Using remote mode!"
@@ -25,5 +25,7 @@ if [[ -z "$HOST" ]]; then
 fi
 
 export CUSTOM_CONFIG=$(cat gitlab.yml)
+export CUSTOM_UID=$(id -u)
+export CUSTOM_GID=$(id -g)
 
 exec "$@"

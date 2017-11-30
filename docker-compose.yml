@@ -2,6 +2,11 @@ version: '2'
 services:
   unicorn:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -27,6 +32,11 @@ services:
 
   sidekiq:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -48,6 +58,11 @@ services:
 
   spring:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -73,6 +88,11 @@ services:
 
   workhorse:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -94,6 +114,11 @@ services:
 
   sshd:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -113,6 +138,11 @@ services:
 
   webpack:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-rails:/home/git/gitlab:cached
@@ -129,6 +159,11 @@ services:
 
   gitaly:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitaly:/home/git/gitaly:cached
@@ -145,6 +180,11 @@ services:
 
   pages:
     image: gitlab-v2
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-pages:/home/git/go/src/gitlab.com/gitlab-org/gitlab-pages:cached
