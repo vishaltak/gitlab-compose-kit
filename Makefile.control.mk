@@ -53,8 +53,16 @@ shell: spring
 
 .PHONY: console
 console: spring
-	./scripts/proxy docker-compose exec spring bundle exec rails console
+	./scripts/proxy docker-compose exec spring bin/rake rails console
 
 .PHONY: webpack-compile
 webpack-compile: spring
 	./scripts/proxy docker-compose exec spring bin/rake webpack:compile
+
+.PHONY: dbconsole
+dbconsole: spring
+	./scripts/proxy docker-compose exec spring bin/rails dbconsole -p
+
+.PHONY: dbconsole-test
+dbconsole-test: spring
+	./scripts/proxy docker-compose exec spring bin/rails dbconsole -p -e test
