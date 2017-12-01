@@ -132,9 +132,8 @@ services:
       - redis
       - unicorn
     working_dir: /home/git
-    user: root
     entrypoint: [/scripts/entrypoint/gitlab-shell-env.sh]
-    command: [/scripts/startup/sshd.sh]
+    command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
     image: gitlab-v2
