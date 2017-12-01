@@ -20,7 +20,7 @@ gitlab-workhorse:
 repos: gitaly gitlab-shell gitlab-pages gitlab-rails gitlab-workhorse data
 
 .PHONY: deps
-deps: build repos
+deps: repos
 
 .PHONY: update-repos
 update-repos: repos

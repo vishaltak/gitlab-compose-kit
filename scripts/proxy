@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 if [[ -n "$SSH_TARGET_HOST" ]]; then
   echo "Using remote mode!"
