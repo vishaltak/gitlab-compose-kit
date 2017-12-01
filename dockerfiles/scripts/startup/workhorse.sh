@@ -2,12 +2,6 @@
 
 set -xe
 
-# custom paths for workhorse
-export GEM_HOME=/data/cache/workhorse-bundle
-export BUNDLE_PATH="$GEM_HOME"
-export BUNDLE_BIN="$GEM_HOME/bin"
-export BUNDLE_APP_CONFIG="$GEM_HOME"
-export PATH="$BUNDLE_BIN:$PATH"
 export BUNDLE_JOBS=$(nproc)
 
 cd /home/git/gitlab-workhorse
