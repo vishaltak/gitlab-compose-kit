@@ -57,20 +57,20 @@ spring: deps
 
 .PHONY: shell
 shell: spring
-	./scripts/proxy docker-compose exec spring /usr/local/bin/dumb-init -- /bin/bash
+	./scripts/proxy docker-compose exec spring /bin/bash
 
 .PHONY: console
 console: spring
-	./scripts/proxy docker-compose exec spring /usr/local/bin/dumb-init -- bin/rails console
+	./scripts/proxy docker-compose exec spring bin/rails console
 
 .PHONY: webpack-compile
 webpack-compile: spring
-	./scripts/proxy docker-compose exec spring /usr/local/bin/dumb-init -- bin/rake webpack:compile
+	./scripts/proxy docker-compose exec spring bin/rake webpack:compile
 
 .PHONY: dbconsole
 dbconsole: spring
-	./scripts/proxy docker-compose exec spring /usr/local/bin/dumb-init -- bin/rails dbconsole -p
+	./scripts/proxy docker-compose exec spring bin/rails dbconsole -p
 
 .PHONY: dbconsole-test
 dbconsole-test: spring
-	./scripts/proxy docker-compose exec spring /usr/local/bin/dumb-init -- bin/rails dbconsole -p -e test
+	./scripts/proxy docker-compose exec spring bin/rails dbconsole -p -e test
