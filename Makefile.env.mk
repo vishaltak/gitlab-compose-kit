@@ -36,3 +36,8 @@ update-test: update-repos
 
 .PHONY: update
 update: update-dev update-test
+
+.PHONY: assets-compile
+assets-compile:
+	./scripts/proxy docker-compose run -e RAILS_ENV=test -e IN_MEMORY_APPLICATION_SETTINGS=true \
+		spring bash -c 'bin/rake gitlab:assets:compile'
