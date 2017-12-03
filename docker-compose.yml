@@ -27,7 +27,7 @@ services:
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
-    entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/unicorn.sh]
 
   sidekiq:
@@ -53,7 +53,7 @@ services:
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
-    entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/sidekiq.sh]
 
   spring:
@@ -86,7 +86,7 @@ services:
       CHROME_HEADLESS: "false"
     tty: true
     working_dir: /home/git/gitlab
-    entrypoint: [/scripts/entrypoint/gitlab-rails-env.sh]
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [cat]
 
   workhorse:
@@ -112,7 +112,7 @@ services:
       - redis
       - unicorn
     working_dir: /home/git/gitlab-workhorse
-    entrypoint: [/scripts/entrypoint/gitlab-shell-env.sh]
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/workhorse.sh]
 
   sshd:
@@ -135,7 +135,7 @@ services:
       - redis
       - unicorn
     working_dir: /home/git
-    entrypoint: [/scripts/entrypoint/gitlab-shell-env.sh]
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
@@ -157,7 +157,7 @@ services:
     expose:
       - 3808
     working_dir: /home/git/gitlab
-    command: [/scripts/startup/webpack.sh]
+    command: [/usr/local/bin/dumb-init, --, /scripts/startup/webpack.sh]
 
   gitaly:
     image: gitlab-v2
@@ -177,7 +177,7 @@ services:
     expose:
       - 9999
     working_dir: /home/git/gitaly
-    entrypoint: [/scripts/entrypoint/gitlab-shell-env.sh]
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
 
   pages:
@@ -199,6 +199,7 @@ services:
     ports:
       - 8989
     working_dir: /home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
+    entrypoint: [/usr/local/bin/dumb-init, --]
     command: [/scripts/startup/pages.sh]
 
   registry:
