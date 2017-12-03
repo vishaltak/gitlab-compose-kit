@@ -53,7 +53,7 @@ shell: spring
 
 .PHONY: console
 console: spring
-	./scripts/proxy docker-compose exec spring bin/rake rails console
+	./scripts/proxy docker-compose exec spring bin/rails console
 
 .PHONY: webpack-compile
 webpack-compile: spring
