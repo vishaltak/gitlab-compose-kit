@@ -28,7 +28,15 @@ restart: deps
 
 .PHONY: down
 down:
+	make kill
+	make clean
+
+.PHONY: kill
+kill:
 	./scripts/proxy docker-compose kill
+
+.PHONY: clean
+clean:
 	./scripts/proxy docker-compose rm
 
 .PHONY: destroy
