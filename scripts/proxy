@@ -6,9 +6,18 @@ if [[ -e .env ]]; then
   source .env
 fi
 
+ssh_escape() {
+  for arg; do
+    printf '%q ' "$arg"
+  done
+}
+
 if [[ -n "$SSH_TARGET_HOST" ]]; then
   echo "Using remote mode!"
-  exec ./scripts/ssh "cd" "$SSH_TARGET_DIR" "&&" exec ./scripts/proxy "$@"
+  ./scripts/ssh \
+    "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
+    "cd" "$SSH_TARGET_DIR" "&&" \
+    ./scripts/proxy $(ssh_escape "$@")
 fi
 
 if [[ -z "$HOST" ]]; then
