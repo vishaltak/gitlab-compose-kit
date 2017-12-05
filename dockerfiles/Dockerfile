@@ -11,6 +11,9 @@ RUN npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
 RUN gem install bundler
 RUN ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
+RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
+    chmod +x /usr/local/bin/dumb-init
+
 ARG UID
 ARG GID
 

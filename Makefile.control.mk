@@ -28,7 +28,15 @@ restart: deps
 
 .PHONY: down
 down:
+	make kill
+	make clean
+
+.PHONY: kill
+kill:
 	./scripts/proxy docker-compose kill
+
+.PHONY: clean
+clean:
 	./scripts/proxy docker-compose rm
 
 .PHONY: destroy
@@ -53,7 +61,7 @@ shell: spring
 
 .PHONY: console
 console: spring
-	./scripts/proxy docker-compose exec spring bin/rake rails console
+	./scripts/proxy docker-compose exec spring bin/rails console
 
 .PHONY: webpack-compile
 webpack-compile: spring
