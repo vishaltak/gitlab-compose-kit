@@ -14,7 +14,7 @@ ssh_escape() {
 
 if [[ -n "$SSH_TARGET_HOST" ]]; then
   echo "Using remote mode!"
-  ./scripts/ssh \
+  exec ./scripts/ssh \
     "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
     "cd" "$SSH_TARGET_DIR" "&&" \
     ./scripts/proxy $(ssh_escape "$@")
