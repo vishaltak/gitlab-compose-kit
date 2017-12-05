@@ -157,7 +157,8 @@ services:
     expose:
       - 3808
     working_dir: /home/git/gitlab
-    command: [/usr/local/bin/dumb-init, --, /scripts/startup/webpack.sh]
+    entrypoint: [/usr/local/bin/dumb-init, --]
+    command: [/scripts/startup/webpack.sh]
 
   gitaly:
     image: gitlab-v2
