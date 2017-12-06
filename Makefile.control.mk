@@ -51,6 +51,10 @@ logs:
 tail:
 	./scripts/proxy docker-compose logs -f
 
+.PHONY: ps
+ps:
+	docker-compose ps
+
 .PHONY: spring
 spring: deps
 	./scripts/proxy docker-compose up -d spring
