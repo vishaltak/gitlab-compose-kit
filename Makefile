@@ -1,4 +1,6 @@
 export USE_RAILS_SERVER ?=
+export CHROME_HEADLESS ?= false
+export DISPLAY ?=
 
 ifeq (,$(wildcard gitlab.yml))
 $(shell touch gitlab.yml)

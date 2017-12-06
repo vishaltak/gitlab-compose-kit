@@ -177,11 +177,21 @@ This also means that if you only so far worked on CE, after switching branch you
 make create-test
 ```
 
+## X11 and Chrome for testing
+
+When running on Linux GitLab Compose Kit shares `.X11-unix` with container and makes to run Chrome in non-headless mode. You will see all tests being executed live, in Chrome.
+
+You can disable it with (can be put in `.env`):
+
+```ruby
+export CHROME_HEADLESS=true
+```
+
 ## Remote environment
 
 This project can use `lsyncd` to run remote environment.
 
-To configure the use of remote environment define:
+To configure the use of remote environment create a file `.env`:
 
 ```bash
 export SSH_TARGET_DIR=gitlab-compose-kit

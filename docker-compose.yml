@@ -83,7 +83,7 @@ services:
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       DISPLAY: ${DISPLAY}
-      CHROME_HEADLESS: "false"
+      CHROME_HEADLESS: ${CHROME_HEADLESS}
     tty: true
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
