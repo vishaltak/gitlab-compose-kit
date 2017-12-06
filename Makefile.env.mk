@@ -21,7 +21,7 @@ migrate-dev:
 	./scripts/proxy docker-compose run -e RAILS_ENV=development -e IN_MEMORY_APPLICATION_SETTINGS=true \
 		spring bash -c 'bin/rake db:migrate'
 
-.PHONY: update-test
+.PHONY: migrate-test
 migrate-test:
 	./scripts/proxy docker-compose run -e RAILS_ENV=test -e IN_MEMORY_APPLICATION_SETTINGS=true \
 		spring bash -c 'bin/rake db:migrate'
