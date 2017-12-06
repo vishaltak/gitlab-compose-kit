@@ -177,6 +177,14 @@ This also means that if you only so far worked on CE, after switching branch you
 make create-test
 ```
 
+It also often happens that you want to migrate database, use any of these commands:
+
+```bash
+make migrate
+make migrate-test
+make migrate-dev
+```
+
 ## X11 and Chrome for testing
 
 When running on Linux GitLab Compose Kit shares `.X11-unix` with container and makes to run Chrome in non-headless mode. You will see all tests being executed live, in Chrome.
