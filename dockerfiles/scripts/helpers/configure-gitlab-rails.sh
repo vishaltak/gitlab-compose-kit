@@ -115,7 +115,7 @@ staging:
 
 test: 
   <<: *production
-  database: gitlabhq_test
+  database: gitlabhq_test_<%= defined?(::EE) ? 'ee' : 'ce' %>
   pool: 5
 EOF
 

@@ -162,6 +162,21 @@ performance due to significant overhead.
 Running natively will achieve better performance, as there's simply no virtualization overhead.
 This is not a case for Linux, as running in container allows to achieve 99.99% of the host performance.
 
+## CE and EE interwork
+
+GitLab Compose Kit uses the single shared development database, but separate CE and EE databases for testing. The testing database is automatically deduced from running code. When switching branch you might want to kill and start again:
+
+```bash
+make kill
+make shell
+```
+
+This also means that if you only so far worked on CE, after switching branch you might want to create EE database:
+
+```bash
+make create-test
+```
+
 ## Remote environment
 
 This project can use `lsyncd` to run remote environment.
