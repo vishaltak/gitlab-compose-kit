@@ -22,7 +22,9 @@ It allows to:
 - Run development environment,
 - Run tests,
 - Easily teardown and start a new environment,
-- Run remove environment over SSH.
+- Run remote environment over SSH,
+- Run tests live in Chrome on Linux,
+- Use single Compose Kit for both CE and EE development.
 
 How it differs from GitLab Development Kit it uses containers for everything,
 starting from scratch, building minimal container per application.
