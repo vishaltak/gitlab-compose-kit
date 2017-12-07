@@ -78,3 +78,7 @@ dbconsole: spring
 .PHONY: dbconsole-test
 dbconsole-test: spring
 	./scripts/proxy docker-compose exec spring bin/rails dbconsole -p -e test
+
+.PHONY: redisconsole
+redisconsole: spring
+	./scripts/proxy docker-compose exec spring redis-cli -h redis
