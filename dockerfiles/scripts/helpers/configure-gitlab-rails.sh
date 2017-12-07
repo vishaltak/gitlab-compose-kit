@@ -115,7 +115,7 @@ staging:
 
 test: 
   <<: *production
-  database: gitlabhq_test_<%= defined?(::EE) ? 'ee' : 'ce' %>
+  database: gitlabhq_test_<%= File.directory?(Rails.root.join('ee')) ? 'ee' : 'ce' %>
   pool: 5
 EOF
 
