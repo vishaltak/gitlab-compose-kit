@@ -13,7 +13,7 @@ fi
 
 set -xe
 
-/scripts/helpers/merge-yaml.rb config.yml.example > config.yml <<EOF
+/scripts/helpers/merge-yaml.rb config.yml.example /dev/stdin > config.yml <<EOF
 gitlab_url: "http://unicorn:8080/"
 secret_file: /home/git/shell-secret
 redis:
