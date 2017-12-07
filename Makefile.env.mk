@@ -1,7 +1,7 @@
 .PHONY: create-dev
 create-dev: deps
 	./scripts/proxy docker-compose run -e RAILS_ENV=development -e IN_MEMORY_APPLICATION_SETTINGS=true \
-		spring bash -c 'bin/rake db:create && bin/rake dev:setup'
+		spring /scripts/helpers/create-dev-env.sh
 
 .PHONY: create-test
 create-test: deps
