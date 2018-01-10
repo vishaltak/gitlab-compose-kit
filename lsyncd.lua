@@ -16,6 +16,15 @@ settings {
   -- delay = 1,
 }
 
+rsync_binary = "/usr/bin/rsync"
+
+-- try /usr/local/bin/rsync
+local f = io.open("/usr/local/bin/rsync", "r")
+if f ~= nil then
+  io.close(f)
+  rsync_binary = "/usr/local/bin/rsync"
+end
+
 base_config = {
   default.rsyncssh,
   exclude = {
@@ -28,7 +37,7 @@ base_config = {
     archive = true,
     compress = true,
     whole_file = false,
-    binary = "/usr/local/bin/rsync"
+    binary = rsync_binary
   },
 
   ssh = {

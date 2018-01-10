@@ -1,3 +1,3 @@
 sync: repos
-	./scripts/proxy echo OK
+	@bash -c 'source .env && ./scripts/ssh mkdir -p "$$SSH_TARGET_DIR" && echo OK'
 	./scripts/env lsyncd lsyncd.lua
