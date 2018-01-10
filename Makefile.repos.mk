@@ -12,6 +12,8 @@ gitlab-pages:
 
 gitlab-rails:
 	git clone https://gitlab.com/gitlab-org/gitlab-ce.git gitlab-rails
+	git -C gitlab-rails remote add origin-ee https://gitlab.com/gitlab-org/gitlab-ee.git
+	git -C gitlab-rails fetch origin-ee
 
 gitlab-workhorse:
 	git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git
