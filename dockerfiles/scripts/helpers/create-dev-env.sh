@@ -2,6 +2,8 @@
 
 set -e
 
+export ENABLE_SPRING=0
+
 echo "Dropping data..."
 rm -rf /data/repositories/* /data/shared/*
 /scripts/helpers/fix-perms.sh
