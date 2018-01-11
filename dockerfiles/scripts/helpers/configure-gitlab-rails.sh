@@ -75,7 +75,13 @@ fi
 echo -n 12345678901234567890123456789012 | base64 > /home/git/workhorse-secret
 
 if [[ ! -e config/secrets.yml ]]; then
-  cp config/secrets.yml.example config/secrets.yml
+  cat > config/secrets.yml <<EOF
+development:
+  db_key_base: 9a138cf90aa854ba65b50a5e2e76b2acfb9dfd22d1df5ccb9e1ff5a6f9657e2c
+
+test:
+  db_key_base: 9a138cf90aa854ba65b50a5e2e76b2acfb9dfd22d1df5ccb9e1ff5a6f9657e2c
+EOF
 fi
 
 sed \
