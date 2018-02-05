@@ -23,6 +23,8 @@ services:
       - webpack
     environment:
       RAILS_ENV: development
+      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_RAILS_SERVER: ${USE_RAILS_SERVER}
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
@@ -50,6 +52,8 @@ services:
       - gitaly
     environment:
       RAILS_ENV: development
+      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
@@ -80,6 +84,8 @@ services:
       RAILS_ENV: development
       ENABLE_SPRING: "1"
       SPEC_OPTS: "--format documentation"
+      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       DISPLAY: ${DISPLAY}
@@ -96,6 +102,9 @@ services:
       args:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
+    environment:
+      GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -122,6 +131,8 @@ services:
       args:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
+    environment:
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -154,6 +165,7 @@ services:
       DEV_SERVER_HOST: 0.0.0.0
       DEV_SERVER_LIVERELOAD: 'true'
       NODE_ENV: development
+      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
     expose:
       - 3808
     working_dir: /home/git/gitlab
@@ -177,6 +189,9 @@ services:
       - redis
     expose:
       - 9999
+    environment:
+      GITLAB_GITALY_REVISION: ${GITLAB_GITALY_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
     working_dir: /home/git/gitaly
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
@@ -199,6 +214,8 @@ services:
       - 8989
     ports:
       - 8989
+    environment:
+      GITLAB_PAGES_REVISION: ${GITLAB_PAGES_REVISION}
     working_dir: /home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
     entrypoint: [/usr/local/bin/dumb-init, --]
     command: [/scripts/startup/pages.sh]

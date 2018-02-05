@@ -2,6 +2,12 @@ export USE_RAILS_SERVER ?=
 export CHROME_HEADLESS ?= false
 export DISPLAY ?=
 
+export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails describe 2>/dev/null || echo "unknown")
+export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell describe 2>/dev/null || echo "unknown")
+export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse describe 2>/dev/null || echo "unknown")
+export GITLAB_GITALY_REVISION ?= $(shell git -C gitlab-gitaly describe 2>/dev/null || echo "unknown")
+export GITLAB_PAGES_REVISION ?= $(shell git -C gitlab-pages describe 2>/dev/null || echo "unknown")
+
 ifeq (,$(wildcard gitlab.yml))
 $(shell touch gitlab.yml)
 endif

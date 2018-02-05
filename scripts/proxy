@@ -15,6 +15,12 @@ ssh_escape() {
 if [[ -n "$SSH_TARGET_HOST" ]]; then
   echo "Using remote mode!"
   exec ./scripts/ssh \
+    "export" "GITLAB_RAILS_REVISION=$GITLAB_RAILS_REVISION" "&&" \
+    "export" "GITLAB_WORKHORSE_REVISION=$GITLAB_WORKHORSE_REVISION" "&&" \
+    "export" "GITLAB_GITALY_REVISION=$GITLAB_GITALY_REVISION" "&&" \
+    "export" "GITLAB_PAGES_REVISION=$GITLAB_PAGES_REVISION" "&&" \
+    "export" "GITLAB_SHELL_REVISION=$GITLAB_SHELL_REVISION" "&&" \
+    "export" "USE_RAILS_SERVER=$USE_RAILS_SERVER" "&&" \
     "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
     "cd" "$SSH_TARGET_DIR" "&&" \
     ./scripts/proxy $(ssh_escape "$@")
