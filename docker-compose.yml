@@ -107,6 +107,7 @@ services:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
     volumes:
       - ./data:/home/git:delegated
+      - ./gitlab-rails:/home/git/gitlab:cached
       - ./gitlab-shell:/home/git/gitlab-shell:cached
       - ./gitlab-workhorse:/home/git/gitlab-workhorse:cached
       - cache:/data/cache
