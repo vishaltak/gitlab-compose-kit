@@ -61,24 +61,24 @@ spring: deps
 
 .PHONY: shell
 shell: spring
-	./scripts/proxy docker-compose exec spring /bin/bash
+	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh /bin/bash
 
 .PHONY: console
 console: spring
-	./scripts/proxy docker-compose exec spring bin/rails console
+	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails console
 
 .PHONY: webpack-compile
 webpack-compile: spring
-	./scripts/proxy docker-compose exec spring bin/rake webpack:compile
+	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake webpack:compile
 
 .PHONY: dbconsole
 dbconsole: spring
-	./scripts/proxy docker-compose exec spring bin/rails dbconsole -p
+	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p
 
 .PHONY: dbconsole-test
 dbconsole-test: spring
-	./scripts/proxy docker-compose exec spring bin/rails dbconsole -p -e test
+	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p -e test
 
 .PHONY: redisconsole
 redisconsole: spring
-	./scripts/proxy docker-compose exec spring redis-cli -h redis
+	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh redis-cli -h redis

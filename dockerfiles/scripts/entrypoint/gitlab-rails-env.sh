@@ -13,4 +13,6 @@ fi
 /scripts/helpers/configure-gitlab-rails.sh
 /scripts/helpers/install-gettext.sh
 
+touch /tmp/gitlab-rails-env-started
+
 exec "$@"
