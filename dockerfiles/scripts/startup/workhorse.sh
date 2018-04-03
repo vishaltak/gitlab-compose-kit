@@ -21,6 +21,7 @@ export PATH="$PWD:$PATH"
   -authBackend="http://unicorn:8080/" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
+  -documentRoot="/home/git/gitlab/public" \
   -config="/home/git/workhorse-config.toml" \
   -secretPath="/home/git/workhorse-secret" \
   "$@"

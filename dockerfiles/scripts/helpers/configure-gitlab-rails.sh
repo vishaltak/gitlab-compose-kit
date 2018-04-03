@@ -63,6 +63,8 @@ development:
       enabled: true
       host: webpack
       port: 3808
+  uploads:
+    storage_path: /home/git/gitlab/public/
 EOF
 
 if [[ ! -e /home/git/registry-auth.crt ]]; then
@@ -88,7 +90,6 @@ sed \
   -e 's|^worker_processes .*$|worker_processes 2|' \
   -e 's|^listen$|# listen|' \
   -e 's|^listen .*$|listen "0.0.0.0:8080", :tcp_nopush => true|' \
-  -e 's|^std|# std|g' \
   -e 's|^pid|# pid|g' \
   config/unicorn.rb.example > config/unicorn.rb
 
