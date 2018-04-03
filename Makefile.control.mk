@@ -45,11 +45,11 @@ destroy:
 
 .PHONY: logs
 logs:
-	./scripts/proxy docker-compose logs
+	export COMPOSE_HTTP_TIMEOUT=3600 && ./scripts/proxy docker-compose logs
 
 .PHONY: tail
 tail:
-	./scripts/proxy docker-compose logs -f
+	export COMPOSE_HTTP_TIMEOUT=3600 && ./scripts/proxy docker-compose logs -f
 
 .PHONY: ps
 ps:
