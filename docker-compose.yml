@@ -1,7 +1,7 @@
 version: '2'
 services:
   unicorn:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -33,7 +33,7 @@ services:
     command: [/scripts/startup/unicorn.sh]
 
   sidekiq:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -61,7 +61,7 @@ services:
     command: [/scripts/startup/sidekiq.sh]
 
   spring:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -96,7 +96,7 @@ services:
     command: [cat]
 
   workhorse:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -126,7 +126,7 @@ services:
     command: [/scripts/startup/workhorse.sh]
 
   sshd:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -151,12 +151,13 @@ services:
     command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
+        COMPOSE_KIT_REVISION: ${COMPOSE_KIT_REVISION}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-rails:/home/git/gitlab:cached
@@ -174,7 +175,7 @@ services:
     command: [/scripts/startup/webpack.sh]
 
   gitaly:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -198,7 +199,7 @@ services:
     command: [/scripts/startup/gitaly.sh]
 
   pages:
-    image: gitlab-v2
+    image: gitlab-v2:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:

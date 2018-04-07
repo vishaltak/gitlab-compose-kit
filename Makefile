@@ -7,6 +7,7 @@ export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell describe 2>/dev/null
 export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse describe 2>/dev/null || echo "unknown")
 export GITLAB_GITALY_REVISION ?= $(shell git -C gitlab-gitaly describe 2>/dev/null || echo "unknown")
 export GITLAB_PAGES_REVISION ?= $(shell git -C gitlab-pages describe 2>/dev/null || echo "unknown")
+export COMPOSE_KIT_REVISION ?= $(shell git -C . describe 2>/dev/null || echo "unknown")
 
 ifeq (,$(wildcard gitlab.yml))
 $(shell touch gitlab.yml)
