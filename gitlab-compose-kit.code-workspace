@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "gitlab-workhorse"
+		},
+		{
+			"path": "gitlab-shell"
+		},
+		{
+			"path": "gitlab-rails"
+		},
+		{
+			"path": "gitaly"
+		},
+		{
+			"path": "gitlab-pages"
+		}
+	],
+	"settings": {}
+}
