@@ -92,12 +92,7 @@ test:
 EOF
 fi
 
-sed \
-  -e 's|^worker_processes .*$|worker_processes 2|' \
-  -e 's|^listen$|# listen|' \
-  -e 's|^listen .*$|listen "0.0.0.0:8080", :tcp_nopush => true|' \
-  -e 's|^pid|# pid|g' \
-  config/unicorn.rb.example > config/unicorn.rb
+cp config/unicorn.rb.example.development config/unicorn.rb
 
 cat <<EOF > config/resque.yml
 production: &production
