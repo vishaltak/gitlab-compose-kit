@@ -14,6 +14,10 @@ db: deps
 web: deps
 	./scripts/proxy docker-compose up workhorse unicorn sshd webpack
 
+.PHONY: scale
+scale: deps
+	./scripts/proxy docker-compose scale $(SCALE)
+
 .PHONY: sshd
 sshd: deps
 	./scripts/proxy docker-compose up sshd
@@ -21,6 +25,10 @@ sshd: deps
 .PHONY: sidekiq
 sidekiq: deps
 	./scripts/proxy docker-compose up sidekiq
+
+.PHONY: runner
+runner: deps
+	./scripts/proxy docker-compose up runner
 
 .PHONY: restart
 restart: deps
