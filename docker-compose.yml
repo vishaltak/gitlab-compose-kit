@@ -21,6 +21,7 @@ services:
       - redis
       - gitaly
       - webpack
+      - minio
     environment:
       RAILS_ENV: development
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
@@ -50,6 +51,7 @@ services:
       - postgres
       - redis
       - gitaly
+      - minio
     environment:
       RAILS_ENV: development
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
@@ -80,6 +82,7 @@ services:
       - redis
       - gitaly
       - webpack
+      - minio
     environment:
       RAILS_ENV: development
       ENABLE_SPRING: "1"
@@ -121,6 +124,7 @@ services:
       - gitaly
       - redis
       - unicorn
+      - minio
     working_dir: /home/git/gitlab-workhorse
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/workhorse.sh]
@@ -283,6 +287,21 @@ services:
     - 6379
     mem_limit: 128M
 
+  minio:
+    image: minio/minio
+    volumes:
+    - object-storage:/export
+    expose:
+    - 9000
+    ports:
+    - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: TEST_KEY
+      MINIO_SECRET_KEY: TEST_SECRET
+    entrypoint: /bin/sh -c
+    command:
+      - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket && minio server /export"
+
 volumes:
   redis:
   postgres:
@@ -291,4 +310,4 @@ volumes:
   cache:
   shared:
   repositories:
-
+  object-storage:

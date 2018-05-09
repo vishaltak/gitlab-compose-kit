@@ -17,6 +17,7 @@ It currently supports:
 - SSH,
 - GitLab Pages
 - GitLab Runner
+- Minio as Object Storage backend
 
 It allows to:
 - Run development environment,
@@ -24,7 +25,8 @@ It allows to:
 - Easily teardown and start a new environment,
 - Run remote environment over SSH,
 - Run tests live in Chrome on Linux,
-- Use single Compose Kit for both CE and EE development.
+- Use single Compose Kit for both CE and EE development,
+- Simulate the Object Storage usage.
 
 How it differs from GitLab Development Kit it uses containers for everything,
 starting from scratch, building minimal container per application.
@@ -41,6 +43,7 @@ Everything has it's own container:
 - GitLab Pages,
 - GitLab Runner,
 - Nested Docker Engine (for running CI jobs),
+- Minio (for Object Storage)
 
 The containers interact via HTTP/TCP using intra-container networking.
 There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
@@ -91,7 +94,10 @@ $ make run
 
 Then, to reload environment simply Ctrl-C and re-run it again :)
 
-**Access GitLab: http://localhost:3000/**
+1. **Access GitLab: http://localhost:3000/**
+2. **Access Minio: http://localhost:9000/** (TEST_KEY / TEST_SECRET)
+3. **Access SSH: ssh://localhost:2222/**
+4. **Access Registry: http://localhost:5000/v2/_ping**
 
 #### 4. Update
 
