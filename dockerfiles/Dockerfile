@@ -1,7 +1,7 @@
-FROM ubuntu:artful
+FROM ubuntu:bionic
 
 RUN apt-get update -y && \
-    apt-get install -y software-properties-common python-software-properties \
+    apt-get install -y software-properties-common \
       git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
       ruby-dev ruby-bundler sudo libsqlite3-dev libmysqlclient-dev openssh-server \
