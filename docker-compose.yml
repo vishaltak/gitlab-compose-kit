@@ -188,6 +188,7 @@ services:
     volumes:
       - ./data:/home/git:delegated
       - ./gitaly:/home/git/gitaly:cached
+      - ./gitlab-rails:/home/git/gitlab:cached
       - ./gitlab-shell:/home/git/gitlab-shell:cached
       - cache:/data/cache
       - repositories:/data/repositories
