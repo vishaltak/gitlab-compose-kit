@@ -67,7 +67,7 @@ development:
       connection:
         provider: AWS
         endpoint: 'http://minio:9000'
-        path_style: true # this is required as only DNS name exposed is `minio`
+        path_style: true # this is required as only DNS name exposed is minio
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
   lfs:
@@ -80,7 +80,7 @@ development:
       connection:
         provider: AWS
         endpoint: 'http://minio:9000'
-        path_style: true # this is required as only DNS name exposed is `minio`
+        path_style: true # this is required as only DNS name exposed is minio
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
   uploads:
@@ -92,7 +92,7 @@ development:
       connection:
         provider: AWS
         endpoint: 'http://minio:9000'
-        path_style: true # this is required as only DNS name exposed is `minio`
+        path_style: true # this is required as only DNS name exposed is minio
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
 EOF
