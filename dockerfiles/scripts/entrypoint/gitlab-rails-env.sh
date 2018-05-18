@@ -8,9 +8,7 @@ if ! gem list -i bundler; then
     gem install bundler
 fi
 
-if [[ -n "$USE_RAILS5" ]]; then
-    export BUNDLE_GEMFILE=Gemfile.rails5
-fi
+source /scripts/helpers/configure-gitlab-rails5.sh
 
 /scripts/helpers/fix-perms.sh
 /scripts/helpers/configure-gitlab-shell.sh

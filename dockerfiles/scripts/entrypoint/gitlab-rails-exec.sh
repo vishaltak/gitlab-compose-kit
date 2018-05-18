@@ -12,4 +12,6 @@ for i in $(seq 1 1000); do
 done
 echo " Done"
 
+source /scripts/helpers/configure-gitlab-rails5.sh
+
 exec "$@"
