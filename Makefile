@@ -1,4 +1,5 @@
 export USE_RAILS_SERVER ?=
+export USE_RAILS5 ?=
 export CHROME_HEADLESS ?= false
 export DISPLAY ?=
 

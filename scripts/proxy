@@ -22,6 +22,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "GITLAB_SHELL_REVISION=$GITLAB_SHELL_REVISION" "&&" \
     "export" "COMPOSE_KIT_REVISION=$COMPOSE_KIT_REVISION" "&&" \
     "export" "USE_RAILS_SERVER=$USE_RAILS_SERVER" "&&" \
+    "export" "USE_RAILS5=$USE_RAILS5" "&&" \
     "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
     "cd" "$SSH_TARGET_DIR" "&&" \
     ./scripts/proxy $(ssh_escape "$@")

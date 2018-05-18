@@ -18,6 +18,7 @@ It currently supports:
 - GitLab Pages
 - GitLab Runner
 - Minio as Object Storage backend
+- Rails 5
 
 It allows to:
 - Run development environment,
@@ -201,6 +202,22 @@ You can disable it with (can be put in `.env`):
 
 ```ruby
 export CHROME_HEADLESS=true
+```
+
+## Use Thin web-server
+
+Sometimes it is desired to use Thin web server (one that comes with Rails). Before running any command just use:
+
+```ruby
+export USE_RAILS_SERVER=true
+```
+
+## Use Rails5
+
+Testing Rails5 never got easier, just use:
+
+```ruby
+export USE_RAILS5=true
 ```
 
 ## Remote environment

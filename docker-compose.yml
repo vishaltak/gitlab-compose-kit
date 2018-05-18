@@ -27,6 +27,7 @@ services:
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_RAILS_SERVER: ${USE_RAILS_SERVER}
+      USE_RAILS5: ${USE_RAILS5}
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
@@ -56,6 +57,7 @@ services:
       RAILS_ENV: development
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_RAILS5: ${USE_RAILS5}
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
@@ -89,6 +91,7 @@ services:
       SPEC_OPTS: "--format documentation"
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_RAILS5: ${USE_RAILS5}
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       DISPLAY: ${DISPLAY}
