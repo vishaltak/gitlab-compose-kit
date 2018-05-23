@@ -14,6 +14,10 @@ RUN ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
     chmod +x /usr/local/bin/dumb-init
 
+RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
+    apt-get update -y && \
+    apt-get install -y nodejs npm
+
 ARG UID
 ARG GID
 
