@@ -16,7 +16,7 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 
 RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
     apt-get update -y && \
-    apt-get install -y nodejs npm
+    apt-get install -y nodejs npm golang
 
 ARG UID
 ARG GID
