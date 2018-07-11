@@ -220,6 +220,14 @@ Testing Rails5 never got easier, just use:
 export USE_RAILS5=true
 ```
 
+## Drop cache
+
+Sometimes it is useful to reinstall all gems, node modules and so-on without recreating databases, just use:
+
+```bash
+make drop-cache
+```
+
 ## Remote environment
 
 This project can use `lsyncd` to run remote environment.

@@ -51,6 +51,12 @@ kill:
 clean:
 	./scripts/proxy docker-compose rm
 
+.PHONY: drop-cache
+drop-cache:
+	./scripts/proxy docker-compose run --no-deps --rm --entrypoint="/bin/bash -c" spring "rm -rf /data/cache/*"
+	./scripts/proxy docker-compose kill
+	./scripts/proxy docker-compose rm
+
 .PHONY: destroy
 destroy:
 	./scripts/proxy docker-compose down -v --remove-orphans
