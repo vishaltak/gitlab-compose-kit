@@ -11,7 +11,7 @@ create-test: deps
 .PHONY: create-runner
 create-runner: deps
 	./scripts/proxy docker-compose run -e RAILS_ENV=development -e IN_MEMORY_APPLICATION_SETTINGS=true \
-		spring bin/rails runner "Ci::Runner.create(is_shared: true, token: 'SHARED_RUNNER_TOKEN')"
+		spring bin/rails runner "Ci::Runner.create(runner_type: :instance_type, token: 'SHARED_RUNNER_TOKEN')"
 
 .PHONY: create
 create: create-dev create-test create-runner
