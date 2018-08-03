@@ -2,6 +2,7 @@ export USE_RAILS_SERVER ?= 1
 export USE_RAILS5 ?=
 export CHROME_HEADLESS ?= false
 export DISPLAY ?=
+export ENABLE_SPRING ?= 1
 
 export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails describe 2>/dev/null || echo "unknown")
 export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell describe 2>/dev/null || echo "unknown")
