@@ -255,7 +255,7 @@ services:
     image: gitlab/gitlab-runner:alpine
     environment:
       DOCKER_HOST: tcp://dind:2375
-      CI_SERVER_URL: http://workhorse:8181/
+      CI_SERVER_URL: http://${HOST}:3000/
       CI_SERVER_TOKEN: SHARED_RUNNER_TOKEN
       CLONE_URL: http://${HOST}:3000/
       RUNNER_EXECUTOR: docker
