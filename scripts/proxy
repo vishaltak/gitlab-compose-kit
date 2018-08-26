@@ -24,6 +24,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "USE_RAILS_SERVER=$USE_RAILS_SERVER" "&&" \
     "export" "USE_RAILS5=$USE_RAILS5" "&&" \
     "export" "ENABLE_SPRING=$ENABLE_SPRING" "&&" \
+    "export" "COMPOSE_HTTP_TIMEOUT=$COMPOSE_HTTP_TIMEOUT" && \
     "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
     "cd" "$SSH_TARGET_DIR" "&&" \
     ./scripts/proxy $(ssh_escape "$@")
