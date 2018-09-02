@@ -1,7 +1,7 @@
 version: '2'
 services:
   unicorn:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -38,7 +38,7 @@ services:
     command: [/scripts/startup/unicorn.sh]
 
   sidekiq:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -69,7 +69,7 @@ services:
     command: [/scripts/startup/sidekiq.sh]
 
   spring:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -108,7 +108,7 @@ services:
     command: [cat]
 
   workhorse:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -139,7 +139,7 @@ services:
     command: [/scripts/startup/workhorse.sh]
 
   sshd:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -164,7 +164,7 @@ services:
     command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -188,7 +188,7 @@ services:
     command: [/scripts/startup/webpack.sh]
 
   gitaly:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -213,7 +213,7 @@ services:
     command: [/scripts/startup/gitaly.sh]
 
   pages:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
