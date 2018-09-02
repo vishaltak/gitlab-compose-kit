@@ -1,7 +1,7 @@
 version: '2'
 services:
   unicorn:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -32,11 +32,13 @@ services:
       HOST: ${HOST}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
+    stdin_open: true
+    tty: true
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/unicorn.sh]
 
   sidekiq:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -67,7 +69,7 @@ services:
     command: [/scripts/startup/sidekiq.sh]
 
   spring:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -99,13 +101,14 @@ services:
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}
+    stdin_open: true
     tty: true
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [cat]
 
   workhorse:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -136,7 +139,7 @@ services:
     command: [/scripts/startup/workhorse.sh]
 
   sshd:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -161,7 +164,7 @@ services:
     command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -185,7 +188,7 @@ services:
     command: [/scripts/startup/webpack.sh]
 
   gitaly:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -210,7 +213,7 @@ services:
     command: [/scripts/startup/gitaly.sh]
 
   pages:
-    image: gitlab-v2:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases/${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -241,7 +244,7 @@ services:
     environment:
       REGISTRY_LOG_LEVEL: info
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /registry
-      REGISTRY_AUTH_TOKEN_REALM: http://${HOST}:3000/jwt/auth
+      REGISTRY_AUTH_TOKEN_REALM: http://localhost:3000/jwt/auth
       REGISTRY_AUTH_TOKEN_SERVICE: container_registry
       REGISTRY_AUTH_TOKEN_ISSUER: gitlab-issuer
       REGISTRY_AUTH_TOKEN_ROOTCERTBUNDLE: /home/git/registry-auth.crt
