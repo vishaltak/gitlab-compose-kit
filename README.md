@@ -220,6 +220,14 @@ Testing Rails5 never got easier, just use:
 export USE_RAILS5=true
 ```
 
+## Use MySQL
+
+Testing Rails5 never got easier, just use:
+
+```ruby
+export USE_DB=mysql2
+```
+
 ## Drop cache
 
 Sometimes it is useful to reinstall all gems, node modules and so-on without recreating databases, just use:

@@ -1,5 +1,6 @@
 export USE_RAILS_SERVER ?= 1
 export USE_RAILS5 ?=
+export USE_DB ?= postgres
 export CHROME_HEADLESS ?= false
 export DISPLAY ?=
 export ENABLE_SPRING ?= 1
