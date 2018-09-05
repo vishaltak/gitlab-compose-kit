@@ -136,7 +136,7 @@ production: &production
   pool: 10
   username: root
   password: password
-  host: mysql
+  host: mysql2
 
 development:
   <<: *production

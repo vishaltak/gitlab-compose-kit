@@ -8,7 +8,7 @@ run: deps
 
 .PHONY: db
 db: deps
-	./scripts/proxy docker-compose up postgres redis
+	./scripts/proxy docker-compose up $(USE_DB) redis
 
 .PHONY: web
 web: deps
