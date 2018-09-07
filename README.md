@@ -13,11 +13,12 @@ It currently supports:
 - GitLab Workhorse,
 - Gitaly,
 - PostgreSQL,
+- MySQL,
 - Redis,
 - SSH,
-- GitLab Pages
-- GitLab Runner
-- Minio as Object Storage backend
+- GitLab Pages,
+- GitLab Runner,
+- Minio as Object Storage backend,
 - Rails 5
 
 It allows to:
@@ -37,6 +38,7 @@ Everything has it's own container:
 - GitLab Workhorse,
 - Gitaly,
 - PostgreSQL,
+- MySQL,
 - Redis,
 - Webpacks,
 - OpenSSH,
@@ -220,12 +222,30 @@ Testing Rails5 never got easier, just use:
 export USE_RAILS5=true
 ```
 
+Or:
+
+```ruby
+make console USE_RAILS5=true
+make shell USE_RAILS5=true
+make web USE_RAILS5=true
+make up USE_RAILS5=true
+```
+
 ## Use MySQL
 
 Testing Rails5 never got easier, just use:
 
 ```ruby
 export USE_DB=mysql2
+```
+
+Or:
+
+```ruby
+make console USE_DB=mysql2
+make shell USE_DB=mysql2
+make web USE_DB=mysql2
+make up USE_DB=mysql2
 ```
 
 ## Drop cache
