@@ -6,5 +6,5 @@ build:
 .PHONY: push
 push: build
 	@echo Checking version...
-	@git describe --exact-match
+	@git describe
 	docker-compose push
