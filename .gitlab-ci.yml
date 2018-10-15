@@ -12,6 +12,7 @@ variables:
 before_script:
   - apk add -U make bash
   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+  - export HOST=$(hostname -i docker)
 
 stages:
   - test
