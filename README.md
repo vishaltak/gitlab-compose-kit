@@ -307,7 +307,7 @@ make sync
 You can now use regular commands (locally) to develop everything remotely:
 
 ```bash
-make setup
+make create
 ```
 
 ## Author
