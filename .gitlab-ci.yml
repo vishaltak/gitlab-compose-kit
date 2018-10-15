@@ -17,6 +17,10 @@ stages:
   - test
   - build
 
+test-dev:
+  script:
+    - make create-dev
+
 build:
   script:
     - make build
