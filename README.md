@@ -283,7 +283,7 @@ apt-get install -y rsync docker.io docker-compose
 ### 2. Add a new account on remote server and copy ssh keys
 
 ```bash
-useradd -m -G docker gitlab
+useradd -s /bin/bash -m -G docker gitlab
 ```
 
 Optionally copy your SSH identities:
