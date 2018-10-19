@@ -42,6 +42,7 @@ VOLUME ["/home/git", "/data/cache"]
 ENV HOME=/home/git \
     GEM_HOME=/data/cache/bundle \
     GOPATH=/data/cache/go \
+    GOCACHE=/data/cache/go-build \
     npm_config_prefix=/data/cache/node_modules \
     YARN_CACHE_FOLDER=/data/cache/yarn
 
