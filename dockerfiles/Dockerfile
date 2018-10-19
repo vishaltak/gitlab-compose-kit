@@ -52,7 +52,8 @@ ENV BUNDLE_PATH="$GEM_HOME" \
     BUNDLE_APP_CONFIG="$GEM_HOME" \
     BUNDLE_WITHOUT=production \
     BUNDLE_JOBS=6 \
-    BUNDLE_IGNORE_CONFIG=1
+    BUNDLE_IGNORE_CONFIG=1 \
+    BUNDLE_USER_HOME="/data/cache/bundle-user-home"
 
 ENV PATH="$GOPATH/bin:$PATH"
 
