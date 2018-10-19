@@ -3,10 +3,6 @@
 # migrate old paths
 pushd /home/git/gitlab
 
-if [[ -d tmp/cache ]]; then
-  rm -rf tmp/cache
-fi
-
 if [[ -d tmp/tests ]]; then
   rm -rf tmp/tests
 fi

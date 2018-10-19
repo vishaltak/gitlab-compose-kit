@@ -44,7 +44,9 @@ ENV HOME=/home/git \
     GOPATH=/data/cache/go \
     GOCACHE=/data/cache/go-build \
     npm_config_prefix=/data/cache/node_modules \
-    YARN_CACHE_FOLDER=/data/cache/yarn
+    YARN_CACHE_FOLDER=/data/cache/yarn \
+    WEBPACK_CACHE_PATH=/data/cache/webpack \
+    BOOTSNAP_CACHE_PATH=/data/cache/bootsnap
 
 ENV BUNDLE_PATH="$GEM_HOME" \
     BUNDLE_BIN="$GEM_HOME/bin" \
