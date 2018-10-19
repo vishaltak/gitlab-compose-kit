@@ -266,9 +266,9 @@ services:
     image: gitlab/gitlab-runner:alpine
     environment:
       DOCKER_HOST: tcp://dind:2375
-      CI_SERVER_URL: http://${HOST}:3000/
+      CI_SERVER_URL: http://${CUSTOM_HOSTNAME}:3000/
       CI_SERVER_TOKEN: SHARED_RUNNER_TOKEN
-      CLONE_URL: http://${HOST}:3000/
+      CLONE_URL: http://${CUSTOM_HOSTNAME}:3000/
       RUNNER_EXECUTOR: docker
       DOCKER_VOLUMES: '/var/run/docker.sock:/var/run/docker.sock'
       DOCKER_PRIVILEGED: 'true'
