@@ -11,6 +11,7 @@ fi
 source /scripts/helpers/configure-gitlab-rails5.sh
 
 /scripts/helpers/fix-perms.sh
+/scripts/helpers/fix-gitlab-tmp.sh
 /scripts/helpers/configure-gitlab-shell.sh
 /scripts/helpers/configure-gitlab-rails.sh
 /scripts/helpers/install-gettext.sh

@@ -7,6 +7,7 @@ export ENABLE_SPRING=0
 echo "Dropping data..."
 rm -rf /data/repositories/* /data/shared/*
 /scripts/helpers/fix-perms.sh
+/scripts/helpers/fix-gitlab-tmp.sh
 
 echo "Dropping database..."
 bin/rake db:drop

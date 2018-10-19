@@ -192,3 +192,11 @@ fi
 
 mkdir -p /data/cache/gitlab/tests
 ln -sf /data/cache/gitlab/tests tmp/
+
+# migrate old path
+if [[ -d tmp/cache ]]; then
+  rm -rf tmp/cache
+fi
+
+mkdir -p /data/cache/gitlab/cache
+ln -sf /data/cache/gitlab/cache tmp/
