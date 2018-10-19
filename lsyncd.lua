@@ -1,6 +1,11 @@
 print("Welcome to GitLab Compose Kit syncing script...")
 print()
 
+if not os.getenv("SSH_TARGET_USER") then
+  print("SSH_TARGET_USER not defined")
+  os.exit(1)
+end
+
 if not os.getenv("SSH_TARGET_HOST") then
   print("SSH_TARGET_HOST not defined")
   os.exit(1)
@@ -32,7 +37,7 @@ base_config = {
   },
   delete = true,
 
-  host = os.getenv("SSH_TARGET_HOST"),
+  host = os.getenv("SSH_TARGET_USER") .. "@" .. os.getenv("SSH_TARGET_HOST"),
   rsync = {
     archive = true,
     compress = true,

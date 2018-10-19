@@ -264,16 +264,45 @@ To configure the use of remote environment create a file `.env`:
 
 ```bash
 export SSH_TARGET_DIR=gitlab-compose-kit
-export SSH_TARGET_HOST=root@my-remote-server
+export SSH_TARGET_USER=gitlab
+export SSH_TARGET_HOST=my-remote-server
+export SSH_TARGET_PORT=22 # default: 22
 ```
 
-### 1. Prepare a remote machine with `rsync`, `docker` and `docker-compose` installed:
+On remote environment you have to run as unprivileged user.
+It can be any user `gitlab`, `ubuntu` as long as it is not `root`.
+
+### 1. Prepare a remote machine with `rsync`, `docker` and `docker-compose` installed
+
+Use `Ubuntu Bionic`, as it has most of up-to date packages in default repository.
 
 ```bash
 apt-get install -y rsync docker.io docker-compose
 ```
 
-### 2. Prepare and install `lsyncd` on local machine:
+### 2. Add a new account on remote server and copy ssh keys
+
+```bash
+useradd -m -G docker gitlab
+```
+
+Optionally copy your SSH identities:
+
+```bash
+cp -rv ~/.ssh ~gitlab/
+chown -R  gitlab:gitlab ~gitlab/.ssh
+```
+
+### 3. Create `.env` and fill it with details
+
+```bash
+export SSH_TARGET_DIR=gitlab-compose-kit
+export SSH_TARGET_USER=gitlab
+export SSH_TARGET_HOST=my-remote-server
+export SSH_TARGET_PORT=22 # default: 22
+```
+
+### 4. Prepare and install `lsyncd` on local machine
 
 ```bash
 # Debian/Ubuntu
@@ -283,13 +312,13 @@ apt-get install -y lsyncd
 brew install lsyncd
 ```
 
-### 3. Ryn sync process
+### 5. Ryn sync process
 
 ```bash
 make sync
 ```
 
-### 4. Wait for inital sync to finish
+### 6. Wait for inital sync to finish
 
 ```
 22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-pages/" finished: 0
@@ -302,7 +331,7 @@ make sync
 22:58:54 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/data/" finished: 0
 ```
 
-### 5. Setup and develop
+### 7. Setup and develop
 
 You can now use regular commands (locally) to develop everything remotely:
 

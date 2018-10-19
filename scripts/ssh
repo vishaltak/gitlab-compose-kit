@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ -z "$SSH_TARGET_USER" ]]; then
+  echo "Missing SSH_TARGET_USER"
+  exit 1
+fi
+
 if [[ -z "$SSH_TARGET_HOST" ]]; then
   echo "Missing SSH_TARGET_HOST"
   exit 1
@@ -10,5 +15,5 @@ exec ssh -t \
   -o ControlPath=.sync.control \
   -o ControlPersist=5m \
   -o Port="${SSH_TARGET_PORT-22}" \
-  "$SSH_TARGET_HOST" \
+  "$SSH_TARGET_USER@$SSH_TARGET_HOST" \
   "$@"
