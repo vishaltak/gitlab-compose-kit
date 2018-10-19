@@ -48,7 +48,8 @@ Everything has it's own container:
 - Nested Docker Engine (for running CI jobs),
 - Minio (for Object Storage)
 
-For **remote mode** at least 2GB of RAM, but this is BARE minimum.
+For **remote mode** at least 4GB of RAM is required, but this is BARE minimum,
+with **ZRAM compression configured**.
 
 The containers interact via HTTP/TCP using intra-container networking.
 There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
