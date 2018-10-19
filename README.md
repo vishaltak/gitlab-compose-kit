@@ -339,6 +339,20 @@ You can now use regular commands (locally) to develop everything remotely:
 make create
 ```
 
+## Custom hostname
+
+If you want GitLab to be accessible over custom DNS name, for example in remote mode,
+or local mode, when the DNS is already configured you can use:
+
+```bash
+export CUSTOM_HOSTNAME=my-custom-dns-name
+```
+
+You can set it dynamically, or put that into `.env` file.
+
+For **remote mode** this by default fallbacks to `$SSH_TARGET_HOST` which is your likely
+the hostname you gonna use.
+
 ## Author
 
 Kamil Trzciński, 2017, GitLab
