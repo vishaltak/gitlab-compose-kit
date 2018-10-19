@@ -37,6 +37,7 @@ services:
     tty: true
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/unicorn.sh]
+    restart: on-failure:1
 
   sidekiq:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
@@ -69,6 +70,7 @@ services:
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/sidekiq.sh]
+    restart: on-failure:1
 
   spring:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
@@ -140,6 +142,7 @@ services:
     working_dir: /home/git/gitlab-workhorse
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/workhorse.sh]
+    restart: on-failure:3
 
   sshd:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
@@ -189,6 +192,7 @@ services:
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --]
     command: [/scripts/startup/webpack.sh]
+    restart: on-failure:3
 
   gitaly:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
@@ -214,6 +218,7 @@ services:
     working_dir: /home/git/gitaly
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
+    restart: on-failure:3
 
   pages:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
