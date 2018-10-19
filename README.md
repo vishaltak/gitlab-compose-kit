@@ -48,6 +48,8 @@ Everything has it's own container:
 - Nested Docker Engine (for running CI jobs),
 - Minio (for Object Storage)
 
+For **remote mode** at least 2GB of RAM, but this is BARE minimum.
+
 The containers interact via HTTP/TCP using intra-container networking.
 There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
 
@@ -291,6 +293,16 @@ Optionally copy your SSH identities:
 ```bash
 cp -rv ~/.ssh ~gitlab/
 chown -R  gitlab:gitlab ~gitlab/.ssh
+```
+
+#### 2.1. Configure zram (optionally)
+
+If you have small amount of RAM it can help to configure ZRAM (memory compression).
+
+```bash
+apt-get install zram-config
+systemctl enable zram-config
+systemctl start zram-config
 ```
 
 ### 3. Create `.env` and fill it with details
