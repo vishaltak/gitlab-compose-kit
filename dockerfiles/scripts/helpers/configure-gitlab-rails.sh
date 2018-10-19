@@ -19,7 +19,7 @@ echo "$CUSTOM_CONFIG" > /home/git/gitlab-custom.yml
 /scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab-custom.yml > config/gitlab.yml <<EOF
 development:
   gitlab:
-    host: ${HOST}
+    host: ${CUSTOM_HOSTNAME}
     port: 3000
   gitlab_shell:
     ssh_port: 2222
@@ -37,7 +37,7 @@ development:
     host: 'https://mattermost.example.com'
   registry:
     enabled: true
-    host: ${HOST}
+    host: ${CUSTOM_HOSTNAME}
     port: 5000
     api_url: http://registry:5000/ # internal address to the registry, will be used by GitLab to directly communicate with API
     key: /home/git/registry-auth.key

@@ -30,7 +30,7 @@ services:
       USE_RAILS_SERVER: ${USE_RAILS_SERVER}
       USE_RAILS5: ${USE_RAILS5}
       USE_DB: ${USE_DB}
-      HOST: ${HOST}
+      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
     stdin_open: true
@@ -64,7 +64,7 @@ services:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_RAILS5: ${USE_RAILS5}
       USE_DB: ${USE_DB}
-      HOST: ${HOST}
+      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
@@ -100,7 +100,7 @@ services:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_RAILS5: ${USE_RAILS5}
       USE_DB: ${USE_DB}
-      HOST: ${HOST}
+      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}

@@ -25,6 +25,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "GITLAB_PAGES_REVISION=$GITLAB_PAGES_REVISION" "&&" \
     "export" "GITLAB_SHELL_REVISION=$GITLAB_SHELL_REVISION" "&&" \
     "export" "COMPOSE_KIT_REVISION=$COMPOSE_KIT_REVISION" "&&" \
+    "export" "CUSTOM_HOSTNAME=${CUSTOM_HOSTNAME:-$SSH_TARGET_HOST}" "&&" \
     "export" "USE_RAILS_SERVER=$USE_RAILS_SERVER" "&&" \
     "export" "USE_RAILS5=$USE_RAILS5" "&&" \
     "export" "USE_DB=$USE_DB" "&&" \
@@ -35,20 +36,23 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     ./scripts/proxy $(ssh_escape "$@")
 fi
 
-if [[ -z "$HOST" ]]; then
+if [[ -z "$CUSTOM_HOSTNAME" ]]; then
   case "$(uname -s)" in
     Linux)
-      export HOST=$(hostname -I | cut -d' ' -f1)
+      export CUSTOM_HOSTNAME=$(hostname -I | cut -d' ' -f1)
       ;;
 
     Darwin)
-      export HOST=$(ipconfig getifaddr en0 || ipconfig getifaddr en1 || ipconfig getifaddr en2)
+      export CUSTOM_HOSTNAME=$(ipconfig getifaddr en0 || ipconfig getifaddr en1 || ipconfig getifaddr en2)
       ;;
   esac
 fi
 
-if [[ -z "$HOST" ]]; then
-  echo "Could not detect IP address. Consider setting this as an environment variable: export HOST=<my-ip-address>"
+if [[ -z "$CUSTOM_HOSTNAME" ]]; then
+  echo "Could not detect IP address. Consider setting this as an environment variable:"
+  echo "use export CUSTOM_HOSTNAME=<my-ip-address>"
+  echo "use export CUSTOM_HOSTNAME=<dns-hostname>"
+  echo "You can put it in .env file!"
   exit 1
 fi
 
