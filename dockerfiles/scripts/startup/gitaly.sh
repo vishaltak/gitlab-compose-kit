@@ -2,14 +2,17 @@
 
 set -xe
 
-cd /home/git/gitaly
-make
-
 pushd ruby
 if ! bundle install --quiet --local; then
   bundle install
 fi
 popd
+
+# ensure that we do not re-install all dependencies
+export BUNDLE_FLAGS=--local
+
+cd /home/git/gitaly
+make
 
 sed \
   -e 's|^socket_path|# socket_path|' \
