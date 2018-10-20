@@ -179,7 +179,6 @@ services:
       args:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
-        COMPOSE_KIT_REVISION: ${COMPOSE_KIT_REVISION}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-rails:/home/git/gitlab:cached
