@@ -11,7 +11,6 @@ variables:
 
 before_script:
   - apk add -U make bash git
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
   - echo "export CUSTOM_HOSTNAME=$(hostname -i docker)" > .env
   - echo "export DOCKER_HOST=$DOCKER_HOST" >> .env
   - adduser -h /home/git -D -u 1000 git
@@ -25,7 +24,3 @@ test-dev:
   script:
     - su git -c 'make create-dev'
 
-build:
-  script:
-    - su git -c 'make build'
-    - su git -c 'make push'
