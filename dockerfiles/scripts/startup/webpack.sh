@@ -28,7 +28,7 @@ echo 'use `export ENABLE_WEBPACK_DEV=true` to enable hotreload!'
 
 if [[ "$GITLAB_RAILS_REVISION" == "$(cat /home/git/webpack-done || true)" ]]; then
   echo "Webpack resources are up-to date ($GITLAB_RAILS_REVISION)."
-  exec cat # hang forever
+  exit 0
 fi
 
 echo "New version of resources ($GITLAB_RAILS_REVISION) detected, recompiling..."
@@ -36,4 +36,3 @@ yarn install
 yarn webpack
 echo "$GITLAB_RAILS_REVISION" > /home/git/webpack-done
 echo "Done."
-exec cat # hang forever
