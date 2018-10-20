@@ -1,10 +1,10 @@
 export USE_RAILS_SERVER ?= 1
 export USE_RAILS5 ?=
 export USE_DB ?= postgres
+export USE_WEBPACK_DEV ?= true
 export CHROME_HEADLESS ?= false
 export DISPLAY ?=
 export ENABLE_SPRING ?= 1
-export ENABLE_WEBPACK_DEV ?= true
 export COMPOSE_HTTP_TIMEOUT ?= 3600
 
 export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails describe 2>/dev/null || echo "unknown")

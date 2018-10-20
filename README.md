@@ -373,10 +373,10 @@ of all assets. This configuration is ideal for working on all Frontend related c
 as it makes it to run with regular workflow. However, for pure backend development
 it can be advised to disable `webpack` `dev` mode and rely on manual assets compilation.
 
-You can do that by configuring the `ENABLE_WEBPACK_DEV=false`. For persistency you can set that in `.env`:
+You can do that by configuring the `USE_WEBPACK_DEV=false`. For persistency you can set that in `.env`:
 
 ```ruby
-export ENABLE_WEBPACK_DEV=false
+export USE_WEBPACK_DEV=false
 ```
 
 In this mode Webpack is not being run when starting webserver.

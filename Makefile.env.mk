@@ -44,4 +44,4 @@ assets-compile:
 
 .PHONY: webpack-compile
 webpack-compile:
-	./scripts/proxy docker-compose run -e COMPILE_WEBPACK=true webpack
+	./scripts/proxy docker-compose run -e FORCE_WEBPACK_COMPILE=true webpack

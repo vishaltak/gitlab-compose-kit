@@ -54,7 +54,7 @@ development:
     path: /data/shared/pages
   webpack:
     dev_server:
-      enabled: ${ENABLE_WEBPACK_DEV:-false}
+      enabled: ${USE_WEBPACK_DEV:-false}
       host: webpack
       port: 3808
   artifacts:
