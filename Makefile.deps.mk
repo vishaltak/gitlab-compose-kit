@@ -7,4 +7,4 @@ build:
 push: build
 	@echo Checking version...
 	@git describe
-	docker-compose push
+	./scripts/proxy docker-compose push
