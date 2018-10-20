@@ -41,3 +41,7 @@ update: update-dev update-test
 assets-compile:
 	./scripts/proxy docker-compose run -e RAILS_ENV=test -e IN_MEMORY_APPLICATION_SETTINGS=true \
 		spring bash -c 'bin/rake gitlab:assets:compile'
+
+.PHONY: webpack-compile
+webpack-compile:
+	./scripts/proxy docker-compose run -e COMPILE_WEBPACK=true webpack

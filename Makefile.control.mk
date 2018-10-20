@@ -85,9 +85,9 @@ shell: spring
 console: spring
 	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails console
 
-.PHONY: webpack-compile
-webpack-compile: spring
-	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake webpack:compile
+# .PHONY: webpack-compile
+# webpack-compile: spring
+# 	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake webpack:compile
 
 .PHONY: dbconsole
 dbconsole: spring

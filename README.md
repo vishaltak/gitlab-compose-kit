@@ -366,6 +366,30 @@ You can set it dynamically, or put that into `.env` file.
 For **remote mode** this by default fallbacks to `$SSH_TARGET_HOST` which is your likely
 the hostname you gonna use.
 
+## Webpack
+
+Webpack by default runs in `dev` mode. That means that it supports hot-reloading
+of all assets. This configuration is ideal for working on all Frontend related changes,
+as it makes it to run with regular workflow. However, for pure backend development
+it can be advised to disable `webpack` `dev` mode and rely on manual assets compilation.
+
+You can do that by configuring the `ENABLE_WEBPACK_DEV=false`. For persistency you can set that in `.env`:
+
+```ruby
+export ENABLE_WEBPACK_DEV=false
+```
+
+In this mode Webpack is not being run when starting webserver.
+It means that when you change branch, or need to recompile
+frontend assets you have to do it manually with:
+
+```ruby
+make webpack-compile
+```
+
+**Notice:** Use that only when you want to make `gitlab-compose-kit`
+to use less resources as `webpack` is very CPU and memory hungry.
+
 ## Author
 
 Kamil Trzciński, 2017, GitLab
