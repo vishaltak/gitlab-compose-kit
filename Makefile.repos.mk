@@ -3,20 +3,26 @@ data:
 
 gitaly:
 	git clone https://gitlab.com/gitlab-org/gitaly.git
+	git -C gitaly remote set-url origin --push git@gitlab.com:gitlab-org/gitaly.git
 
 gitlab-shell:
 	git clone https://gitlab.com/gitlab-org/gitlab-shell.git
+	git -C gitlab-shell remote set-url origin --push git@gitlab.com:gitlab-org/gitlab-shell.git
 
 gitlab-pages:
 	git clone https://gitlab.com/gitlab-org/gitlab-pages.git
+	git -C gitlab-pages remote set-url origin --push git@gitlab.com:gitlab-org/gitlab-pages.git
 
 gitlab-rails:
 	git clone https://gitlab.com/gitlab-org/gitlab-ce.git gitlab-rails
 	git -C gitlab-rails remote add origin-ee https://gitlab.com/gitlab-org/gitlab-ee.git
+	git -C gitlab-rails remote set-url origin --push git@gitlab.com:gitlab-org/gitlab-ce.git
+	git -C gitlab-rails remote set-url origin-ee --push git@gitlab.com:gitlab-org/gitlab-ee.git
 	git -C gitlab-rails fetch origin-ee
 
 gitlab-workhorse:
 	git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git
+	git -C gitlab-workhorse remote set-url origin --push git@gitlab.com:gitlab-org/gitlab-workhorse.git
 
 .PHONY: repos
 repos: gitaly gitlab-shell gitlab-pages gitlab-rails gitlab-workhorse data
