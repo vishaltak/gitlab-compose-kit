@@ -20,9 +20,9 @@ echo "$CUSTOM_CONFIG" > /home/git/gitlab-custom.yml
 development:
   gitlab:
     host: ${CUSTOM_HOSTNAME}
-    port: 3000
+    port: ${CUSTOM_WEB_PORT}
   gitlab_shell:
-    ssh_port: 2222
+    ssh_port: ${CUSTOM_SSH_PORT}
     secret_file: /home/git/shell-secret
   workhorse:
     secret_file: /home/git/workhorse-secret
@@ -38,7 +38,7 @@ development:
   registry:
     enabled: true
     host: ${CUSTOM_HOSTNAME}
-    port: 5000
+    port: ${CUSTOM_REGISTRY_PORT}
     api_url: http://registry:5000/ # internal address to the registry, will be used by GitLab to directly communicate with API
     key: /home/git/registry-auth.key
     issuer: gitlab-issuer

@@ -7,6 +7,10 @@ export DISPLAY ?=
 export ENABLE_SPRING ?= 1
 export COMPOSE_HTTP_TIMEOUT ?= 3600
 
+export CUSTOM_WEB_PORT ?= 3000
+export CUSTOM_SSH_PORT ?= 2222
+export CUSTOM_REGISTRY_PORT ?= 5000
+
 export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails describe 2>/dev/null || echo "unknown")
 export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell describe 2>/dev/null || echo "unknown")
 export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse describe 2>/dev/null || echo "unknown")

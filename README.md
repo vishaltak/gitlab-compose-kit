@@ -406,6 +406,26 @@ $ make env
 $ docker-compose ps
 ```
 
+## Multiple installations
+
+GitLab Compose Kit can be configured to allow running multiple installations.
+
+You have to do the followings:
+1. Clone `gitlab-compose-kit` into another directory,
+1. Configure additional set of ports for `ssh`, `web` and `registry`,
+
+Let's assume that you have another `gitlab-compose-kit` stored in directory `gck-reviews`.
+You create an `.env` file that redefined ports:
+
+```bash
+export CUSTOM_WEB_PORT=4000
+export CUSTOM_SSH_PORT=4022
+export CUSTOM_REGISTRY_PORT=4050
+```
+
+The next time you run `make up` on `gck-reviews`, it will provision additional set of containers
+for that project, with services exposed on above ports.
+
 ## Author
 
 Kamil Trzciński, 2017, GitLab
