@@ -390,6 +390,22 @@ make webpack-compile
 **Notice:** Use that only when you want to make `gitlab-compose-kit`
 to use less resources as `webpack` is very CPU and memory hungry.
 
+
+## Running `docker-compose` yourself
+
+Sometimes you might want to use `docker-compose`. Currently,
+you cannot as `Makefile` defines a number of environment variables,
+that are used to configure `docker-compose.yml`.
+
+To use `docker-compose` natively, you have to drop into shell with `make env`.
+`make env` gonna configure all `docker-compose.yml` needed variables
+and give you an interactive terminal.
+
+```bash
+$ make env
+$ docker-compose ps
+```
+
 ## Author
 
 Kamil Trzciński, 2017, GitLab
