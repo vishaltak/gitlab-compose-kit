@@ -116,6 +116,15 @@ This command will:
 1. Pull and merge all sources into current branch,
 2. Migrate development and test database.
 
+#### 4.1. Switch to latest master
+
+Sometimes you might want to update all dependencies
+and switch to latest versions of everything on master.
+
+```bash
+make latest-master
+```
+
 #### 5. Drop into the shell (for tests)
 
 ```bash
@@ -183,6 +192,15 @@ GitLab Compose Kit uses the single shared development database, but separate CE 
 ```bash
 make kill
 make shell
+```
+
+There's also a `master-ee` branch available which is being tracked to `origin-ee/master`.
+You can easily pick any EE branch with regular git commands, create new branches and push to EE:
+
+```bash
+git checkout master-ee
+git checkout -b my-feature-ee
+git push -u origin-ee my-feature-ee
 ```
 
 This also means that if you only so far worked on CE, after switching branch you might want to create EE database:

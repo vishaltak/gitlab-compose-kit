@@ -19,6 +19,7 @@ gitlab-rails:
 	git -C gitlab-rails remote set-url origin --push git@gitlab.com:gitlab-org/gitlab-ce.git
 	git -C gitlab-rails remote set-url origin-ee --push git@gitlab.com:gitlab-org/gitlab-ee.git
 	git -C gitlab-rails fetch origin-ee
+	git -C gitlab-rails branch --track master-ee origin-ee/master
 
 gitlab-workhorse:
 	git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git
@@ -41,6 +42,8 @@ update-repos: repos
 latest-master: repos
 	git -C gitaly checkout master
 	git -C gitaly pull
+	git -C gitlab-rails checkout master-ee
+	git -C gitlab-rails pull
 	git -C gitlab-rails checkout master
 	git -C gitlab-rails pull
 	git -C gitlab-shell checkout master
