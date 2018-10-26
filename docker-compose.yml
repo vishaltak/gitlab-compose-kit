@@ -91,6 +91,7 @@ services:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
       - ./gitlab-rails:/home/git/gitlab:cached
+      - ./gitlab-workhorse:/home/git/gitlab-workhorse:cached
       - ./gitaly:/home/git/gitaly:cached
       - /tmp/.X11-unix:/tmp/.X11-unix
       - cache:/data/cache

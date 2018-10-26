@@ -3,6 +3,7 @@
 set -xe
 
 export BUNDLE_JOBS=$(nproc)
+export BUILD_DIR=/tmp/gitlab-workhorse
 
 cd /home/git/gitlab-workhorse
 make
@@ -15,9 +16,9 @@ cat <<EOF > /home/git/workhorse-config.toml
 URL = "tcp://redis:6379"
 EOF
 
-export PATH="$PWD:$PATH"
+export PATH="$BUILD_DIR:$PATH"
 
-./gitlab-workhorse \
+/tmp/gitlab-workhorse/gitlab-workhorse \
   -authBackend="http://unicorn:8080/" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
