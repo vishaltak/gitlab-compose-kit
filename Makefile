@@ -1,4 +1,4 @@
-export USE_RAILS_SERVER ?= 1
+export USE_RAILS_SERVER ?=
 export USE_RAILS5 ?=
 export USE_DB ?= postgres
 export USE_WEBPACK_DEV ?= true
