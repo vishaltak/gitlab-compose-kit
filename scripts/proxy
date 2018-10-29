@@ -26,6 +26,9 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "GITLAB_SHELL_REVISION=$GITLAB_SHELL_REVISION" "&&" \
     "export" "COMPOSE_KIT_REVISION=$COMPOSE_KIT_REVISION" "&&" \
     "export" "CUSTOM_HOSTNAME=${CUSTOM_HOSTNAME:-$SSH_TARGET_HOST}" "&&" \
+    "export" "CUSTOM_WEB_PORT=$CUSTOM_WEB_PORT" "&&" \
+    "export" "CUSTOM_SSH_PORT=$CUSTOM_SSH_PORT" "&&" \
+    "export" "CUSTOM_REGISTRY_PORT=$CUSTOM_REGISTRY_PORT" "&&" \
     "export" "USE_RAILS_SERVER=$USE_RAILS_SERVER" "&&" \
     "export" "USE_RAILS5=$USE_RAILS5" "&&" \
     "export" "USE_DB=$USE_DB" "&&" \
