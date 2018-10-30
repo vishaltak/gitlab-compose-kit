@@ -227,12 +227,18 @@ You can disable it with (can be put in `.env`):
 export CHROME_HEADLESS=true
 ```
 
-## Use Thin web-server
+## Use Rails server (thin) web-server
 
 Sometimes it is desired to use Thin web server (one that comes with Rails). Before running any command just use:
 
 ```ruby
-export USE_RAILS_SERVER=true
+export USE_WEB_SERVER=rails
+```
+
+## Use PUMA web-server
+
+```ruby
+export USE_WEB_SERVER=puma
 ```
 
 ## Use Rails5
