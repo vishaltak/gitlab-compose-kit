@@ -1,4 +1,4 @@
-export USE_WEB_SERVER ?=
+export USE_WEB_SERVER ?= unicorn
 export USE_RAILS5 ?=
 export USE_DB ?= postgres
 export USE_WEBPACK_DEV ?= true
