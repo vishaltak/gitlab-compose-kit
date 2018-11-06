@@ -10,3 +10,4 @@
 /.sync.control
 /.env
 /gitlab.yml
+.DS_Store
