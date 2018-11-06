@@ -47,7 +47,7 @@ if [[ -z "$CUSTOM_HOSTNAME" ]]; then
       ;;
 
     Darwin)
-      export CUSTOM_HOSTNAME=$(ipconfig getifaddr en0 || ipconfig getifaddr en1 || ipconfig getifaddr en2)
+      export CUSTOM_HOSTNAME=$(ipconfig getifaddr en0 || ipconfig getifaddr en1 || ipconfig getifaddr en2 || ipconfig getifaddr en3)
       ;;
   esac
 fi
