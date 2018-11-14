@@ -8,7 +8,7 @@ if ! gem list -i bundler; then
     gem install bundler
 fi
 
-source /scripts/helpers/configure-gitlab-rails5.sh
+source /scripts/helpers/configure-gitlab-rails-gemfile.sh
 
 /scripts/helpers/fix-perms.sh
 /scripts/helpers/fix-gitlab-tmp.sh

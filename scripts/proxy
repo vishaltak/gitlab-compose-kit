@@ -30,7 +30,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "CUSTOM_SSH_PORT=$CUSTOM_SSH_PORT" "&&" \
     "export" "CUSTOM_REGISTRY_PORT=$CUSTOM_REGISTRY_PORT" "&&" \
     "export" "USE_WEB_SERVER=$USE_WEB_SERVER" "&&" \
-    "export" "USE_RAILS5=$USE_RAILS5" "&&" \
+    "export" "USE_RAILS=$USE_RAILS" "&&" \
     "export" "USE_DB=$USE_DB" "&&" \
     "export" "ENABLE_SPRING=$ENABLE_SPRING" "&&" \
     "export" "USE_WEBPACK_DEV=$USE_WEBPACK_DEV" "&&" \

@@ -241,21 +241,38 @@ export USE_WEB_SERVER=rails
 export USE_WEB_SERVER=puma
 ```
 
-## Use Rails5
+## Use Rails4 (no longer default)
 
 Testing Rails5 never got easier, just use:
 
 ```ruby
-export USE_RAILS5=true
+export USE_RAILS=rails4
 ```
 
 Or:
 
 ```ruby
-make console USE_RAILS5=true
-make shell USE_RAILS5=true
-make web USE_RAILS5=true
-make up USE_RAILS5=true
+make console USE_RAILS=rails4
+make shell USE_RAILS=rails4
+make web USE_RAILS=rails4
+make up USE_RAILS=rails4
+```
+
+## Use Rails5 (default)
+
+Testing Rails5 never got easier, just use:
+
+```ruby
+export USE_RAILS=rails5
+```
+
+Or:
+
+```ruby
+make console USE_RAILS=rails5
+make shell USE_RAILS=rails5
+make web USE_RAILS=rails5
+make up USE_RAILS=rails5
 ```
 
 ## Use MySQL
