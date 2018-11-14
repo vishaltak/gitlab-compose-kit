@@ -41,7 +41,7 @@ VOLUME ["/home/git", "/data/cache"]
 # install things globally, for great justice
 # and don't create ".bundle" in all our apps
 ENV HOME=/home/git \
-    GEM_HOME=/data/cache/bundle \
+    GEM_HOME=/data/cache/bundle-2.5 \
     GOPATH=/data/cache/go \
     GOCACHE=/data/cache/go-build \
     npm_config_prefix=/data/cache/node_modules \
