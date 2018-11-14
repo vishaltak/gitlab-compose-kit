@@ -1,7 +1,8 @@
-FROM ubuntu:artful
+FROM ubuntu:bionic
 
-RUN apt-get update -y && \
-    apt-get install -y software-properties-common python-software-properties \
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update -y && \
+    apt-get install -y software-properties-common \
       git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
       sudo libsqlite3-dev libmysqlclient-dev openssh-server \
@@ -10,7 +11,7 @@ RUN ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
 RUN apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update -y && \
-    apt-get install -y ruby2.4 ruby2.4-dev && \
+    apt-get install -y ruby2.5 ruby2.5-dev && \
     gem install bundler
 
 RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
