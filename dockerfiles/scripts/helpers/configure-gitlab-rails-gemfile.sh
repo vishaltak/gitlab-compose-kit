@@ -6,7 +6,6 @@ case "$USE_RAILS" in
         if [[ -e /home/git/gitlab/Gemfile.rails4 ]]; then
             export BUNDLE_GEMFILE=Gemfile.rails4
         fi
-        export RAILS5=0
         ;;
 
     rails5)
@@ -14,7 +13,6 @@ case "$USE_RAILS" in
         if [[ -e /home/git/gitlab/Gemfile.rails5 ]]; then
             export BUNDLE_GEMFILE=Gemfile.rails5
         fi
-        export RAILS5=1
         ;;
 
     *)
