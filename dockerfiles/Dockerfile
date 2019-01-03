@@ -12,6 +12,7 @@ RUN ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 RUN apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update -y && \
     apt-get install -y ruby2.5 ruby2.5-dev && \
+    gem update --system && \
     gem install bundler
 
 RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
