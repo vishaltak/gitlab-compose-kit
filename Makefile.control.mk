@@ -34,6 +34,10 @@ sidekiq: deps
 runner: deps
 	./scripts/proxy docker-compose up runner
 
+.PHONY: registry
+registry: deps
+	./scripts/proxy docker-compose up registry
+
 .PHONY: restart
 restart: deps
 	./scripts/proxy docker-compose restart
