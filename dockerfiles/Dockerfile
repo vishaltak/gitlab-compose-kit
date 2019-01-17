@@ -6,7 +6,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
       sudo libsqlite3-dev libmysqlclient-dev openssh-server \
-      libfontconfig1 chromium-chromedriver
+      libfontconfig1 chromium-chromedriver unzip
 RUN ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
 
 RUN apt-add-repository ppa:brightbox/ruby-ng && \
