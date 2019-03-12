@@ -7,7 +7,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
       sudo libsqlite3-dev libmysqlclient-dev openssh-server \
       libfontconfig1 chromium-chromedriver unzip
-RUN ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
 
 RUN apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update -y && \
