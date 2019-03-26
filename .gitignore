@@ -7,7 +7,7 @@
 /gitaly
 /tmp
 /www-gitlab-com
-/.sync.control
+/.sync.control*
 /.env
 /gitlab.yml
 .DS_Store
