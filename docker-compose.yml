@@ -294,8 +294,6 @@ services:
     image: docker:dind
     volumes:
       - docker:/var/lib/docker
-    environment:
-      DOCKER_DRIVER: overlay
     privileged: true
     expose:
       - 2375
