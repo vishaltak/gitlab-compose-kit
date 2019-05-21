@@ -11,7 +11,7 @@ RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chro
 
 RUN apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update -y && \
-    apt-get install -y ruby2.5 ruby2.5-dev && \
+    apt-get install -y ruby2.6 ruby2.6-dev && \
     gem update --system && \
     gem install bundler
 
