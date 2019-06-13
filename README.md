@@ -372,7 +372,7 @@ brew install lsyncd
 make sync
 ```
 
-### 6. Wait for inital sync to finish
+### 6. Wait for the initial sync to finish
 
 ```
 22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-pages/" finished: 0
