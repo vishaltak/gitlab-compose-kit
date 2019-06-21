@@ -4,7 +4,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
     apt-get install -y software-properties-common \
       git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
-      build-essential nodejs npm libre2-dev libkrb5-dev golang ed pkg-config \
+      build-essential nodejs npm libre2-dev libkrb5-dev ed pkg-config \
       sudo libsqlite3-dev libmysqlclient-dev openssh-server \
       libfontconfig1 chromium-chromedriver unzip
 RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
@@ -17,8 +17,11 @@ RUN apt-add-repository ppa:brightbox/ruby-ng && \
 
 RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
     apt-get update -y && \
-    apt-get install -y nodejs npm golang && \
+    apt-get install -y nodejs npm && \
     npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
+
+RUN wget -q -O - https://dl.google.com/go/go1.12.linux-amd64.tar.gz | \
+    tar -zxC /usr/local
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
     chmod +x /usr/local/bin/dumb-init
@@ -44,6 +47,7 @@ VOLUME ["/home/git", "/data/cache"]
 ENV HOME=/home/git \
     GEM_HOME=/data/cache/bundle-2.5 \
     GOPATH=/data/cache/go \
+    GOROOT=/usr/local/go \
     GOCACHE=/data/cache/go-build \
     npm_config_prefix=/data/cache/node_modules \
     YARN_CACHE_FOLDER=/data/cache/yarn \
@@ -59,6 +63,6 @@ ENV BUNDLE_PATH="$GEM_HOME" \
     BUNDLE_IGNORE_CONFIG=1 \
     BUNDLE_USER_HOME="/data/cache/bundle-user-home"
 
-ENV PATH="$GOPATH/bin:$PATH"
+ENV PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
 ADD /scripts /scripts
