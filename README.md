@@ -72,7 +72,7 @@ It still doesn't support:
 First clone this repository:
 
 ```bash
-git clone https://gitlab.com/ayufan/gitlab-compose-kit.git
+git clone https://gitlab.com/gitlab-org/gitlab-compose-kit.git
 ```
 
 #### 2. Run to setup:
