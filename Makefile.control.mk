@@ -12,11 +12,11 @@ db: deps
 
 .PHONY: web
 web: deps
-	./scripts/proxy docker-compose up workhorse unicorn sshd webpack
+	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER) sshd webpack
 
 .PHONY: web-and-sidekiq
 web-and-sidekiq: deps
-	./scripts/proxy docker-compose up workhorse unicorn sidekiq sshd webpack
+	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER)  sidekiq sshd webpack
 
 .PHONY: scale
 scale: deps

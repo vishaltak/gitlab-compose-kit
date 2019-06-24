@@ -3,7 +3,7 @@
 cd /home/git/gitlab
 
 case "$USE_WEB_SERVER" in
-    rails)
+    thin)
         rm -f /tmp/rails-server.pid
         exec bundle exec rails server -b "0.0.0.0" -p 8080 -e "$RAILS_ENV" -P /tmp/rails-server.pid
         ;;
