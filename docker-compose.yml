@@ -1,6 +1,6 @@
 version: '2'
 services:
-  unicorn:
+  unicorn: &web_server
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
@@ -40,8 +40,11 @@ services:
     stdin_open: true
     tty: true
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
-    command: [/scripts/startup/unicorn.sh]
+    command: [/scripts/startup/web.sh]
     restart: on-failure:1
+
+  puma: *web_server
+  thin: *web_server
 
   sidekiq:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
@@ -136,6 +139,7 @@ services:
     environment:
       GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_WEB_SERVER: ${USE_WEB_SERVER}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-rails:/home/git/gitlab:cached
@@ -151,7 +155,7 @@ services:
     depends_on:
       - gitaly
       - redis
-      - unicorn
+      - ${USE_WEB_SERVER}
       - minio
     working_dir: /home/git/gitlab-workhorse
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
@@ -167,6 +171,7 @@ services:
         GID: ${CUSTOM_GID}
     environment:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_WEB_SERVER: ${USE_WEB_SERVER}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -178,7 +183,7 @@ services:
     depends_on:
       - gitaly
       - redis
-      - unicorn
+      - ${USE_WEB_SERVER}
     working_dir: /home/git
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [sudo, /scripts/startup/sshd.sh]

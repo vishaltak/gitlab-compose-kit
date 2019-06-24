@@ -19,7 +19,7 @@ EOF
 export PATH="$BUILD_DIR:$PATH"
 
 /tmp/gitlab-workhorse/gitlab-workhorse \
-  -authBackend="http://unicorn:8080/" \
+  -authBackend="http://${USE_WEB_SERVER}:8080/" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
   -documentRoot="/home/git/gitlab/public" \

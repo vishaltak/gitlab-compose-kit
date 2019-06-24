@@ -232,7 +232,7 @@ export CHROME_HEADLESS=true
 Sometimes it is desired to use Thin web server (one that comes with Rails). Before running any command just use:
 
 ```ruby
-export USE_WEB_SERVER=rails
+export USE_WEB_SERVER=thin
 ```
 
 ## Use PUMA web-server
