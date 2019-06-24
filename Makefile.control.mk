@@ -12,11 +12,11 @@ db: deps
 
 .PHONY: web
 web: deps
-	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER) sshd webpack
+	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER) sshd webpack $(USE_TRACING)
 
 .PHONY: web-and-sidekiq
 web-and-sidekiq: deps
-	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER)  sidekiq sshd webpack
+	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER) sidekiq sshd webpack $(USE_TRACING)
 
 .PHONY: scale
 scale: deps
@@ -24,11 +24,11 @@ scale: deps
 
 .PHONY: sshd
 sshd: deps
-	./scripts/proxy docker-compose up sshd
+	./scripts/proxy docker-compose up sshd $(USE_TRACING)
 
 .PHONY: sidekiq
 sidekiq: deps
-	./scripts/proxy docker-compose up sidekiq
+	./scripts/proxy docker-compose up sidekiq $(USE_TRACING)
 
 .PHONY: runner
 runner: deps

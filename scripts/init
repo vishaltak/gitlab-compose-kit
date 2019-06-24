@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [[ -e .env ]]; then
-  source .env
-fi
-
 echo ">> Enter SSH_TARGET_HOST:"
 echo -n "[$SSH_TARGET_HOST]: "
 read NEW_SSH_TARGET_HOST

@@ -9,6 +9,7 @@ It does not use any of existing [GitLab Development Kit](https://gitlab.com/gitl
 ### Features
 
 It currently supports:
+
 - GitLab Rails: Unicorn / Sidekiq,
 - GitLab Workhorse,
 - Gitaly,
@@ -19,9 +20,11 @@ It currently supports:
 - GitLab Pages,
 - GitLab Runner,
 - Minio as Object Storage backend,
-- Rails 5
+- Rails 5,
+- Jaeger
 
 It allows to:
+
 - Run development environment,
 - Run tests,
 - Easily teardown and start a new environment,
@@ -33,6 +36,7 @@ It allows to:
 How it differs from GitLab Development Kit it uses containers for everything,
 starting from scratch, building minimal container per application.
 Everything has it's own container:
+
 - GitLab Unicorn,
 - GitLab Sidekiq,
 - GitLab Workhorse,
@@ -55,6 +59,7 @@ The containers interact via HTTP/TCP using intra-container networking.
 There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, Gitaly and OpenSSH.
 
 It still doesn't support:
+
 - Geo
 - and others...
 
@@ -291,6 +296,23 @@ make shell USE_DB=mysql2
 make web USE_DB=mysql2
 make up USE_DB=mysql2
 ```
+
+## Use OpenTracing
+
+GitLab Compose Kit supports Jaeger integration that allows to see a correlation
+of all events as part of [Tracing](https://docs.gitlab.com/ee/user/project/operations/tracing.html).
+
+To use Tracing, you have to enable it for a moment, or forever:
+
+```bash
+# forever, by adding to .env
+export USE_TRACING=jaeger >> .env
+
+# for a moment
+make web USE_TRACING=jaeger
+```
+
+Open [Performance Bar](https://docs.gitlab.com/ee/administration/monitoring/performance/performance_bar.html) or open Jaeger UI: https://localhost:16686.
 
 ## Drop cache
 

@@ -1,6 +1,7 @@
 export USE_WEB_SERVER ?= unicorn
 export USE_RAILS ?= rails5
 export USE_DB ?= postgres
+export USE_TRACING ?=
 export USE_WEBPACK_DEV ?= true
 export CHROME_HEADLESS ?= false
 export DISPLAY ?=
@@ -17,6 +18,10 @@ export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse describe 2>/
 export GITLAB_GITALY_REVISION ?= $(shell git -C gitlab-gitaly describe 2>/dev/null || echo "unknown")
 export GITLAB_PAGES_REVISION ?= $(shell git -C gitlab-pages describe 2>/dev/null || echo "unknown")
 export COMPOSE_KIT_REVISION ?= $(shell git -C . describe 2>/dev/null || echo "unknown")
+
+ifneq (,$(wildcard .env))
+include .env
+endif
 
 ifeq (,$(wildcard gitlab.yml))
 $(shell touch gitlab.yml)
