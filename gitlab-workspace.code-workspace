@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"path": "gitlab-rails"
+		},
+		{
+			"path": "sidekiq-limit_fetch"
+		},
+		{
+			"path": "sidekiq"
+		},
+		{
+			"path": "www-gitlab-com"
+		},
+		{
+			"path": "gitlab-shell"
+		},
+		{
+			"path": "gitlab-workhorse"
+		},
+		{
+			"path": "omnibus-gitlab"
+		},
+		{
+			"path": "fog-aws"
+		},
+		{
+			"path": "fog-core"
+		},
+		{
+			"path": "fog"
+		},
+		{
+			"path": "charts.gitlab.io"
+		},
+		{
+			"path": "gitlab-pages"
+		},
+		{
+			"path": "gitlab-runner"
+		},
+		{
+			"path": "gitaly"
+		}
+	],
+	"settings": {}
+}

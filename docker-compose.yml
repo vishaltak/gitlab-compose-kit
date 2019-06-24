@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 services:
   unicorn: &web_server
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
@@ -27,6 +27,7 @@ services:
       RAILS_ENV: development
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_TRACING: ${USE_TRACING}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_RAILS: ${USE_RAILS}
       USE_DB: ${USE_DB}
@@ -70,6 +71,7 @@ services:
       RAILS_ENV: development
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_TRACING: ${USE_TRACING}
       USE_RAILS: ${USE_RAILS}
       USE_DB: ${USE_DB}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
@@ -140,6 +142,7 @@ services:
       GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
+      USE_TRACING: ${USE_TRACING}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-rails:/home/git/gitlab:cached
@@ -172,6 +175,7 @@ services:
     environment:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
+      USE_TRACING: ${USE_TRACING}
     volumes:
       - ./data:/home/git:delegated
       - ./gitlab-shell:/home/git/gitlab-shell:cached
@@ -234,6 +238,7 @@ services:
     environment:
       GITLAB_GITALY_REVISION: ${GITLAB_GITALY_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_TRACING: ${USE_TRACING}
     working_dir: /home/git/gitaly
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
@@ -344,6 +349,19 @@ services:
     entrypoint: /bin/sh -c
     command:
       - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket && minio server /export"
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 5775:5775/udp
+      - 6831:6831/udp
+      - 6832:6832/udp
+      - 5778:5778
+      - 16686:16686
+      - 14268:14268
+      - 9411:9411
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: 9411
 
 volumes:
   redis:

@@ -4,7 +4,7 @@ ifneq (,$(wildcard /dev/fsevents))
 	sudo -E bash -c 'source .env && ./scripts/ssh mkdir -p "$$SSH_TARGET_DIR/data" && echo OK'
 	sudo -E ./scripts/env lsyncd lsyncd.lua
 else
-	bash -c 'source .env && ./scripts/ssh mkdir -p "$$SSH_TARGET_DIR/data" && echo OK'
+	bash -c './scripts/ssh mkdir -p "$$SSH_TARGET_DIR/data" && echo OK'
 	./scripts/env lsyncd lsyncd.lua
 endif
 

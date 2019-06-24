@@ -2,10 +2,6 @@
 
 set -e
 
-if [[ -e .env ]]; then
-  source .env
-fi
-
 if [[ -n "$DEBUG" ]]; then
   set -xe
 fi
@@ -34,6 +30,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "USE_DB=$USE_DB" "&&" \
     "export" "ENABLE_SPRING=$ENABLE_SPRING" "&&" \
     "export" "USE_WEBPACK_DEV=$USE_WEBPACK_DEV" "&&" \
+    "export" "USE_TRACING=$USE_TRACING" "&&" \
     "export" "COMPOSE_HTTP_TIMEOUT=$COMPOSE_HTTP_TIMEOUT" "&&" \
     "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
     "cd" "$SSH_TARGET_DIR" "&&" \
