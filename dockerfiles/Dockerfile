@@ -18,7 +18,7 @@ RUN apt-add-repository ppa:brightbox/ruby-ng && \
 RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
     apt-get update -y && \
     apt-get install -y nodejs npm && \
-    npm install phantomjs-prebuilt@2.1.12 yarn -g --unsafe-perm
+    npm install yarn -g --unsafe-perm
 
 RUN wget -q -O - https://dl.google.com/go/go1.12.linux-amd64.tar.gz | \
     tar -zxC /usr/local
