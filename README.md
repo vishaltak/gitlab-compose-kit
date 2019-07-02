@@ -21,7 +21,8 @@ It currently supports:
 - GitLab Runner,
 - Minio as Object Storage backend,
 - Rails 5,
-- Jaeger
+- Jaeger,
+- Runs on Puma
 
 It allows to:
 
@@ -240,7 +241,13 @@ Sometimes it is desired to use Thin web server (one that comes with Rails). Befo
 export USE_WEB_SERVER=thin
 ```
 
-## Use PUMA web-server
+## Use Unicorn web-server (not longer default)
+
+```ruby
+export USE_WEB_SERVER=unicorn
+```
+
+## Use PUMA web-server (default)
 
 ```ruby
 export USE_WEB_SERVER=puma

@@ -13,7 +13,7 @@ case "$USE_WEB_SERVER" in
         ;;
 
     puma)
-        exec bundle exec puma -e "$RAILS_ENV"  -p 8080 --workers 1 --threads 4
+        exec bundle exec puma -e "$RAILS_ENV"  -p 8080 --workers 2 --threads 4
         ;;
 
     *)

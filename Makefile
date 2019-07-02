@@ -1,4 +1,4 @@
-export USE_WEB_SERVER ?= unicorn
+export USE_WEB_SERVER ?= puma
 export USE_RAILS ?= rails5
 export USE_DB ?= postgres
 export USE_TRACING ?=
