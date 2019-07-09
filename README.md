@@ -249,10 +249,24 @@ export USE_WEB_SERVER=thin
 export USE_WEB_SERVER=unicorn
 ```
 
+Configure number of workers (default: 2 workers):
+
+```bash
+export CUSTOM_WEB_CONFIG=3 # 3 workers
+export CUSTOM_WEB_CONFIG=1 # 1 worker
+```
+
 ## Use PUMA web-server (default)
 
 ```ruby
 export USE_WEB_SERVER=puma
+```
+
+Configure number of workers and threads (default: 2 workers, 4 threads):
+
+```bash
+export CUSTOM_WEB_CONFIG=3:6 # 3 workers, 6 threads
+export CUSTOM_WEB_CONFIG=1:3 # 1 worker, 3 threads
 ```
 
 ## Use Rails4 (no longer default)

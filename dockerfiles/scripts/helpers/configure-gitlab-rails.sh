@@ -123,8 +123,6 @@ test:
 EOF
 fi
 
-cp config/unicorn.rb.example.development config/unicorn.rb
-
 cat <<EOF > config/resque.yml
 production: &production
   url: redis://redis:6379
