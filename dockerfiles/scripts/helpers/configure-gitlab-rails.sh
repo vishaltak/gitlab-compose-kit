@@ -43,6 +43,13 @@ development:
     key: /home/git/registry-auth.key
     issuer: gitlab-issuer
     # path: shared/registry
+  monitoring:
+    ip_whitelist:
+      - 0.0.0.0/0
+    sidekiq_exporter:
+      enabled: true
+      address: 0.0.0.0
+      port: 3807
   repositories:
     storages:
       default:

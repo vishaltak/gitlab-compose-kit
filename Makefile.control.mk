@@ -38,6 +38,10 @@ runner: deps
 registry: deps
 	./scripts/proxy docker-compose up registry
 
+.PHONY: prometheus
+prometheus: deps
+	./scripts/proxy docker-compose up prometheus
+
 .PHONY: restart
 restart: deps
 	./scripts/proxy docker-compose restart

@@ -22,6 +22,7 @@ export PATH="$BUILD_DIR:$PATH"
   -authBackend="http://${USE_WEB_SERVER}:8080/" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
+  -prometheusListenAddr="0.0.0.0:9229" \
   -documentRoot="/home/git/gitlab/public" \
   -config="/home/git/workhorse-config.toml" \
   -secretPath="/home/git/workhorse-secret" \

@@ -22,7 +22,8 @@ It currently supports:
 - Minio as Object Storage backend,
 - Rails 5,
 - Jaeger,
-- Runs on Puma
+- Runs on Puma,
+- Prometheus
 
 It allows to:
 
@@ -62,6 +63,7 @@ There's also a shared volume `/home/git` between: Unicorn, Sidekiq, Workhorse, G
 It still doesn't support:
 
 - Geo
+- Does not start Grafana,
 - and others...
 
 ### Requirements
@@ -320,6 +322,20 @@ make web USE_TRACING=jaeger
 ```
 
 Open [Performance Bar](https://docs.gitlab.com/ee/administration/monitoring/performance/performance_bar.html) or open Jaeger UI: https://localhost:16686.
+
+## Use Prometheus
+
+GitLab Compose Kit can run Prometheus that will scrape all metrics from all started components:
+Puma, Unicorn, Sidekiq, Workhorse and Gitaly, except Runner.
+
+To use Prometheus integration, you need to get a token first from GitLab:
+
+1. Start GitLab,
+2. Go to http://localhost:3000/admin/health_check (or any other relevant URL),
+3. Get `METRICS_TOKEN` and write it to `.env`: `export METRICS_TOKEN=3i113EJN5zf4Ng7Nm-mg >> .env`,
+4. Run Prometheus `make prometheus`.
+
+The Prometheus will be accessible on http://localhost:9090/  (or any other custom URL).
 
 ## Drop cache
 
