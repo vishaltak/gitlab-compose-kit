@@ -363,6 +363,43 @@ services:
     environment:
       COLLECTOR_ZIPKIN_HTTP_PORT: 9411
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090/tcp
+    environment:
+      CONFIG: |
+        global:
+          scrape_interval: 15s
+          evaluation_interval: 15s
+        scrape_configs:
+        - job_name: backend
+          metrics_path: /metrics
+          static_configs:
+          - targets:
+            - sidekiq:3807
+            - gitaly:9236
+            - workhorse:9229
+        - job_name: web
+          metrics_path: /-/metrics
+          params:
+            token: [${METRICS_TOKEN}]
+          static_configs:
+          - targets:
+            - unicorn:8080
+            - puma:8080
+      CMD: |
+        set -e
+        echo "$$CONFIG"
+        echo "$$CONFIG" > /etc/prometheus/prometheus.yml
+        /bin/prometheus \
+          --config.file=/etc/prometheus/prometheus.yml \
+          --storage.tsdb.path=/prometheus
+    volumes:
+      - 'prometheus:/prometheus'
+    entrypoint: []
+    command: ["/bin/sh", "-c", 'eval "$$CMD"']
+
 volumes:
   redis:
   postgres:
@@ -373,3 +410,4 @@ volumes:
   shared:
   repositories:
   object-storage:
+  prometheus:

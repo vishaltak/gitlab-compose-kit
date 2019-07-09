@@ -16,7 +16,7 @@ make
 
 sed \
   -e 's|^socket_path|# socket_path|' \
-  -e 's|^# prometheus_listen_addr|prometheus_listen_addr|' \
+  -e 's|^# prometheus_listen_addr.*|prometheus_listen_addr = "0.0.0.0:9236"|' \
   -e 's|^# listen_addr.*|listen_addr = "0.0.0.0:9999"|' \
   -e 's|^path .*|path = "/data/repositories"|' \
   config.toml.example > /home/git/gitaly-config.toml
