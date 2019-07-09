@@ -25,6 +25,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "CUSTOM_WEB_PORT=$CUSTOM_WEB_PORT" "&&" \
     "export" "CUSTOM_SSH_PORT=$CUSTOM_SSH_PORT" "&&" \
     "export" "CUSTOM_REGISTRY_PORT=$CUSTOM_REGISTRY_PORT" "&&" \
+    "export" "CUSTOM_WEB_CONFIG=$CUSTOM_WEB_CONFIG" "&&" \
     "export" "USE_WEB_SERVER=$USE_WEB_SERVER" "&&" \
     "export" "USE_RAILS=$USE_RAILS" "&&" \
     "export" "USE_DB=$USE_DB" "&&" \
