@@ -3,11 +3,15 @@ FROM ubuntu:bionic
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
     apt-get install -y software-properties-common \
-      git postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
+      postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev ed pkg-config \
       sudo libsqlite3-dev libmysqlclient-dev openssh-server \
       libfontconfig1 chromium-chromedriver unzip
 RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
+
+RUN apt-add-repository ppa:git-core/ppa && \
+    apt-get update -y && \
+    apt-get install -y git
 
 RUN apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update -y && \
