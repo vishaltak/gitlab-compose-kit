@@ -154,7 +154,7 @@ This will shutdown all containers, releasing all resources.
 $ make destroy
 ```
 
-Afterwards you have to run `make setup` again :)
+Afterwards you have to run `make create` again :)
 
 ## User GitLab config
 
