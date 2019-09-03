@@ -24,9 +24,10 @@ services:
       - webpack
       - minio
     environment:
-      RAILS_ENV: development
+      RAILS_ENV: ${RAILS_ENV}
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/development/chaos_endpoints.md
       USE_TRACING: ${USE_TRACING}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_RAILS: ${USE_RAILS}
@@ -38,6 +39,7 @@ services:
       CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
       CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
+      ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
     stdin_open: true
     tty: true
@@ -69,18 +71,20 @@ services:
       - gitaly
       - minio
     environment:
-      RAILS_ENV: development
+      RAILS_ENV: ${RAILS_ENV}
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_TRACING: ${USE_TRACING}
       USE_RAILS: ${USE_RAILS}
       USE_DB: ${USE_DB}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
+      USE_WEB_SERVER: ${USE_WEB_SERVER}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
       CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
+      ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/sidekiq.sh]
@@ -110,7 +114,7 @@ services:
       - webpack
       - minio
     environment:
-      RAILS_ENV: development
+      RAILS_ENV: ${RAILS_ENV}
       ENABLE_SPRING: "${ENABLE_SPRING}"
       SPEC_OPTS: "--format documentation"
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "1" # disable https://github.com/rails/rails/blob/fc2684c9c012b95ce003cce22b378d5ea9ab56d3/activerecord/lib/active_record/tasks/database_tasks.rb#L58
@@ -119,6 +123,7 @@ services:
       USE_RAILS: ${USE_RAILS}
       USE_DB: ${USE_DB}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
+      USE_WEB_SERVER: ${USE_WEB_SERVER}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
@@ -126,6 +131,7 @@ services:
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}
+      ENABLE_RBTRACE: "1"
     stdin_open: true
     tty: true
     working_dir: /home/git/gitlab

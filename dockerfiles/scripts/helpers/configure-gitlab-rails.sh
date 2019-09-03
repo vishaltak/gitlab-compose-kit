@@ -17,7 +17,7 @@ git config --global repack.writeBitmaps true
 echo "$CUSTOM_CONFIG" > /home/git/gitlab-custom.yml
 
 /scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab-custom.yml > config/gitlab.yml <<EOF
-development:
+production: &production
   gitlab:
     host: ${CUSTOM_HOSTNAME}
     port: ${CUSTOM_WEB_PORT}
@@ -102,6 +102,8 @@ development:
         path_style: true # this is required as only DNS name exposed is minio
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
+
+development: *production
 EOF
 
 if [[ ! -e /home/git/registry-auth.crt ]]; then
@@ -115,6 +117,9 @@ echo -n 12345678901234567890123456789012 | base64 > /home/git/workhorse-secret
 
 if [[ ! -e config/secrets.yml ]]; then
   cat > config/secrets.yml <<EOF
+production:
+  db_key_base: 9a138cf90aa854ba65b50a5e2e76b2acfb9dfd22d1df5ccb9e1ff5a6f9657e2c
+
 development:
   db_key_base: 9a138cf90aa854ba65b50a5e2e76b2acfb9dfd22d1df5ccb9e1ff5a6f9657e2c
 
@@ -137,52 +142,44 @@ production: &production
   encoding: utf8
   collation: utf8_general_ci
   reconnect: false
-  database: gitlabhq_production
-  pool: 10
+  database: gitlabhq_development
+  pool: 5
   username: root
   password: password
   host: mysql2
 
 development:
   <<: *production
-  database: gitlabhq_development
-  pool: 5
 
 staging:
   <<: *production
   database: gitlabhq_staging
-  pool: 5
 
 test: 
   <<: *production
   database: gitlabhq_test_<%= File.directory?(Rails.root.join('ee')) ? 'ee' : 'ce' %>
-  pool: 5
 EOF
 else
 cat <<EOF > config/database.yml
 production: &production
   adapter: postgresql
   encoding: unicode
-  database: gitlabhq_production
-  pool: 10
+  database: gitlabhq_development
+  pool: 5
   username: postgres
   password: password
   host: postgres
 
 development:
   <<: *production
-  database: gitlabhq_development
-  pool: 5
 
 staging:
   <<: *production
   database: gitlabhq_staging
-  pool: 5
 
 test: 
   <<: *production
   database: gitlabhq_test_<%= File.directory?(Rails.root.join('ee')) ? 'ee' : 'ce' %>
-  pool: 5
 EOF
 fi
 
