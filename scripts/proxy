@@ -33,6 +33,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "USE_WEBPACK_DEV=$USE_WEBPACK_DEV" "&&" \
     "export" "USE_TRACING=$USE_TRACING" "&&" \
     "export" "COMPOSE_HTTP_TIMEOUT=$COMPOSE_HTTP_TIMEOUT" "&&" \
+    "export" "RAILS_ENV=$RAILS_ENV" "&&" \
     "export" "METRICS_TOKEN=$METRICS_TOKEN" "&&" \
     "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
     "cd" "$SSH_TARGET_DIR" "&&" \

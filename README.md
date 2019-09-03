@@ -375,6 +375,39 @@ export SSH_TARGET_PORT=22 # default: 22
 On remote environment you have to run as unprivileged user.
 It can be any user `gitlab`, `ubuntu` as long as it is not `root`.
 
+## Running `production`-like
+
+It is possible to run application in `production`-like environment.
+
+The `RAILS_ENV=production` uses the same database, and configs,
+but runs application with application caching enabled.
+
+To selectively run for example `web` or `sidekiq`:
+
+```bash
+make web RAILS_ENV=production
+make sidekiq RAILS_ENV=production
+```
+
+## Using [rbtrace](https://github.com/tmm1/rbtrace)
+
+[rbtrace](https://github.com/tmm1/rbtrace) is useful application to attach
+and execute Ruby code in currently running processes.
+
+All components of GitLab Compose Kit run with [`ENABLE_RBTRACE=1`](https://docs.gitlab.com/ee/administration/troubleshooting/debug.html#rbtrace).
+
+If you want to connect for example to `Unicorn` and execute some command in that process:
+
+```bash
+# find a name of `unicorn_1` process, like `gitlab-v2_unicorn_1`
+$ docker ps -a
+$ docker exec -it gitlab-v2_unicorn_1 /bin/bash
+
+# now in Unicorn container:
+$ ps auxf | pgrep unicorn # or puma, or sidekiq
+$ bundle exec rbtrace -p $(ps auxf | pgrep ruby) -e 'GC.stat'
+```
+
 ### 1. Prepare a remote machine with `rsync`, `docker` and `docker-compose` installed
 
 Use `Ubuntu Bionic`, as it has most of up-to date packages in default repository.
@@ -490,7 +523,6 @@ make webpack-compile
 **Notice:** Use that only when you want to make `gitlab-compose-kit`
 to use less resources as `webpack` is very CPU and memory hungry.
 
-
 ## Running `docker-compose` yourself
 
 Sometimes you might want to use `docker-compose`. Currently,
@@ -511,6 +543,7 @@ $ docker-compose ps
 GitLab Compose Kit can be configured to allow running multiple installations.
 
 You have to do the followings:
+
 1. Clone `gitlab-compose-kit` into another directory,
 1. Configure additional set of ports for `ssh`, `web` and `registry`,
 
