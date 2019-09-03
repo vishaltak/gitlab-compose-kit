@@ -156,6 +156,14 @@ $ make destroy
 
 Afterwards you have to run `make create` again :)
 
+## Development
+
+After running `make create` every folder `gitaly`, `gitlab-rails` etc will contain a .git file with the remote location of the project.
+
+You can view these by `cd` into one of the directories and type `git remote -v`.
+
+Once you have finished developing you can use easily use this to deploy it back to the correct remote project.
+
 ## User GitLab config
 
 You sometimes want to configure `gitlab-rails/config/gitlab.yml`.
