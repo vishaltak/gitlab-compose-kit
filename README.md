@@ -23,7 +23,7 @@ It currently supports:
 - Rails 5,
 - Jaeger,
 - Runs on Puma,
-- Prometheus
+- Prometheus with cAdvisor (to gather container metrics)
 
 It allows to:
 

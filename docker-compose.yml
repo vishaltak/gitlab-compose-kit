@@ -389,6 +389,11 @@ services:
           - targets:
             - unicorn:8080
             - puma:8080
+        - job_name: cadvisor
+          metrics_path: /metrics
+          static_configs:
+          - targets:
+            - cadvisor:8080
       CMD: |
         set -e
         echo "$$CONFIG"
@@ -400,6 +405,21 @@ services:
       - 'prometheus:/prometheus'
     entrypoint: []
     command: ["/bin/sh", "-c", 'eval "$$CMD"']
+    depends_on:
+      - cadvisor
+
+  cadvisor:
+    image: google/cadvisor:v0.33.0
+    expose:
+      - 8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    command: ["-store_container_labels=false", "-docker_only"]
+    depends_on:
+      - redis
 
 volumes:
   redis:
