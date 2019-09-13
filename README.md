@@ -14,7 +14,6 @@ It currently supports:
 - GitLab Workhorse,
 - Gitaly,
 - PostgreSQL,
-- MySQL,
 - Redis,
 - SSH,
 - GitLab Pages,
@@ -44,7 +43,6 @@ Everything has it's own container:
 - GitLab Workhorse,
 - Gitaly,
 - PostgreSQL,
-- MySQL,
 - Redis,
 - Webpacks,
 - OpenSSH,
@@ -309,23 +307,6 @@ make console USE_RAILS=rails5
 make shell USE_RAILS=rails5
 make web USE_RAILS=rails5
 make up USE_RAILS=rails5
-```
-
-## Use MySQL
-
-Testing Rails5 never got easier, just use:
-
-```ruby
-export USE_DB=mysql2
-```
-
-Or:
-
-```ruby
-make console USE_DB=mysql2
-make shell USE_DB=mysql2
-make web USE_DB=mysql2
-make up USE_DB=mysql2
 ```
 
 ## Use OpenTracing
