@@ -135,31 +135,6 @@ development: *production
 test: *production
 EOF
 
-if [[ "$USE_DB" == "mysql2" ]]; then
-cat <<EOF > config/database.yml
-production: &production
-  adapter: mysql2
-  encoding: utf8
-  collation: utf8_general_ci
-  reconnect: false
-  database: gitlabhq_development
-  pool: 5
-  username: root
-  password: password
-  host: mysql2
-
-development:
-  <<: *production
-
-staging:
-  <<: *production
-  database: gitlabhq_staging
-
-test: 
-  <<: *production
-  database: gitlabhq_test_<%= File.directory?(Rails.root.join('ee')) ? 'ee' : 'ce' %>
-EOF
-else
 cat <<EOF > config/database.yml
 production: &production
   adapter: postgresql
@@ -181,7 +156,6 @@ test:
   <<: *production
   database: gitlabhq_test_<%= File.directory?(Rails.root.join('ee')) ? 'ee' : 'ce' %>
 EOF
-fi
 
 cp -u config/initializers/rack_attack.rb.example config/initializers/rack_attack.rb
 

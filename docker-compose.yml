@@ -325,16 +325,6 @@ services:
     - 5432
     mem_limit: 256M
 
-  mysql2:
-    image: 'mysql:5'
-    environment:
-    - MYSQL_ROOT_PASSWORD=password
-    volumes:
-    - 'mysql:/var/lib/mysql'
-    expose:
-    - 3306
-    mem_limit: 256M
-
   redis:
     image: 'redis:alpine'
     volumes:
@@ -429,7 +419,6 @@ services:
 volumes:
   redis:
   postgres:
-  mysql:
   registry:
   docker:
   cache:
