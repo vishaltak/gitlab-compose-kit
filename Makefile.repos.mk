@@ -14,12 +14,12 @@ gitlab-pages/.git:
 	git -C gitlab-pages remote set-url origin --push git@gitlab.com:gitlab-org/gitlab-pages.git
 
 gitlab-rails/.git:
-	git clone https://gitlab.com/gitlab-org/gitlab-ce.git gitlab-rails
-	git -C gitlab-rails remote add origin-ee https://gitlab.com/gitlab-org/gitlab-ee.git
-	git -C gitlab-rails remote set-url origin --push git@gitlab.com:gitlab-org/gitlab-ce.git
-	git -C gitlab-rails remote set-url origin-ee --push git@gitlab.com:gitlab-org/gitlab-ee.git
-	git -C gitlab-rails fetch origin-ee
-	git -C gitlab-rails branch --track master-ee origin-ee/master
+	git clone https://gitlab.com/gitlab-org/gitlab.git gitlab-rails
+	git -C gitlab-rails remote add origin-foss https://gitlab.com/gitlab-org/gitlab-foss.git
+	git -C gitlab-rails remote set-url origin --push git@gitlab.com:gitlab-org/gitlab.git
+	git -C gitlab-rails remote set-url origin-foss --push git@gitlab.com:gitlab-org/gitlab-foss.git
+	git -C gitlab-rails fetch origin-foss
+	git -C gitlab-rails branch --track master-foss origin-foss/master
 
 gitlab-workhorse/.git:
 	git clone https://gitlab.com/gitlab-org/gitlab-workhorse.git

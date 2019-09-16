@@ -27,7 +27,7 @@ services:
       RAILS_ENV: ${RAILS_ENV}
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/development/chaos_endpoints.md
+      GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
       USE_TRACING: ${USE_TRACING}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_RAILS: ${USE_RAILS}

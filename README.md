@@ -199,25 +199,25 @@ performance due to significant overhead.
 Running natively will achieve better performance, as there's simply no virtualization overhead.
 This is not a case for Linux, as running in container allows to achieve 99.99% of the host performance.
 
-## CE and EE interwork
+## GitLab and GitLab FOSS interwork
 
-GitLab Compose Kit uses the single shared development database, but separate CE and EE databases for testing. The testing database is automatically deduced from running code. When switching branch you might want to kill and start again:
+GitLab Compose Kit uses the single shared development database, but separate GitLab and GitLab FOSS databases for testing. The testing database is automatically deduced from running code. When switching branch you might want to kill and start again:
 
 ```bash
 make kill
 make shell
 ```
 
-There's also a `master-ee` branch available which is being tracked to `origin-ee/master`.
-You can easily pick any EE branch with regular git commands, create new branches and push to EE:
+There's also a `master-foss` branch available which is being tracked to `origin-foss/master`.
+You can easily pick any FOSS branch with regular git commands, create new branches and push to FOSS:
 
 ```bash
-git checkout master-ee
-git checkout -b my-feature-ee
-git push -u origin-ee my-feature-ee
+git checkout master-foss
+git checkout -b my-feature-foss
+git push -u origin-foss my-feature-foss
 ```
 
-This also means that if you only so far worked on CE, after switching branch you might want to create EE database:
+This also means that if you only so far worked on GitLab, after switching branch you might want to create FOSS database:
 
 ```bash
 make create-test
