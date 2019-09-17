@@ -20,7 +20,24 @@ stages:
   - test
   - build
 
-test-dev:
+dev CE:
+  script:
+    - su git -c 'make deps'
+    - su git -c 'git -C gitlab-rails checkout master-foss'
+    - su git -c 'make create-dev'
+
+dev EE:
   script:
     - su git -c 'make create-dev'
 
+test CE:
+  script:
+    - su git -c 'make create-test'
+    - su git -c 'make command COMMAND="bin/rspec spec/models/chat_name_spec.rb"'
+
+test EE:
+  script:
+    - su git -c 'make deps'
+    - su git -c 'git -C gitlab-rails checkout master-foss'
+    - su git -c 'make create-test'
+    - su git -c 'make command COMMAND="bin/rspec spec/models/chat_name_spec.rb"'
