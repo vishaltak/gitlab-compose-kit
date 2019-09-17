@@ -89,6 +89,10 @@ spring: deps
 shell: spring
 	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh /bin/bash
 
+.PHONY: command
+command: spring
+	./scripts/proxy docker-compose exec -T spring /scripts/entrypoint/gitlab-rails-exec.sh $(COMMAND)
+
 .PHONY: console
 console: spring
 	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails console
