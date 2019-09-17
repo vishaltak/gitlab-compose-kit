@@ -29,6 +29,8 @@ dev CE:
 dev EE:
   script:
     - su git -c 'make create-dev'
+  # enabled, because of https://gitlab.com/gitlab-org/gitlab/merge_requests/15556
+  allow_failure: true
 
 test CE:
   script:
