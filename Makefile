@@ -8,6 +8,7 @@ export DISPLAY ?=
 export ENABLE_SPRING ?= 1
 export COMPOSE_HTTP_TIMEOUT ?= 3600
 export RAILS_ENV ?= development
+export IS_GITLAB_EE ?= 1
 
 export CUSTOM_WEB_PORT ?= 3000
 export CUSTOM_SSH_PORT ?= 2222
