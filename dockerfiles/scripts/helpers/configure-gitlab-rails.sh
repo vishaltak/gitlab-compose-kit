@@ -154,7 +154,7 @@ staging:
 
 test: 
   <<: *production
-  database: gitlabhq_test_<%= File.directory?(Rails.root.join('ee')) ? 'ee' : 'ce' %>
+  database: gitlabhq_test_<%= ENV['IS_GITLAB_EE'].to_i.positive? && File.directory?(Rails.root.join('ee')) ? 'ee' : 'ce' %>
 EOF
 
 cp -u config/initializers/rack_attack.rb.example config/initializers/rack_attack.rb

@@ -20,11 +20,15 @@ stages:
   - test
   - build
 
-dev CE:
+dev FOSS:
   script:
     - su git -c 'make deps'
     - su git -c 'git -C gitlab-rails checkout master-foss'
     - su git -c 'make create-dev'
+
+dev CE:
+  script:
+    - su git -c 'make create-dev IS_GITLAB_EE=0'
 
 dev EE:
   script:
@@ -32,14 +36,19 @@ dev EE:
   # enabled, because of https://gitlab.com/gitlab-org/gitlab/merge_requests/15556
   allow_failure: true
 
-test CE:
-  script:
-    - su git -c 'make create-test'
-    - su git -c 'make command COMMAND="bin/rspec spec/models/chat_name_spec.rb"'
-
-test EE:
+test FOSS:
   script:
     - su git -c 'make deps'
     - su git -c 'git -C gitlab-rails checkout master-foss'
     - su git -c 'make create-test'
     - su git -c 'make command COMMAND="bin/rspec spec/models/chat_name_spec.rb"'
+
+test CE:
+  script:
+    - su git -c 'make create-test IS_GITLAB_EE=0'
+    - su git -c 'make command COMMAND="bin/rspec spec/models/chat_name_spec.rb" IS_GITLAB_EE=0'
+
+test EE:
+  script:
+    - su git -c 'make create-test'
+    - su git -c 'make command COMMAND="bin/rspec ee/spec/models/milestone_spec.rb"'
