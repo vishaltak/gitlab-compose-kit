@@ -499,20 +499,21 @@ the hostname you gonna use.
 
 ## Webpack
 
-Webpack by default runs in `dev` mode. That means that it supports hot-reloading
-of all assets. This configuration is ideal for working on all Frontend related changes,
-as it makes it to run with regular workflow. However, for pure backend development
-it can be advised to disable `webpack` `dev` mode and rely on manual assets compilation.
+Webpack by default runs in `single` mode. That means that it precompiles all assets once
+and exits. This configuration is ideal for working on application, but is bad if you modify
+any of the Frontend code.
 
-You can do that by configuring the `USE_WEBPACK_DEV=false`. For persistency you can set that in `.env`:
+You can enable `dev` mode and support reloading of webpack with configuring the `USE_WEBPACK_DEV=true`.
+For simplicity you can set that in `.env`:
 
 ```ruby
-export USE_WEBPACK_DEV=false
+export USE_WEBPACK_DEV=true
 ```
 
-In this mode Webpack is not being run when starting webserver.
-It means that when you change branch, or need to recompile
-frontend assets you have to do it manually with:
+In this mode Webpack is will be run in dev mode when starting webserver.
+
+Since if running in `single` mode you might want to fire assets compilcation,
+you can use `webpack-compile` for that purpose:
 
 ```ruby
 make webpack-compile
