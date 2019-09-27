@@ -8,10 +8,10 @@ services:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitlab-shell:/home/git/gitlab-shell:cached
-      - ./gitlab-rails:/home/git/gitlab:cached
-      - ./gitaly:/home/git/gitaly:cached
+      - home_git:/home/git
+      - src_gitlab_shell:/home/git/gitlab-shell
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitaly:/home/git/gitaly
       - cache:/data/cache
       - repositories:/data/repositories
       - shared:/data/shared
@@ -59,10 +59,10 @@ services:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitlab-shell:/home/git/gitlab-shell:cached
-      - ./gitlab-rails:/home/git/gitlab:cached
-      - ./gitaly:/home/git/gitaly:cached
+      - home_git:/home/git
+      - src_gitlab_shell:/home/git/gitlab-shell
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitaly:/home/git/gitaly
       - cache:/data/cache
       - repositories:/data/repositories
       - shared:/data/shared
@@ -99,16 +99,16 @@ services:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitlab-shell:/home/git/gitlab-shell:cached
-      - ./gitlab-rails:/home/git/gitlab:cached
-      - ./gitlab-workhorse:/home/git/gitlab-workhorse:cached
-      - ./gitaly:/home/git/gitaly:cached
+      - home_git:/home/git
+      - src_gck:/gck
+      - src_gitlab_shell:/home/git/gitlab-shell
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitlab_workhorse:/home/git/gitlab-workhorse
+      - src_gitaly:/home/git/gitaly
       - /tmp/.X11-unix:/tmp/.X11-unix
       - cache:/data/cache
       - repositories:/data/repositories
       - shared:/data/shared
-      - gck:/gck
     depends_on:
       - postgres
       - redis
@@ -152,10 +152,10 @@ services:
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_TRACING: ${USE_TRACING}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitlab-rails:/home/git/gitlab:cached
-      - ./gitlab-shell:/home/git/gitlab-shell:cached
-      - ./gitlab-workhorse:/home/git/gitlab-workhorse:cached
+      - home_git:/home/git
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitlab_shell:/home/git/gitlab-shell
+      - src_gitlab_workhorse:/home/git/gitlab-workhorse
       - cache:/data/cache
       - repositories:/data/repositories
       - shared:/data/shared
@@ -185,8 +185,8 @@ services:
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_TRACING: ${USE_TRACING}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitlab-shell:/home/git/gitlab-shell:cached
+      - home_git:/home/git
+      - src_gitlab_shell:/home/git/gitlab-shell
       - repositories:/data/repositories
     expose:
       - 2222
@@ -208,8 +208,8 @@ services:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitlab-rails:/home/git/gitlab:cached
+      - home_git:/home/git
+      - src_gitlab_rails:/home/git/gitlab
       - cache:/data/cache
     environment:
       DEV_SERVER_PORT: 3808
@@ -233,10 +233,10 @@ services:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitaly:/home/git/gitaly:cached
-      - ./gitlab-rails:/home/git/gitlab:cached
-      - ./gitlab-shell:/home/git/gitlab-shell:cached
+      - home_git:/home/git
+      - src_gitaly:/home/git/gitaly
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitlab_shell:/home/git/gitlab-shell
       - cache:/data/cache
       - repositories:/data/repositories
     depends_on:
@@ -260,8 +260,8 @@ services:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
     volumes:
-      - ./data:/home/git:delegated
-      - ./gitlab-pages:/home/git/go/src/gitlab.com/gitlab-org/gitlab-pages:cached
+      - home_git:/home/git
+      - src_gitlab_pages:/home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
       - cache:/data/cache
       - shared:/data/shared
     depends_on:
@@ -280,7 +280,7 @@ services:
     image: registry:2.4.1
     volumes:
       - registry:/registry
-      - ./data:/home/git:delegated
+      - home_git:/home/git
     environment:
       REGISTRY_LOG_LEVEL: info
       REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /registry
@@ -428,9 +428,47 @@ volumes:
   repositories:
   object-storage:
   prometheus:
-  gck:
+
+  home_git:
+
+  src_gck:
+    driver: local
     driver_opts:
-      type: none
-      device: ${GCK_HOME}
-      o: bind
-  
+        type: $SRC_MOUNT_TYPE
+        o: $SRC_MOUNT_OPTS
+        device: "$SRC_MOUNT_PATH"
+
+  src_gitlab_shell:
+    driver: local
+    driver_opts:
+        type: $SRC_MOUNT_TYPE
+        o: $SRC_MOUNT_OPTS
+        device: "$SRC_MOUNT_PATH/gitlab-shell"
+
+  src_gitlab_rails:
+    driver: local
+    driver_opts:
+        type: $SRC_MOUNT_TYPE
+        o: $SRC_MOUNT_OPTS
+        device: "$SRC_MOUNT_PATH/gitlab-rails"
+
+  src_gitlab_pages:
+    driver: local
+    driver_opts:
+        type: $SRC_MOUNT_TYPE
+        o: $SRC_MOUNT_OPTS
+        device: "$SRC_MOUNT_PATH/gitlab-pages"
+
+  src_gitlab_workhorse:
+    driver: local
+    driver_opts:
+        type: $SRC_MOUNT_TYPE
+        o: $SRC_MOUNT_OPTS
+        device: "$SRC_MOUNT_PATH/gitlab-workhorse"
+
+  src_gitaly:
+    driver: local
+    driver_opts:
+        type: $SRC_MOUNT_TYPE
+        o: $SRC_MOUNT_OPTS
+        device: "$SRC_MOUNT_PATH/gitaly"

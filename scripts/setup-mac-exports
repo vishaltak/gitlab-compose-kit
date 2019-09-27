@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [[ $(uname -s) != "Darwin" ]]; then
+  echo "This script is OSX-only. Please do not run it on any other Unix."
+  exit 1
+fi
+
+if [[ -z "$SUDO_UID" ]]; then
+  echo "This script must run with sudo. Please re-run without sudo."
+  exit 1
+fi
+
+if grep "^$PWD/" /etc/exports; then
+  echo "The /etc/exports is already configured."
+  echo "To force reconfigure, remove the line with "$PWD/"."
+  exit 1
+fi
+
+echo "-- Setting /etc/exports..."
+cat <<EOF >> /etc/exports
+${PWD}/ -alldirs -mapall=${SUDO_UID}:${SUDO_GID} localhost
+EOF
+
+if ! grep nfs.server.mount.require_resv_port /etc/nfs.conf; then
+  echo "nfs.server.mount.require_resv_port = 0" >> /etc/nfs.conf
+fi
+
+echo "-- Restarting nfsd..."
+nfsd restart
+
+echo "-- Done."
