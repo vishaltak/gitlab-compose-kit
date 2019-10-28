@@ -25,7 +25,7 @@ services:
       - minio
     environment:
       RAILS_ENV: ${RAILS_ENV}
-      IS_GITLAB_EE: ${IS_GITLAB_EE}
+      FOSS_ONLY: ${FOSS_ONLY}
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
@@ -73,7 +73,7 @@ services:
       - minio
     environment:
       RAILS_ENV: ${RAILS_ENV}
-      IS_GITLAB_EE: ${IS_GITLAB_EE}
+      FOSS_ONLY: ${FOSS_ONLY}
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_TRACING: ${USE_TRACING}
@@ -117,7 +117,7 @@ services:
       - minio
     environment:
       ENABLE_SPRING: ${ENABLE_SPRING}
-      IS_GITLAB_EE: ${IS_GITLAB_EE}
+      FOSS_ONLY: ${FOSS_ONLY}
       SPEC_OPTS: "--format documentation"
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "1" # disable https://github.com/rails/rails/blob/fc2684c9c012b95ce003cce22b378d5ea9ab56d3/activerecord/lib/active_record/tasks/database_tasks.rb#L58
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
