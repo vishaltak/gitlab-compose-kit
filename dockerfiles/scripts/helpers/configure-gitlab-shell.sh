@@ -22,7 +22,6 @@ redis:
   socket: nil
 EOF
 
-./bin/install
-./bin/compile
+make setup
 
 git describe > /home/git/gitlab-shell-done
