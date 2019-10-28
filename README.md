@@ -201,18 +201,17 @@ This is not a case for Linux, as running in container allows to achieve 99.99% o
 
 ## GitLab CE and GitLab EE interwork
 
-GitLab Compose Kit uses the single shared development database, but separate GitLab and GitLab FOSS databases for testing. The testing database is automatically deduced from running code or used `IS_GITLAB_EE` environment variable.
+GitLab Compose Kit uses the single shared development database, but separate GitLab and GitLab FOSS databases for testing. The testing database is automatically deduced from running code or used `FOSS_ONLY` environment variable.
 
-By default `IS_GITLAB_EE` set to `1`, which means that you run EE version
-of the application.
+By setting the `FOSS_ONLY` to `1` you will force to run GitLab CE only.
 
 This also means that if you only so far worked on GitLab EE, after switching branch you might want to create CE database and run all components as CE:
 
 ```bash
-make create-test IS_GITLAB_EE=0
-make web IS_GITLAB_EE=0
-make shell IS_GITLAB_EE=0
-make migrate-test IS_GITLAB_EE=0
+make create-test FOSS_ONLY=1
+make web FOSS_ONLY=1
+make shell FOSS_ONLY=1
+make migrate-test FOSS_ONLY=1
 ```
 
 ## GitLab and GitLab FOSS interwork
