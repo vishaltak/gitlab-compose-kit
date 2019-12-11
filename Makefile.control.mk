@@ -2,6 +2,9 @@
 up: deps
 	./scripts/proxy docker-compose up -d
 
+up-%:
+	./scripts/proxy docker-compose up -d $*
+
 .PHONY: run
 run: deps
 	./scripts/proxy docker-compose up
@@ -50,6 +53,9 @@ restart: deps
 down:
 	make kill
 	make clean
+
+down-%:
+	./scripts/proxy docker-compose rm -fs $*
 
 .PHONY: kill
 kill:
