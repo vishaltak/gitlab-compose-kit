@@ -11,7 +11,7 @@ run: deps
 
 .PHONY: db
 db: deps
-	./scripts/proxy docker-compose up $(USE_DB) redis
+	./scripts/proxy docker-compose up postgres redis
 
 .PHONY: web
 web: deps

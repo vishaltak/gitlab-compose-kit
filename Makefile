@@ -1,6 +1,5 @@
 export USE_WEB_SERVER ?= puma
 export USE_RAILS ?= rails5
-export USE_DB ?= postgres
 export USE_TRACING ?=
 export USE_WEBPACK_DEV ?= false
 export CHROME_HEADLESS ?= false

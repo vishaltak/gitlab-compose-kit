@@ -18,7 +18,7 @@ services:
     expose:
       - 8080
     depends_on:
-      - $USE_DB
+      - postgres
       - redis
       - gitaly
       - webpack
@@ -33,7 +33,6 @@ services:
       USE_TRACING: ${USE_TRACING}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_RAILS: ${USE_RAILS}
-      USE_DB: ${USE_DB}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
@@ -68,7 +67,7 @@ services:
       - repositories:/data/repositories
       - shared:/data/shared
     depends_on:
-      - $USE_DB
+      - postgres
       - redis
       - gitaly
       - minio
@@ -79,7 +78,6 @@ services:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_TRACING: ${USE_TRACING}
       USE_RAILS: ${USE_RAILS}
-      USE_DB: ${USE_DB}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
@@ -111,7 +109,7 @@ services:
       - repositories:/data/repositories
       - shared:/data/shared
     depends_on:
-      - $USE_DB
+      - postgres
       - redis
       - gitaly
       - webpack
@@ -124,7 +122,6 @@ services:
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_RAILS: ${USE_RAILS}
-      USE_DB: ${USE_DB}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
