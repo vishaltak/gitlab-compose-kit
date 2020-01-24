@@ -17,7 +17,8 @@ RUN apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update -y && \
     apt-get install -y ruby2.6 ruby2.6-dev && \
     gem update --system && \
-    gem install bundler
+    gem install bundler -v "~>2.0" && \
+    gem install bundler -v "~>1.0"
 
 RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
     apt-get update -y && \
