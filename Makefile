@@ -1,3 +1,5 @@
+export GCK_HOME=$(CURDIR)
+
 export USE_WEB_SERVER ?= puma
 export USE_RAILS ?= rails5
 export USE_TRACING ?=
