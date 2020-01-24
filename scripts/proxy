@@ -28,7 +28,6 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "CUSTOM_WEB_CONFIG=$CUSTOM_WEB_CONFIG" "&&" \
     "export" "USE_WEB_SERVER=$USE_WEB_SERVER" "&&" \
     "export" "USE_RAILS=$USE_RAILS" "&&" \
-    "export" "USE_DB=$USE_DB" "&&" \
     "export" "ENABLE_SPRING=$ENABLE_SPRING" "&&" \
     "export" "USE_WEBPACK_DEV=$USE_WEBPACK_DEV" "&&" \
     "export" "USE_TRACING=$USE_TRACING" "&&" \
