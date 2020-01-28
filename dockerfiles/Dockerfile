@@ -5,7 +5,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y software-properties-common \
       postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
       build-essential nodejs npm libre2-dev libkrb5-dev ed pkg-config \
-      sudo libsqlite3-dev libmysqlclient-dev openssh-server \
+      sudo libsqlite3-dev openssh-server \
       libfontconfig1 chromium-chromedriver unzip
 RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
 
