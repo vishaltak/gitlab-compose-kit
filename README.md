@@ -71,9 +71,9 @@ It still doesn't support:
 3. GNU Make,
 4. Linux machine (it might work on Docker for Mac, but not guaranteed).
 
-### How to use it?
+### Use it
 
-#### 1. Clone:
+#### 1. Clone
 
 First clone this repository:
 
@@ -81,7 +81,32 @@ First clone this repository:
 git clone https://gitlab.com/gitlab-org/gitlab-compose-kit.git
 ```
 
-#### 2. Run to setup:
+#### 1.1. Configure NFS (for OSX)
+
+On OS X this projects uses NFS to pass data between host and containers.
+It seems to be more performant than using [osxfs](https://docs.docker.com/docker-for-mac/osxfs-caching/#performance-implications-of-host-container-file-system-consistency).
+
+To configure NFS server on your OSX run this simple script that
+sets `/etc/exports`:
+
+```bash
+sudo scripts/setup-mac-exports
+-- Setting /etc/exports...
+-- Restarting nfsd...
+-- Done.
+```
+
+#### 1.2. Use `bind-mount` on OSX
+
+By default this project uses NFS to pass data between host and containers on OSX.
+
+You can force it to use bind-mount with `FORCE_BIND_MOUNT=1` added to `.env`:
+
+```bash
+export FORCE_BIND_MOUNT=1
+```
+
+#### 2. Run to setup
 
 ```bash
 $ make create
@@ -90,7 +115,7 @@ $ make create
 This will take long minutes to build base docker image, compile all dependencies,
 provision application.
 
-#### 3. Start the development environment (and keep it running in shell):
+#### 3. Start the development environment (and keep it running in shell)
 
 ```bash
 $ make up
@@ -196,7 +221,10 @@ This project tries to store as much as possible on Docker VM.
 The source code is still shared, thus it achieves suboptimal
 performance due to significant overhead.
 
-Running natively will achieve better performance, as there's simply no virtualization overhead.
+On OSX this project uses NFS instead of `osxfs`. This gives much better performance,
+but needs a little more work to setup initially.
+
+Running natively will always achieve better performance, as there's simply no virtualization overhead.
 This is not a case for Linux, as running in container allows to achieve 99.99% of the host performance.
 
 ## GitLab CE and GitLab EE interwork
