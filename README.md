@@ -81,12 +81,12 @@ First clone this repository:
 git clone https://gitlab.com/gitlab-org/gitlab-compose-kit.git
 ```
 
-#### 1.1. Configure NFS (for OSX)
+#### 1.1. Configure NFS (for macOS)
 
-On OS X this projects uses NFS to pass data between host and containers.
+On macOS this project uses NFS to pass data between host and containers.
 It seems to be more performant than using [osxfs](https://docs.docker.com/docker-for-mac/osxfs-caching/#performance-implications-of-host-container-file-system-consistency).
 
-To configure NFS server on your OSX run this simple script that
+To configure an NFS server on macOS, run this simple script that
 sets `/etc/exports`:
 
 ```bash
@@ -96,9 +96,9 @@ sudo scripts/setup-mac-exports
 -- Done.
 ```
 
-#### 1.2. Use `bind-mount` on OSX
+#### 1.2. Use `bind-mount` on macOS
 
-By default this project uses NFS to pass data between host and containers on OSX.
+By default this project uses NFS to pass data between host and containers on macOS.
 
 You can force it to use bind-mount with `FORCE_BIND_MOUNT=1` added to `.env`:
 
@@ -221,7 +221,7 @@ This project tries to store as much as possible on Docker VM.
 The source code is still shared, thus it achieves suboptimal
 performance due to significant overhead.
 
-On OSX this project uses NFS instead of `osxfs`. This gives much better performance,
+On macOS this project uses NFS instead of `osxfs`. This gives much better performance,
 but needs a little more work to setup initially.
 
 Running natively will always achieve better performance, as there's simply no virtualization overhead.
