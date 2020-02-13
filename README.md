@@ -83,7 +83,7 @@ git clone https://gitlab.com/gitlab-org/gitlab-compose-kit.git
 
 #### 1.1. Configure NFS (for macOS)
 
-On macOS this projects uses NFS to pass data between host and containers.
+On macOS this project uses NFS to pass data between host and containers.
 It seems to be more performant than using [osxfs](https://docs.docker.com/docker-for-mac/osxfs-caching/#performance-implications-of-host-container-file-system-consistency).
 
 To configure an NFS server on macOS, run this simple script that
