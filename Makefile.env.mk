@@ -6,7 +6,7 @@ create-dev: deps
 .PHONY: create-test
 create-test: deps
 	./scripts/proxy docker-compose run -e RAILS_ENV=test \
-		spring bash -c 'bin/rake db:drop; bin/rake db:create && bin/rake db:setup && bin/rake db:migrate'
+		spring bash -c 'bin/rake -t db:drop db:prepare'
 
 .PHONY: create-runner
 create-runner: deps
