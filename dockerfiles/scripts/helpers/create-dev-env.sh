@@ -10,13 +10,13 @@ rm -rf /data/repositories/* /data/shared/*
 /scripts/helpers/fix-gitlab-tmp.sh
 
 echo "Dropping database..."
-bin/rake db:drop
+bin/rake -t db:drop
 
 echo "Dropping redis..."
 redis-cli -h redis FLUSHALL
 
 echo "Creating database..."
-bin/rake db:create
+bin/rake -t db:prepare
 
-echo "Creating data..."
-bin/rake dev:setup
+echo "Seeding database..."
+bin/rake -t dev:setup
