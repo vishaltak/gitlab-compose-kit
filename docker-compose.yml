@@ -133,6 +133,7 @@ services:
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}
       ENABLE_RBTRACE: "1"
+      HISTCONTROL: "ignoreboth:erasedups"
     stdin_open: true
     tty: true
     working_dir: /home/git/gitlab
