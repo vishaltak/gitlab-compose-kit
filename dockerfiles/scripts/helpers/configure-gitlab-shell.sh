@@ -14,7 +14,7 @@ fi
 set -xe
 
 /scripts/helpers/merge-yaml.rb config.yml.example /dev/stdin > config.yml <<EOF
-gitlab_url: "http://${USE_WEB_SERVER}:8080/"
+gitlab_url: "http://web:8080/"
 secret_file: /home/git/shell-secret
 redis:
   host: redis

@@ -15,11 +15,11 @@ db: deps
 
 .PHONY: web
 web: deps
-	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER) sshd webpack $(USE_TRACING)
+	./scripts/proxy docker-compose up workhorse web sshd webpack $(USE_TRACING)
 
 .PHONY: web-and-sidekiq
 web-and-sidekiq: deps
-	./scripts/proxy docker-compose up workhorse $(USE_WEB_SERVER) sidekiq sshd webpack $(USE_TRACING)
+	./scripts/proxy docker-compose up workhorse web sidekiq sshd webpack $(USE_TRACING)
 
 .PHONY: scale
 scale: deps
