@@ -1,6 +1,6 @@
 version: '2.1'
 services:
-  unicorn: &web_server
+  web:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
@@ -48,9 +48,6 @@ services:
     command: [/scripts/startup/web.sh]
     restart: on-failure:1
 
-  puma: *web_server
-  thin: *web_server
-
   sidekiq:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
@@ -79,7 +76,6 @@ services:
       USE_TRACING: ${USE_TRACING}
       USE_RAILS: ${USE_RAILS}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
-      USE_WEB_SERVER: ${USE_WEB_SERVER}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
@@ -124,7 +120,6 @@ services:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_RAILS: ${USE_RAILS}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
-      USE_WEB_SERVER: ${USE_WEB_SERVER}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
@@ -150,7 +145,6 @@ services:
     environment:
       GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_TRACING: ${USE_TRACING}
     volumes:
       - home_git:/home/git
@@ -167,7 +161,7 @@ services:
     depends_on:
       - gitaly
       - redis
-      - ${USE_WEB_SERVER}
+      - web
       - minio
     working_dir: /home/git/gitlab-workhorse
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
@@ -183,7 +177,6 @@ services:
         GID: ${CUSTOM_GID}
     environment:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      USE_WEB_SERVER: ${USE_WEB_SERVER}
       USE_TRACING: ${USE_TRACING}
     volumes:
       - home_git:/home/git
@@ -196,7 +189,7 @@ services:
     depends_on:
       - gitaly
       - redis
-      - ${USE_WEB_SERVER}
+      - web
     working_dir: /home/git
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [sudo, /scripts/startup/sshd.sh]

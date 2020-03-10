@@ -19,7 +19,7 @@ EOF
 export PATH="$BUILD_DIR:$PATH"
 
 /tmp/gitlab-workhorse/gitlab-workhorse \
-  -authBackend="http://${USE_WEB_SERVER}:8080/" \
+  -authBackend="http://web:8080/" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
   -prometheusListenAddr="0.0.0.0:9229" \
