@@ -20,35 +20,54 @@ stages:
   - test
   - build
 
-dev FOSS:
+.dev:
   script:
-    - su git -c 'make deps'
-    - su git -c 'git -C gitlab-rails checkout master-foss'
-    - su git -c 'make create-dev'
+    - su git -mc 'make deps'
+    - su git -mc 'git -C gitlab-rails checkout $GITLAB_RAILS_BRANCH'
+    - su git -mc 'if ! make create-dev; then make logs > logs.txt; exit 1; fi'
+  artifacts:
+    paths:
+      - logs.txt
+
+dev FOSS:
+  extends: .dev
+  variables:
+    GITLAB_RAILS_BRANCH: master-foss
 
 dev CE:
-  script:
-    - su git -c 'make create-dev IS_GITLAB_EE=0'
+  extends: .dev
+  variables:
+    GITLAB_RAILS_BRANCH: master
+    FOSS_ONLY: 1
 
 dev EE:
-  script:
-    - su git -c 'make create-dev'
+  extends: .dev
+  variables:
+    GITLAB_RAILS_BRANCH: master
   # enabled, because of https://gitlab.com/gitlab-org/gitlab/merge_requests/15556
   allow_failure: true
 
-test FOSS:
+.test:
   script:
-    - su git -c 'make deps'
-    - su git -c 'git -C gitlab-rails checkout master-foss'
-    - su git -c 'make create-test'
-    - su git -c 'make command COMMAND="bin/rspec spec/models/chat_name_spec.rb"'
+    - su git -mc 'make deps'
+    - su git -mc 'git -C gitlab-rails checkout $GITLAB_RAILS_BRANCH'
+    - su git -mc 'make create-test'
+    - su git -mc 'make command'
+  variables:
+    COMMAND: bin/rspec spec/models/chat_name_spec.rb
+
+test FOSS:
+  extends: .test
+  variables:
+    GITLAB_RAILS_BRANCH: master-foss
 
 test CE:
-  script:
-    - su git -c 'make create-test IS_GITLAB_EE=0'
-    - su git -c 'make command COMMAND="bin/rspec spec/models/chat_name_spec.rb" IS_GITLAB_EE=0'
+  extends: .test
+  variables:
+    GITLAB_RAILS_BRANCH: master
+    FOSS_ONLY: 1
 
 test EE:
-  script:
-    - su git -c 'make create-test'
-    - su git -c 'make command COMMAND="bin/rspec ee/spec/models/milestone_spec.rb"'
+  extends: .test
+  variables:
+    GITLAB_RAILS_BRANCH: master
