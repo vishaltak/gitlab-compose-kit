@@ -1,12 +1,12 @@
 .PHONY: create-dev
 create-dev: deps
 	./scripts/proxy docker-compose run -e RAILS_ENV=development \
-		spring /scripts/helpers/create-dev-env.sh
+		spring /scripts/entrypoint/gitlab-rails-exec.sh /scripts/helpers/create-dev-env.sh
 
 .PHONY: create-test
 create-test: deps
 	./scripts/proxy docker-compose run -e RAILS_ENV=test \
-		spring bash -c 'bin/rake -t db:drop db:prepare'
+		spring /scripts/entrypoint/gitlab-rails-exec.sh bash -c 'bin/rake -t db:drop db:prepare'
 
 .PHONY: create-runner
 create-runner: deps
