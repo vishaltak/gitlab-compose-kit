@@ -10,4 +10,5 @@
 /.sync.control*
 /.env
 /gitlab.yml
+/docker-compose.override.yml
 .DS_Store
