@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 require 'yaml'
+require 'erb'
 
 def deep_merge!(hash, other_hash, &block)
   other_hash.each_pair do |current_key, other_value|
@@ -25,7 +26,15 @@ def deep_merge(hash, other_hash, &block)
 end
 
 config = ARGV.inject({}) do |config, arg|
-  deep_merge(config, YAML.load_file(arg) || {})
+  file_name, *digs = arg.split(':')
+
+  # we dig into our config
+  content = File.read(file_name)
+  content = ERB.new(content).result
+  content = YAML.load(content) || {}
+  content = content.dig(*digs) if digs.any?
+
+  deep_merge(config, content || {})
 end
 
 puts config.to_yaml

@@ -68,7 +68,7 @@ root_sync = sync {
   base_config,
   source = ".",
 }
-root_sync.rmExclude("/gitlab.yml")
+root_sync.rmExclude("/gck.yml")
 
 gitaly_sync = sync {
   base_config,

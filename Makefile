@@ -40,8 +40,8 @@ ifneq (,$(wildcard .env))
 include .env
 endif
 
-ifeq (,$(wildcard gitlab.yml))
-$(shell touch gitlab.yml)
+ifeq (,$(wildcard gck.yml))
+$(shell touch gck.yml)
 endif
 
 all: help
