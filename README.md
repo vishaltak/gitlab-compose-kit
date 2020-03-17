@@ -189,22 +189,46 @@ Once you have finished developing you can use easily use this to deploy it back 
 
 ## User GitLab config
 
-You sometimes want to configure `gitlab-rails/config/gitlab.yml`.
+You sometimes want to configure additional configs.
 
-It is super easy. Just edit `./gitlab.yml` after setup,
-adding only entries that you need:
+GCK manages all configs on behalf of you, so you should
+never manually edit them.
+
+Only these configs are supported today:
+
+- `gitlab.yml`: is merged into `gitlab-rails/config/gitlab.yml`
+- `database.yml`: is merged into `gitlab-rails/config/database.yml`
+- `resque.yml`: is merged into `gitlab-rails/config/resque.yml`
+
+To use it edit `./gck.yml` after the setup,
+adding the entries that you need to extend:
 
 ```yaml
-development:
-  omniauth:
-    providers:
-      - { name: 'google_oauth2',
-          app_id: 'my-app-id.apps.googleusercontent.com',
-          app_secret: 'my-secret',
-          args: { access_type: 'offline', approval_prompt: '' } }
+gitlab.yml: # merge with `gitlab-rails/config/gitlab.yml`
+  development:
+    omniauth:
+      providers:
+        - { name: 'google_oauth2',
+            app_id: 'my-app-id.apps.googleusercontent.com',
+            app_secret: 'my-secret',
+            args: { access_type: 'offline', approval_prompt: '' } }
+
+database.yml: # merge with `gitlab-rails/config/database.yml`
+  development:
+    load_balancing:
+      hosts:
+        - postgres
+        - postgres
 ```
 
-Then restart `make restart`.
+The above configures the following items:
+
+1. We inject `Omniauth` provider to enable integration with Google services,
+   this for example allows you to create Kubernetes clusters,
+2. We inject `load_balancing` configuration which allows to simulate application
+   behaviour with load balancing enabled.
+
+Then run GCK again with `make web`, `make up` or similar command.
 
 ## Pages
 

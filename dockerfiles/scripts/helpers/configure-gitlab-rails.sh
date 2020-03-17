@@ -14,9 +14,9 @@ git config --global core.autocrlf input
 git config --global gc.auto 0
 git config --global repack.writeBitmaps true
 
-echo "$CUSTOM_CONFIG" > /home/git/gitlab-custom.yml
+echo "$CUSTOM_CONFIG" > /home/git/gck-custom.yml
 
-/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gitlab-custom.yml > config/gitlab.yml <<EOF
+/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gck-custom.yml:gitlab.yml > config/gitlab.yml <<EOF
 production: &production
   gitlab:
     host: ${CUSTOM_HOSTNAME}
@@ -128,14 +128,14 @@ test:
 EOF
 fi
 
-cat <<EOF > config/resque.yml
+/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:resque.yml > config/resque.yml <<EOF
 production: &production
   url: redis://redis:6379
 development: *production
 test: *production
 EOF
 
-cat <<EOF > config/database.yml
+/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:database.yml > config/database.yml <<EOF
 production: &production
   adapter: postgresql
   encoding: unicode
@@ -152,9 +152,9 @@ staging:
   <<: *production
   database: gitlabhq_staging
 
-test: 
+test:
   <<: *production
-  database: gitlabhq_test_<%= Rails.root.join('ee/app/models/license.rb').exist? && !%w[true 1].include?(ENV['FOSS_ONLY'].to_s) ? 'ee' : 'ce' %>
+  database: gitlabhq_test_<%= File.exist?('ee/app/models/license.rb') && !%w[true 1].include?(ENV['FOSS_ONLY'].to_s) ? 'ee' : 'ce' %>
 EOF
 
 cp -u config/initializers/rack_attack.rb.example config/initializers/rack_attack.rb
