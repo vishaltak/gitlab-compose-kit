@@ -2,9 +2,9 @@ FROM ubuntu:bionic
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
-    apt-get install -y software-properties-common \
-      postgresql postgresql-contrib libpq-dev redis-server libicu-dev cmake \
-      build-essential nodejs npm libre2-dev libkrb5-dev ed pkg-config \
+    apt-get install -y software-properties-common curl \
+      postgresql postgresql-contrib libpq-dev redis-server libicu-dev libssl-dev cmake \
+      build-essential libre2-dev libkrb5-dev ed pkg-config \
       sudo libsqlite3-dev openssh-server \
       libfontconfig1 chromium-chromedriver unzip
 RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
@@ -20,9 +20,10 @@ RUN apt-add-repository ppa:brightbox/ruby-ng && \
     gem install bundler -v "~>2.0" && \
     gem install bundler -v "~>1.0"
 
-RUN apt-add-repository "deb http://pl.archive.ubuntu.com/ubuntu/ bionic main restricted universe" && \
+RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
+    apt-add-repository "deb https://deb.nodesource.com/node_12.x bionic main" && \
     apt-get update -y && \
-    apt-get install -y nodejs npm && \
+    apt-get install -y nodejs && \
     npm install yarn -g --unsafe-perm
 
 RUN wget -q -O - https://dl.google.com/go/go1.12.linux-amd64.tar.gz | \
