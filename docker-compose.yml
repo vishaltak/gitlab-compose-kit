@@ -25,6 +25,7 @@ services:
       - minio
     environment:
       RAILS_ENV: ${RAILS_ENV}
+      RAILS_HOSTS: "web"
       FOSS_ONLY: ${FOSS_ONLY}
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
