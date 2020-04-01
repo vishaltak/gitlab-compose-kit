@@ -21,4 +21,4 @@ sed \
   -e 's|^path .*|path = "/data/repositories"|' \
   config.toml.example > /home/git/gitaly-config.toml
 
-./gitaly /home/git/gitaly-config.toml
+exec ./gitaly /home/git/gitaly-config.toml

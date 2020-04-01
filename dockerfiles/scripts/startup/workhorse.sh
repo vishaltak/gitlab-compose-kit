@@ -18,7 +18,7 @@ EOF
 
 export PATH="$BUILD_DIR:$PATH"
 
-/tmp/gitlab-workhorse/gitlab-workhorse \
+exec /tmp/gitlab-workhorse/gitlab-workhorse \
   -authBackend="http://web:8080/" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
