@@ -26,7 +26,7 @@ RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add
     apt-get install -y nodejs && \
     npm install yarn -g --unsafe-perm
 
-RUN wget -q -O - https://dl.google.com/go/go1.12.linux-amd64.tar.gz | \
+RUN wget -q -O - https://dl.google.com/go/go1.13.linux-amd64.tar.gz | \
     tar -zxC /usr/local
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
