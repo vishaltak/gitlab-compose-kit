@@ -8,7 +8,6 @@ if ! gem list -i bundler; then
     gem install bundler
 fi
 
-source /scripts/helpers/configure-gitlab-rails-gemfile.sh
 source /scripts/helpers/configure-gitlab-tracing.sh
 
 /scripts/helpers/fix-perms.sh
