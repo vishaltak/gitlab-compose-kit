@@ -22,7 +22,6 @@ for i in $(seq 1 1000); do
 done
 echo " Done"
 
-source /scripts/helpers/configure-gitlab-rails-gemfile.sh
 source /scripts/helpers/configure-gitlab-tracing.sh
 
 exec "$@"

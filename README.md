@@ -335,40 +335,6 @@ export CUSTOM_WEB_CONFIG=3:6 # 3 workers, 6 threads
 export CUSTOM_WEB_CONFIG=1:3 # 1 worker, 3 threads
 ```
 
-## Use Rails4 (no longer default)
-
-Testing Rails5 never got easier, just use:
-
-```ruby
-export USE_RAILS=rails4
-```
-
-Or:
-
-```ruby
-make console USE_RAILS=rails4
-make shell USE_RAILS=rails4
-make web USE_RAILS=rails4
-make up USE_RAILS=rails4
-```
-
-## Use Rails5 (default)
-
-Testing Rails5 never got easier, just use:
-
-```ruby
-export USE_RAILS=rails5
-```
-
-Or:
-
-```ruby
-make console USE_RAILS=rails5
-make shell USE_RAILS=rails5
-make web USE_RAILS=rails5
-make up USE_RAILS=rails5
-```
-
 ## Use OpenTracing
 
 GitLab Compose Kit supports Jaeger integration that allows to see a correlation
