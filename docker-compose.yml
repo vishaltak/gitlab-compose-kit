@@ -48,6 +48,51 @@ services:
     command: [/scripts/startup/web.sh]
     restart: on-failure:1
 
+  cable:
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    build:
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
+    volumes:
+      - home_git:/home/git
+      - src_gitlab_shell:/home/git/gitlab-shell
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitaly:/home/git/gitaly
+      - cache:/data/cache
+      - repositories:/data/repositories
+      - shared:/data/shared
+    expose:
+      - 8090
+    depends_on:
+      - postgres
+      - redis
+      - gitaly
+      - minio
+    environment:
+      RAILS_ENV: ${RAILS_ENV}
+      RAILS_HOSTS: "cable"
+      FOSS_ONLY: ${FOSS_ONLY}
+      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      GITLAB_ENABLE_CHAOS_ENDPOINTS: 0 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
+      USE_TRACING: ${USE_TRACING}
+      USE_WEB_SERVER: ${USE_WEB_SERVER}
+      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
+      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
+      CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
+      CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
+      CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
+      CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
+      ENABLE_RBTRACE: "1"
+    working_dir: /home/git/gitlab
+    stdin_open: true
+    tty: true
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
+    command: [/scripts/startup/cable.sh]
+    restart: on-failure:1
+
   sidekiq:
     image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
@@ -160,6 +205,7 @@ services:
       - gitaly
       - redis
       - web
+      - cable
       - minio
     working_dir: /home/git/gitlab-workhorse
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]

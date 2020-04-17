@@ -20,6 +20,7 @@ export PATH="$BUILD_DIR:$PATH"
 
 exec /tmp/gitlab-workhorse/gitlab-workhorse \
   -authBackend="http://web:8080/" \
+  -cableBackend="http://cable:8090" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
   -prometheusListenAddr="0.0.0.0:9229" \

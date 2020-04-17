@@ -157,6 +157,19 @@ test:
   database: gitlabhq_test_<%= File.exist?('ee/app/models/license.rb') && !%w[true 1].include?(ENV['FOSS_ONLY'].to_s) ? 'ee' : 'ce' %>
 EOF
 
+/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:cable.yml > config/cable.yml <<EOF
+production: &production
+  adapter: redis
+  url: redis://redis:6379
+  channel_prefix: gitlab_production
+development:
+  <<: *production
+  channel_prefix: gitlab_development
+test:
+  <<: *production
+  channel_prefix: gitlab_test
+EOF
+
 cp -u config/initializers/rack_attack.rb.example config/initializers/rack_attack.rb
 
 mkdir -p public/uploads/
