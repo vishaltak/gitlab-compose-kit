@@ -199,6 +199,7 @@ Only these configs are supported today:
 - `gitlab.yml`: is merged into `gitlab-rails/config/gitlab.yml`
 - `database.yml`: is merged into `gitlab-rails/config/database.yml`
 - `resque.yml`: is merged into `gitlab-rails/config/resque.yml`
+- `cable.yml`: is merged into `gitlab-rails/config/cable.yml`
 
 To use it edit `./gck.yml` after the setup,
 adding the entries that you need to extend:
