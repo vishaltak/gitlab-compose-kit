@@ -6,7 +6,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       postgresql postgresql-contrib libpq-dev redis-server libicu-dev libssl-dev cmake \
       build-essential libre2-dev libkrb5-dev ed pkg-config \
       sudo libsqlite3-dev openssh-server \
-      libfontconfig1 chromium-chromedriver unzip
+      libfontconfig1 chromium-chromedriver unzip \
+      moreutils
 RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
 
 RUN apt-add-repository ppa:git-core/ppa && \

@@ -12,7 +12,7 @@ if [[ -n "${FORCE_WEBPACK_COMPILE}" ]]; then
   echo "Webpack forced compilation!"
   yarn install
   yarn webpack
-  echo "$GITLAB_RAILS_REVISION" > /home/git/webpack-done
+  echo "$GITLAB_RAILS_REVISION" | sponge /home/git/webpack-done
   exit 0
 fi
 
@@ -34,5 +34,5 @@ fi
 echo "New version of resources ($GITLAB_RAILS_REVISION) detected, recompiling..."
 yarn install
 yarn webpack
-echo "$GITLAB_RAILS_REVISION" > /home/git/webpack-done
+echo "$GITLAB_RAILS_REVISION" | sponge /home/git/webpack-done
 echo "Done."

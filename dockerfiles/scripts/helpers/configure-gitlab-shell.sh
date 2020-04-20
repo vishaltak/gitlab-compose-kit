@@ -5,9 +5,9 @@ set -xe
 cd /home/git/gitlab-shell
 
 rm -f .gitlab_shell_secret
-echo gitlab_shell_secret > /home/git/shell-secret
+echo gitlab_shell_secret | sponge /home/git/shell-secret
 
-/scripts/helpers/merge-yaml.rb config.yml.example /dev/stdin > config.yml <<EOF
+/scripts/helpers/merge-yaml.rb config.yml.example /dev/stdin <<EOF | sponge config.yml
 gitlab_url: "http://web:8080/"
 secret_file: /home/git/shell-secret
 redis:
@@ -24,4 +24,4 @@ set -xe
 
 make setup
 
-git describe > /home/git/gitlab-shell-done
+git describe | sponge /home/git/gitlab-shell-done

@@ -4,7 +4,7 @@ set -xe
 
 cd /home/git/gitlab
 
-echo gitlab_shell_secret > /home/git/shell-secret
+echo gitlab_shell_secret | sponge /home/git/shell-secret
 
 if ! bundle install --quiet --local --without production --jobs=$(nproc); then
   bundle install --without production --jobs=$(nproc)
@@ -14,9 +14,9 @@ git config --global core.autocrlf input
 git config --global gc.auto 0
 git config --global repack.writeBitmaps true
 
-echo "$CUSTOM_CONFIG" > /home/git/gck-custom.yml
+echo "$CUSTOM_CONFIG" | sponge /home/git/gck-custom.yml
 
-/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gck-custom.yml:gitlab.yml > config/gitlab.yml <<EOF
+/scripts/helpers/merge-yaml.rb config/gitlab.yml.example /dev/stdin /home/git/gck-custom.yml:gitlab.yml <<EOF | sponge config/gitlab.yml
 production: &production
   gitlab:
     host: ${CUSTOM_HOSTNAME}
@@ -113,10 +113,10 @@ if [[ ! -e /home/git/registry-auth.crt ]]; then
 fi
 
 # Workhorse secret has to be 32 bytes
-echo -n 12345678901234567890123456789012 | base64 > /home/git/workhorse-secret
+echo -n 12345678901234567890123456789012 | base64 | sponge /home/git/workhorse-secret
 
 if [[ ! -e config/secrets.yml ]]; then
-  cat > config/secrets.yml <<EOF
+  sponge config/secrets.yml <<EOF
 production:
   db_key_base: 9a138cf90aa854ba65b50a5e2e76b2acfb9dfd22d1df5ccb9e1ff5a6f9657e2c
 
@@ -128,14 +128,14 @@ test:
 EOF
 fi
 
-/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:resque.yml > config/resque.yml <<EOF
+/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:resque.yml <<EOF | sponge config/resque.yml
 production: &production
   url: redis://redis:6379
 development: *production
 test: *production
 EOF
 
-/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:database.yml > config/database.yml <<EOF
+/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:database.yml <<EOF | sponge config/database.yml
 production: &production
   adapter: postgresql
   encoding: unicode
@@ -157,7 +157,7 @@ test:
   database: gitlabhq_test_<%= File.exist?('ee/app/models/license.rb') && !%w[true 1].include?(ENV['FOSS_ONLY'].to_s) ? 'ee' : 'ce' %>
 EOF
 
-/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:cable.yml > config/cable.yml <<EOF
+/scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:cable.yml <<EOF | sponge config/cable.yml
 production: &production
   adapter: redis
   url: redis://redis:6379
