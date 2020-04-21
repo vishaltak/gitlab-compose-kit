@@ -1,24 +1,34 @@
-image:
-  name: docker/compose:1.22.0
-  entrypoint: [""]
-
-services:
-  - docker:dind
+stages:
+  - test
+  - build
 
 variables:
   DOCKER_DRIVER: 'overlay2'
   DOCKER_HOST: 'tcp://docker:2375'
 
-before_script:
-  - apk add -U make bash git
-  - echo "export CUSTOM_HOSTNAME=$(hostname -i docker)" > .env
-  - echo "export DOCKER_HOST=$DOCKER_HOST" >> .env
-  - adduser -h /home/git -D -u 1000 git
-  - chown -R git:git .
+default:
+  image:
+    name: docker/compose:1.22.0
+    entrypoint: [""]
+  services:
+    - docker:dind
+  before_script:
+    - apk add -U make bash git
+    - echo "export CUSTOM_HOSTNAME=$(hostname -i docker)" > .env
+    - echo "export DOCKER_HOST=$DOCKER_HOST" >> .env
+    - adduser -h /home/git -D -u 1000 git
+    - chown -R git:git .
+  tags:
+    - gitlab-org-docker
 
-stages:
-  - test
-  - build
+workflow:
+  rules:
+    # For merge requests, create a pipeline.
+    - if: '$CI_MERGE_REQUEST_IID'
+    # For `master` branch, create a pipeline (this includes on schedules, pushes, merges, etc.).
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    # For tags, create a pipeline.
+    - if: '$CI_COMMIT_TAG'
 
 .dev:
   script:
