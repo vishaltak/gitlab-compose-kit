@@ -42,7 +42,7 @@ update-repos: repos
 latest-master: repos
 	git -C gitaly checkout master
 	git -C gitaly pull
-	git -C gitlab-rails checkout master-ee
+	git -C gitlab-rails checkout master-foss
 	git -C gitlab-rails pull
 	git -C gitlab-rails checkout master
 	git -C gitlab-rails pull
