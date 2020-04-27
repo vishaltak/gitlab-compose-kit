@@ -587,7 +587,7 @@ For that purpose use `make ports`. It will look at all ports mapped
 on a host and print that in a user readable form:
 
 ```bash
-$ gitlab-v2 make ports
+$ make ports
 ./scripts/proxy ./scripts/ports
 
 Available mappings:
