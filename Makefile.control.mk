@@ -92,7 +92,7 @@ ps:
 
 .PHONY: pgadmin
 pgadmin:
-	$(DOCKER_COMPOSE_AUX) up -d pgadmin
+	$(DOCKER_COMPOSE_AUX) up pgadmin
 
 .PHONY: spring
 spring: deps
