@@ -55,7 +55,7 @@ if [[ -z "$CUSTOM_HOSTNAME" ]]; then
   echo "Could not detect IP address. Consider setting this as an environment variable:"
   echo "use export CUSTOM_HOSTNAME=<my-ip-address>"
   echo "use export CUSTOM_HOSTNAME=<dns-hostname>"
-  echo "You can put it in .env file!"
+  echo "You can put it in gck.env file!"
   exit 1
 fi
 
