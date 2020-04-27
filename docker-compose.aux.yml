@@ -1,0 +1,23 @@
+version: '2.1'
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4:4.20
+    expose:
+      - 8080
+    ports:
+      - 8080
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+      - src_gck:/gck
+    environment:
+      PGADMIN_DEFAULT_EMAIL: gck@gck
+      PGADMIN_DEFAULT_PASSWORD: gck
+      PGADMIN_LISTEN_PORT: 8080
+      PGADMIN_SERVER_JSON_FILE: /gck/pgadmin-servers.json
+    restart: on-failure:1
+
+volumes:
+  pgadmin:
