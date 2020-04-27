@@ -100,7 +100,9 @@ sudo scripts/setup-mac-exports
 
 By default this project uses NFS to pass data between host and containers on macOS.
 
-You can force it to use bind-mount with `FORCE_BIND_MOUNT=1` added to `.env`:
+You can force it to use bind-mount with `FORCE_BIND_MOUNT=1`
+(which is significantly slower than NFS on Mac)
+added to `gck.env`:
 
 ```bash
 export FORCE_BIND_MOUNT=1
@@ -296,7 +298,7 @@ make migrate-dev
 
 When running on Linux GitLab Compose Kit shares `.X11-unix` with container and makes to run Chrome in non-headless mode. You will see all tests being executed live, in Chrome.
 
-You can disable it with (can be put in `.env`):
+You can disable it with (can be put in `gck.env`):
 
 ```ruby
 export CHROME_HEADLESS=true
@@ -344,8 +346,8 @@ of all events as part of [Tracing](https://docs.gitlab.com/ee/user/project/opera
 To use Tracing, you have to enable it for a moment, or forever:
 
 ```bash
-# forever, by adding to .env
-export USE_TRACING=jaeger >> .env
+# forever, by adding to gck.env
+export USE_TRACING=jaeger >> gck.env
 
 # for a moment
 make web USE_TRACING=jaeger
@@ -362,7 +364,7 @@ To use Prometheus integration, you need to get a token first from GitLab:
 
 1. Start GitLab,
 2. Go to http://localhost:3000/admin/health_check (or any other relevant URL),
-3. Get `METRICS_TOKEN` and write it to `.env`: `export METRICS_TOKEN=3i113EJN5zf4Ng7Nm-mg >> .env`,
+3. Get `METRICS_TOKEN` and write it to `gck.env`: `export METRICS_TOKEN=3i113EJN5zf4Ng7Nm-mg >> gck.env`,
 4. Run Prometheus `make prometheus`.
 
 The Prometheus will be accessible on http://localhost:9090/  (or any other custom URL).
@@ -379,7 +381,7 @@ make drop-cache
 
 This project can use `lsyncd` to run remote environment.
 
-To configure the use of remote environment create a file `.env`:
+To configure the use of remote environment create a file `gck.env`:
 
 ```bash
 export SSH_TARGET_DIR=gitlab-compose-kit
@@ -455,7 +457,7 @@ systemctl enable zram-config
 systemctl start zram-config
 ```
 
-### 3. Create `.env` and fill it with details
+### 3. Create `gck.env` and fill it with details
 
 ```bash
 export SSH_TARGET_DIR=gitlab-compose-kit
@@ -510,7 +512,7 @@ or local mode, when the DNS is already configured you can use:
 export CUSTOM_HOSTNAME=my-custom-dns-name
 ```
 
-You can set it dynamically, or put that into `.env` file.
+You can set it dynamically, or put that into `gck.env` file.
 
 For **remote mode** this by default fallbacks to `$SSH_TARGET_HOST` which is your likely
 the hostname you gonna use.
@@ -522,7 +524,7 @@ and exits. This configuration is ideal for working on application, but is bad if
 any of the Frontend code.
 
 You can enable `dev` mode and support reloading of webpack with configuring the `USE_WEBPACK_DEV=true`.
-For simplicity you can set that in `.env`:
+For simplicity you can set that in `gck.env`:
 
 ```ruby
 export USE_WEBPACK_DEV=true
@@ -565,7 +567,7 @@ You have to do the followings:
 1. Configure additional set of ports for `ssh`, `web` and `registry`,
 
 Let's assume that you have another `gitlab-compose-kit` stored in directory `gck-reviews`.
-You create an `.env` file that redefined ports:
+You create an `gck.env` file that redefined ports:
 
 ```bash
 export CUSTOM_WEB_PORT=4000
@@ -575,6 +577,17 @@ export CUSTOM_REGISTRY_PORT=4050
 
 The next time you run `make up` on `gck-reviews`, it will provision additional set of containers
 for that project, with services exposed on above ports.
+
+## Deprecation of `.env`
+
+Due to conflict with `docker-compose`, `GCK` does not allow
+to use `.env`. You need to migrate `.env` to `gck.env`,
+and each environment variable needs to be prefixed
+with `export`:
+
+```bash
+export METRICS_TOKEN=3i113EJN5zf4Ng7Nm-mg
+```
 
 ## Author
 

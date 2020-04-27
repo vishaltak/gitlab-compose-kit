@@ -9,10 +9,13 @@
 /www-gitlab-com
 /.sync.control*
 /.env
+.DS_Store
+
+# config files
+/gck.env
 /gck.yml
 /docker-compose.override.yml
 /docker-compose.aux.override.yml
-.DS_Store
 
 # old configuration file
 /gitlab.yml

@@ -65,7 +65,7 @@ save_if_changed() {
     return 0
   fi
 
-  echo "export $key=\"${new_value}\"" >> .env
+  echo "export $key=\"${new_value}\"" >> gck.env
 }
 
 save_if_changed SSH_TARGET_HOST
