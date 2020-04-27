@@ -1,0 +1,44 @@
+#!/bin/bash
+
+PROJECT_NAME=$(basename "$PWD")
+FILTER="label=com.docker.compose.project=$PROJECT_NAME"
+
+echo
+echo Available mappings:
+echo
+
+docker ps -f "$FILTER" -q --format '{{.Names}}\t{{.Ports}}' | \
+while read NAME PORT OTHER; do
+  # NAME: gitlab-v2_workhorse_1
+  # PORT: 0.0.0.0:3000->8181/tcp
+  HOST_DEF="${PORT%->*}"
+  CONTAINER_DEF="${PORT#*->}"
+
+  # if we don't have host + container def
+  # we need to ignore it
+  if [[ "$HOST_DEF" == "$CONTAINER_DEF" ]]; then
+    continue
+  fi
+
+  HOST_IP="${HOST_DEF%:*}"
+  HOST_PORT="${HOST_DEF#*:}"
+  HOST_PROTO=tcp
+  HOST_USER=
+
+  case "$NAME" in
+    *_sshd_*)       HOST_PROTO=ssh HOST_USER=git@ ;;
+    *_workhorse_*)  HOST_PROTO=http ;;
+    *_prometheus_*) HOST_PROTO=http ;;
+    *_pages_*)      HOST_PROTO=http ;;
+    *_registry_*)   HOST_PROTO=http ;;
+    *_pgadmin_*)    HOST_PROTO=http ;;
+    *)              HOST_PROTO=tcp ;;
+  esac
+
+  if [[ "$HOST_IP" == "0.0.0.0" ]]; then
+    HOST_IP="$CUSTOM_HOSTNAME"
+  fi
+
+  echo "${HOST_PROTO}://${HOST_USER}${HOST_IP}:${HOST_PORT} (from $NAME)"
+done
+

@@ -578,6 +578,24 @@ export CUSTOM_REGISTRY_PORT=4050
 The next time you run `make up` on `gck-reviews`, it will provision additional set of containers
 for that project, with services exposed on above ports.
 
+## Listing all available ports
+
+Sometimes when you start service it might be hard to discover exactly what
+is running, and understanding what address to use in order to connect.
+
+For that purpose use `make ports`. It will look at all ports mapped
+on a host and print that in a user readable form:
+
+```bash
+$ gitlab-v2 make ports
+./scripts/proxy ./scripts/ports
+
+Available mappings:
+
+ssh://git@my.host:2222 (from gitlab-v2_sshd_1)
+http://my.host:3000 (from gitlab-v2_workhorse_1)
+```
+
 ## Deprecation of `.env`
 
 Due to conflict with `docker-compose`, `GCK` does not allow

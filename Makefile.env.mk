@@ -49,3 +49,7 @@ webpack-compile:
 .PHONY: env
 env:
 	./scripts/proxy bash
+
+.PHONY: ports
+ports:
+	./scripts/proxy ./scripts/ports
