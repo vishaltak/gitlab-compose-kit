@@ -35,8 +35,18 @@ export SRC_MOUNT_OPTS ?= bind
 export SRC_MOUNT_PATH ?= $(CURDIR)
 endif
 
+# Deprecations
 ifneq (,$(wildcard .env))
-include .env
+$(error "`.env` file is not supported by gck, use `gck.env` file instead")
+endif
+
+ifneq (,$(wildcard gitlab.yml))
+$(error "`gitlab.yml` file is not supported, use `gck.yml` file instead")
+endif
+
+# Include configs
+ifneq (,$(wildcard gck.env))
+include gck.env
 endif
 
 ifeq (,$(wildcard gck.yml))
