@@ -1,56 +1,56 @@
 .PHONY: up
 up: deps
-	./scripts/proxy docker-compose up -d
+	$(DOCKER_COMPOSE) up -d
 
 up-%:
-	./scripts/proxy docker-compose up -d $*
+	$(DOCKER_COMPOSE) up -d $*
 
 .PHONY: run
 run: deps
-	./scripts/proxy docker-compose up
+	$(DOCKER_COMPOSE) up
 
 .PHONY: db
 db: deps
-	./scripts/proxy docker-compose up postgres redis
+	$(DOCKER_COMPOSE) up postgres redis
 
 .PHONY: web
 web: deps
-	./scripts/proxy docker-compose up workhorse web cable sshd webpack $(USE_TRACING)
+	$(DOCKER_COMPOSE) up workhorse web cable sshd webpack $(USE_TRACING)
 
 .PHONY: web-and-sidekiq
 web-and-sidekiq: deps
-	./scripts/proxy docker-compose up workhorse web cable sidekiq sshd webpack $(USE_TRACING)
+	$(DOCKER_COMPOSE) up workhorse web cable sidekiq sshd webpack $(USE_TRACING)
 
 cable: deps
-	./scripts/proxy docker-compose up workhorse cable $(USE_TRACING)
+	$(DOCKER_COMPOSE) up workhorse cable $(USE_TRACING)
 
 .PHONY: scale
 scale: deps
-	./scripts/proxy docker-compose scale $(SCALE)
+	$(DOCKER_COMPOSE) scale $(SCALE)
 
 .PHONY: sshd
 sshd: deps
-	./scripts/proxy docker-compose up sshd $(USE_TRACING)
+	$(DOCKER_COMPOSE) up sshd $(USE_TRACING)
 
 .PHONY: sidekiq
 sidekiq: deps
-	./scripts/proxy docker-compose up sidekiq $(USE_TRACING)
+	$(DOCKER_COMPOSE) up sidekiq $(USE_TRACING)
 
 .PHONY: runner
 runner: deps
-	./scripts/proxy docker-compose up runner
+	$(DOCKER_COMPOSE) up runner
 
 .PHONY: registry
 registry: deps
-	./scripts/proxy docker-compose up registry
+	$(DOCKER_COMPOSE) up registry
 
 .PHONY: prometheus
 prometheus: deps
-	./scripts/proxy docker-compose up prometheus
+	$(DOCKER_COMPOSE) up prometheus
 
 .PHONY: restart
 restart: deps
-	./scripts/proxy docker-compose restart
+	$(DOCKER_COMPOSE_AUX) restart
 
 .PHONY: down
 down:
@@ -58,62 +58,66 @@ down:
 	make clean
 
 down-%:
-	./scripts/proxy docker-compose rm -fs $*
+	$(DOCKER_COMPOSE_AUX) rm -fs $*
 
 .PHONY: kill
 kill:
-	./scripts/proxy docker-compose kill
+	$(DOCKER_COMPOSE_AUX) kill
 
 .PHONY: clean
 clean:
-	./scripts/proxy docker-compose rm
+	$(DOCKER_COMPOSE_AUX) rm
 
 .PHONY: drop-cache
 drop-cache:
-	./scripts/proxy docker-compose run --no-deps --rm --entrypoint="/bin/bash -c" spring "rm -rf /data/cache/*"
-	./scripts/proxy docker-compose kill
-	./scripts/proxy docker-compose rm
+	$(DOCKER_COMPOSE) run --no-deps --rm --entrypoint="/bin/bash -c" spring "rm -rf /data/cache/*"
+	$(DOCKER_COMPOSE) kill
+	$(DOCKER_COMPOSE) rm
 
 .PHONY: destroy
 destroy:
-	./scripts/proxy docker-compose down -v --remove-orphans
+	$(DOCKER_COMPOSE_AUX) down -v --remove-orphans
 
 .PHONY: logs
 logs:
-	./scripts/proxy docker-compose logs
+	$(DOCKER_COMPOSE_AUX) logs
 
 .PHONY: tail
 tail:
-	./scripts/proxy docker-compose logs -f
+	$(DOCKER_COMPOSE_AUX) logs -f
 
 .PHONY: ps
 ps:
-	docker-compose ps
+	$(DOCKER_COMPOSE_AUX) ps
+
+.PHONY: pgadmin
+pgadmin:
+	$(DOCKER_COMPOSE_AUX) up -d pgadmin
 
 .PHONY: spring
 spring: deps
-	./scripts/proxy docker-compose up -d spring
+	$(DOCKER_COMPOSE) up -d spring
 
 .PHONY: shell
 shell: spring
-	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh /bin/bash
+	$(DOCKER_COMPOSE) exec spring /scripts/entrypoint/gitlab-rails-exec.sh /bin/bash
 
 .PHONY: command
 command: spring
-	./scripts/proxy docker-compose exec -T spring /scripts/entrypoint/gitlab-rails-exec.sh $(COMMAND)
+	$(DOCKER_COMPOSE) exec -T spring /scripts/entrypoint/gitlab-rails-exec.sh $(COMMAND)
 
 .PHONY: console
 console: spring
-	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails console
+	$(DOCKER_COMPOSE) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails console
 
 .PHONY: dbconsole
 dbconsole: spring
-	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p
+	$(DOCKER_COMPOSE) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p
 
 .PHONY: dbconsole-test
 dbconsole-test: spring
-	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p -e test
+	$(DOCKER_COMPOSE) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p -e test
 
 .PHONY: redisconsole
 redisconsole: spring
-	./scripts/proxy docker-compose exec spring /scripts/entrypoint/gitlab-rails-exec.sh redis-cli -h redis
+	$(DOCKER_COMPOSE) exec spring /scripts/entrypoint/gitlab-rails-exec.sh redis-cli -h redis

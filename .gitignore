@@ -11,6 +11,7 @@
 /.env
 /gck.yml
 /docker-compose.override.yml
+/docker-compose.aux.override.yml
 .DS_Store
 
 # old configuration file
