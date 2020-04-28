@@ -3,14 +3,15 @@ version: '2.1'
 services:
   jaeger:
     image: jaegertracing/all-in-one:latest
+    expose:
+      - 5775/udp # UDP: agent: accept zipkin.thrift over compact thrift protocol (deprecated, used by legacy clients only)
+      - 6831/udp # UDP: agent: accept jaeger.thrift over compact thrift protocol
+      - 6832/udp # UDP: agent: accept jaeger.thrift over binary thrift protocol
+      - 5778/tcp # HTTP: agent: serve configs
+      - 14268/tcp # HTTP: collector: accept jaeger.thrift directly from clients
+      - 9411/tcp # HTTP: collector: Zipkin compatible endpoint (optional)
     ports:
-      - 5775:5775/udp
-      - 6831:6831/udp
-      - 6832:6832/udp
-      - 5778:5778
-      - 16686:16686
-      - 14268:14268
-      - 9411:9411
+      - 16686:16686/tcp # HTTP: query: serve frontend
     environment:
       COLLECTOR_ZIPKIN_HTTP_PORT: 9411
 
