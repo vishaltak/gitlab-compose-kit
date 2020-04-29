@@ -108,6 +108,19 @@ added to `gck.env`:
 export FORCE_BIND_MOUNT=1
 ```
 
+#### 1.3 Install requirements
+
+Debian/Ubuntu:
+
+```bash
+# requirements install
+sudo apt install docker.io docker-compose make
+# add current user to docker group
+sudo usermod -aG docker $USER
+```
+
+The current user will need to log out and back in to have the usermod take effect.
+
 #### 2. Run to setup
 
 ```bash
