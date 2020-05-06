@@ -620,6 +620,34 @@ with `export`:
 export METRICS_TOKEN=3i113EJN5zf4Ng7Nm-mg
 ```
 
+## Integration with Bash shell
+
+GitLab Compose Kit provides a way to integrate with your local Bash shell.
+
+To enable it, load [`.gck`](.gck) file into your shell. You can do it for example by adding
+this at the end of your `~/.bashrc`:
+
+```shell
+if [[ -f ~/path/to/gitlab-compose-kit/.gck ]]; then
+    source ~/path/to/gitlab-compose-kit/.gck
+fi
+```
+
+This will add a `gck` command, with following subcommands:
+
+- `gck refresh` - to reload the `.gck` definitions in your shell. It's best to execute it after updating GCK with
+  newest version from the remote repository
+- `gck cd [argument]` - changes directory to a one specified by the argument, which should be relative to the GitLab
+  Compose Kit root directory. For example execute `gck cd gitlab-rails` to switch to the `gitlab-rails` directory
+  under the GitLab Compose Kit root directory. If the argument is not specified, `gck cd` will switch the directory
+  to GCK root one. This command supports Bash completion.
+- `gck [make target]` - all other commands will be "proxied" to Make in context of the GitLab Compose Kit root
+  directory. This allows to execute all Make targets without a need of switching to the root directory. For example
+  instead of `cd ~/my/projects/gitlab-compose-kit; make up` you can simply call `gck up` which will work exactly the
+  same. After finishing the execution of the Make target, the shell context is brought back to the initial directory.
+  This command supports Bash completion, however it depends on `make help` target and doesn't show all the commands
+  (which mostly means that it will not support `make up-something` and `make down-something`).
+
 ## Author
 
 Kamil Trzciński, 2017, GitLab

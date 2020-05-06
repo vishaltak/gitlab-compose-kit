@@ -3,41 +3,28 @@
 GCK_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 _gck_list_make_targets() {
-    cd ${GCK_PATH}
-    make help | grep "^- " | sed "s/- //" | xargs
-}
-
-_gck_run_make() {
-    current_path=$(pwd)
-
-    cd ${GCK_PATH}
-    make ${1}
-    result=$?
-
-    cd ${current_path}
-    return ${result}
+    make -C "${GCK_PATH}"  help | sed -nr "s/^- //p" || return 1
 }
 
 gck() {
     case "$1" in
         cd)
-            path=${GCK_PATH}
-            if [ -n ${2} ]; then
+            local path=${GCK_PATH}
+
+            if [[ -n ${2} ]]; then
                 path="${path}/${2}"
             fi
-            cd $path
+
+            cd "${path}" || return 1
             ;;
         refresh)
-            source ${BASH_SOURCE[0]}
+            echo -n "Reloading GCK Bash integration... "
+            # shellcheck source=.gck
+            source "${BASH_SOURCE[0]}"
+            echo "DONE"
             ;;
         *)
-            if [[ "$(_gck_list_make_targets)" == *"${1}"* ]]; then
-                _gck_run_make ${1}
-                return $?
-            fi
-
-            echo "Unknown command"
-            return 1
+            make -C "${GCK_PATH}" "${@}" || return 1
             ;;
     esac
 }
@@ -46,21 +33,25 @@ _gck_comp() {
     local cur prev opts
 
     COMPREPLY=()
+
     cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    rev="${COMP_WORDS[COMP_CWORD-1]}"
     opts="cd refresh $(_gck_list_make_targets)"
 
     case "${prev}" in
         cd)
             local -a tokens
-            local IFS=$'\n' x tmp quoted
+            local x tmp quoted
+            local IFS=$'\n'
 
             compopt -o nospace
 
             _quote_readline_by_ref "$cur" quoted
-            x=$(compgen -d -- "${GCK_PATH}/${quoted}") &&
+
+            x=$(compgen -d -- "${GCK_PATH}/${quoted}")
+
             while read -r tmp; do
-                tokens+=( "$(echo ${tmp} | sed "s|${GCK_PATH}/||")" )
+                tokens+=( "${tmp//${GCK_PATH}\//}" )
             done <<< "${x}"
 
             if [[ ${#tokens[@]} -ne 0 ]]; then
@@ -74,7 +65,8 @@ _gck_comp() {
             ;;
     esac
 
-    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    mapfile -t COMPREPLY < <(compgen -W "${opts}" -- "${cur}")
+
     return 0
 }
 
