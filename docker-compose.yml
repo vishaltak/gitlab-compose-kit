@@ -347,7 +347,9 @@ services:
     command: [run-single]
 
   dind:
-    image: docker:dind
+    image: docker:19.03-dind
+    environment:
+      DOCKER_TLS_CERTDIR: ''
     volumes:
       - docker:/var/lib/docker
     privileged: true
