@@ -170,6 +170,4 @@ test:
   channel_prefix: gitlab_test
 EOF
 
-cp -u config/initializers/rack_attack.rb.example config/initializers/rack_attack.rb
-
 mkdir -p public/uploads/
