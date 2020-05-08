@@ -35,7 +35,7 @@ _gck_comp() {
     COMPREPLY=()
 
     cur="${COMP_WORDS[COMP_CWORD]}"
-    rev="${COMP_WORDS[COMP_CWORD-1]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
     opts="cd refresh $(_gck_list_make_targets)"
 
     case "${prev}" in
