@@ -411,8 +411,7 @@ services:
             token: [${METRICS_TOKEN}]
           static_configs:
           - targets:
-            - unicorn:8080
-            - puma:8080
+            - web:8080
         - job_name: cadvisor
           metrics_path: /metrics
           static_configs:
