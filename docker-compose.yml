@@ -284,6 +284,7 @@ services:
     environment:
       GITLAB_GITALY_REVISION: ${GITLAB_GITALY_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      GITALY_GITLAB_SHELL_DIR: "/home/git/gitlab-shell"
       USE_TRACING: ${USE_TRACING}
     working_dir: /home/git/gitaly
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
