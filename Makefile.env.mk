@@ -10,7 +10,7 @@ create-test: deps
 
 .PHONY: create-runner
 create-runner: deps
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=development -e IN_MEMORY_APPLICATION_SETTINGS=true \
+	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
 		spring bin/rails runner "Ci::Runner.create(runner_type: :instance_type, token: 'SHARED_RUNNER_TOKEN')"
 
 .PHONY: create
@@ -18,12 +18,12 @@ create: create-dev create-test create-runner
 
 .PHONY: migrate-dev
 migrate-dev:
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=development -e IN_MEMORY_APPLICATION_SETTINGS=true \
+	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
 		spring bash -c 'bin/rake db:migrate'
 
 .PHONY: migrate-test
 migrate-test:
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=test -e IN_MEMORY_APPLICATION_SETTINGS=true \
+	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
 		spring bash -c 'bin/rake db:migrate'
 
 .PHONY: update-dev
@@ -39,7 +39,7 @@ update: update-dev update-test
 
 .PHONY: assets-compile
 assets-compile:
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=test -e IN_MEMORY_APPLICATION_SETTINGS=true \
+	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
 		spring bash -c 'bin/rake gitlab:assets:compile'
 
 .PHONY: webpack-compile
