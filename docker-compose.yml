@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   web:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -49,7 +49,7 @@ services:
     restart: on-failure:1
 
   cable:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -94,7 +94,7 @@ services:
     restart: on-failure:1
 
   sidekiq:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -132,7 +132,7 @@ services:
     restart: on-failure:1
 
   spring:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -179,7 +179,7 @@ services:
     command: [cat]
 
   workhorse:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -213,7 +213,7 @@ services:
     restart: on-failure:3
 
   sshd:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -239,7 +239,7 @@ services:
     command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -264,7 +264,7 @@ services:
     restart: on-failure:3
 
   gitaly:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
@@ -292,7 +292,7 @@ services:
     restart: on-failure:3
 
   pages:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles
       args:
