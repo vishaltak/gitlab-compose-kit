@@ -389,49 +389,6 @@ services:
     command:
       - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket && minio server /export"
 
-  prometheus:
-    image: prom/prometheus
-    ports:
-      - 9090:9090/tcp
-    environment:
-      CONFIG: |
-        global:
-          scrape_interval: 15s
-          evaluation_interval: 15s
-        scrape_configs:
-        - job_name: backend
-          metrics_path: /metrics
-          static_configs:
-          - targets:
-            - sidekiq:3807
-            - gitaly:9236
-            - workhorse:9229
-        - job_name: web
-          metrics_path: /-/metrics
-          params:
-            token: [${METRICS_TOKEN}]
-          static_configs:
-          - targets:
-            - web:8080
-        - job_name: cadvisor
-          metrics_path: /metrics
-          static_configs:
-          - targets:
-            - cadvisor:8080
-      CMD: |
-        set -e
-        echo "$$CONFIG"
-        echo "$$CONFIG" > /etc/prometheus/prometheus.yml
-        /bin/prometheus \
-          --config.file=/etc/prometheus/prometheus.yml \
-          --storage.tsdb.path=/prometheus
-    volumes:
-      - 'prometheus:/prometheus'
-    entrypoint: []
-    command: ["/bin/sh", "-c", 'eval "$$CMD"']
-    depends_on:
-      - cadvisor
-
   cadvisor:
     image: google/cadvisor:v0.33.0
     expose:
@@ -454,7 +411,6 @@ volumes:
   shared:
   repositories:
   object-storage:
-  prometheus:
 
   home_git:
 

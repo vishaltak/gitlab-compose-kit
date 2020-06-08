@@ -33,5 +33,72 @@ services:
       PGADMIN_LISTEN_PORT: 8080
     restart: on-failure:1
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090/tcp
+    environment:
+      CONFIG: |
+        global:
+          scrape_interval: 15s
+          evaluation_interval: 15s
+        scrape_configs:
+        - job_name: node
+          metrics_path: /metrics
+          static_configs:
+          - targets:
+            - node-exporter:9100
+            labels:
+              instance: web:8080
+        - job_name: gitlab-rails
+          metrics_path: /-/metrics
+          params:
+            token: [${METRICS_TOKEN}]
+          static_configs:
+          - targets:
+            - web:8080            
+        - job_name: gitlab-sidekiq
+          metrics_path: /metrics
+          static_configs:
+          - targets:
+            - sidekiq:3807
+        - job_name: gitlab-workhorse
+          metrics_path: /metrics
+          static_configs:
+          - targets:
+            - workhorse:9229
+        - job_name: gitaly
+          metrics_path: /metrics
+          static_configs:
+          - targets:
+            - gitaly:9236
+        - job_name: cadvisor
+          metrics_path: /metrics
+          static_configs:
+          - targets:
+            - cadvisor:8080
+      CMD: |
+        set -e
+        echo "$$CONFIG"
+        echo "$$CONFIG" > /etc/prometheus/prometheus.yml
+        /bin/prometheus \
+          --config.file=/etc/prometheus/prometheus.yml \
+          --storage.tsdb.path=/prometheus
+    volumes:
+      - 'prometheus:/prometheus'
+    entrypoint: []
+    command: ["/bin/sh", "-c", 'eval "$$CMD"']
+    depends_on:
+      - cadvisor
+
+  node-exporter:
+    image: prom/node-exporter
+    hostname: web
+    volumes:
+      - '/:/rootfs:ro,rslave'
+    command:
+      - '--path.rootfs=/rootfs'
+
 volumes:
   pgadmin:
+  prometheus:
