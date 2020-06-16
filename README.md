@@ -136,12 +136,25 @@ provision application.
 $ make up
 ```
 
-This will run application in background.
+This will run the application in the background.
+
+It is also possible to choose what to start using the following syntax - this will
+start the runner and web containers, along with their dependencies, for example.
+
+```bash
+$ make up-web up-runner
+```
 
 To run it interactively:
 
 ```bash
 $ make run
+```
+
+Similarly, you can interactively start a subset of the services as follows:
+
+```bash
+$ make web runner
 ```
 
 Then, to reload environment simply Ctrl-C and re-run it again :)
