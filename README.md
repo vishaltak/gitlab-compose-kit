@@ -424,7 +424,7 @@ It can be any user `gitlab`, `ubuntu` as long as it is not `root`.
 It is possible to run application in `production`-like environment.
 
 The `RAILS_ENV=production` uses the same database, and configs,
-but runs application with application caching enabled.
+but runs application with application caching disabled.
 
 To selectively run for example `web` or `sidekiq`:
 
