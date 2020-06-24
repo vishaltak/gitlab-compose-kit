@@ -68,7 +68,7 @@ dev EE:
     - su git -mc 'make create-test'
     - su git -mc 'make command'
   variables:
-    COMMAND: bin/rspec spec/models/chat_name_spec.rb
+    COMMAND: bin/rspec spec/models/chat_name_spec.rb spec/features/issues/gfm_autocomplete_spec.rb:27
 
 test FOSS:
   extends: .test

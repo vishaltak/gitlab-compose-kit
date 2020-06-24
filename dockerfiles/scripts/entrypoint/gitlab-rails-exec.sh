@@ -22,6 +22,16 @@ for i in $(seq 1 1000); do
 done
 echo " Done"
 
+if [[ -z "$CHROME_HEADLESS" ]]; then
+  if [[ -n "$DISPLAY" ]]; then
+    export CHROME_HEADLESS=false
+    echo 'Running in `export CHROME_HEADLESS=false` mode.'
+  else
+    export CHROME_HEADLESS=true
+    echo 'Running in `export CHROME_HEADLESS=true` mode: as the `$DISPLAY` is missing.'
+  fi
+fi
+
 source /scripts/helpers/configure-gitlab-tracing.sh
 
 exec "$@"
