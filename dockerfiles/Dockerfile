@@ -14,10 +14,13 @@ RUN apt-add-repository ppa:git-core/ppa && \
     apt-get update -y && \
     apt-get install -y git
 
+# `gem update --system 3.0.6` is a fix for `warning: constant Gem::ConfigMap is deprecated`
+# https://github.com/rubygems/rubygems/issues/3068#issuecomment-574775885
+
 RUN apt-add-repository ppa:brightbox/ruby-ng && \
     apt-get update -y && \
     apt-get install -y ruby2.6 ruby2.6-dev && \
-    gem update --system && \
+    gem update --system 3.0.6 && \
     gem install bundler -v "~>2.0" && \
     gem install bundler -v "~>1.0"
 
