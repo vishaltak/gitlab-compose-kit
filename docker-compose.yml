@@ -421,6 +421,13 @@ volumes:
         o: $SRC_MOUNT_OPTS
         device: "$SRC_MOUNT_PATH"
 
+  src_data:
+    driver: local
+    driver_opts:
+        type: $SRC_MOUNT_TYPE
+        o: $SRC_MOUNT_OPTS
+        device: "$SRC_MOUNT_PATH/data"
+
   src_gitlab_shell:
     driver: local
     driver_opts:
