@@ -77,6 +77,8 @@ services:
           static_configs:
           - targets:
             - cadvisor:8080
+        rule_files:
+        - /data/prometheus/rules/*.rules
       CMD: |
         set -e
         echo "$$CONFIG"
@@ -86,6 +88,7 @@ services:
           --storage.tsdb.path=/prometheus
     volumes:
       - 'prometheus:/prometheus'
+      - 'src_data:/data:ro'
     entrypoint: []
     command: ["/bin/sh", "-c", 'eval "$$CMD"']
     depends_on:

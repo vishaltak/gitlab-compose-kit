@@ -364,37 +364,6 @@ export CUSTOM_WEB_CONFIG=3:6 # 3 workers, 6 threads
 export CUSTOM_WEB_CONFIG=1:3 # 1 worker, 3 threads
 ```
 
-## Use OpenTracing
-
-GitLab Compose Kit supports Jaeger integration that allows to see a correlation
-of all events as part of [Tracing](https://docs.gitlab.com/ee/user/project/operations/tracing.html).
-
-To use Tracing, you have to enable it for a moment, or forever:
-
-```bash
-# forever, by adding to gck.env
-export USE_TRACING=jaeger >> gck.env
-
-# for a moment
-make web USE_TRACING=jaeger
-```
-
-Open [Performance Bar](https://docs.gitlab.com/ee/administration/monitoring/performance/performance_bar.html) or open Jaeger UI: https://localhost:16686.
-
-## Use Prometheus
-
-GitLab Compose Kit can run Prometheus that will scrape all metrics from all started components:
-Puma, Unicorn, Sidekiq, Workhorse and Gitaly, except Runner.
-
-To use Prometheus integration, you need to get a token first from GitLab:
-
-1. Start GitLab,
-2. Go to http://localhost:3000/admin/health_check (or any other relevant URL),
-3. Get `METRICS_TOKEN` and write it to `gck.env`: `export METRICS_TOKEN=3i113EJN5zf4Ng7Nm-mg >> gck.env`,
-4. Run Prometheus `make prometheus`.
-
-The Prometheus will be accessible on http://localhost:9090/  (or any other custom URL).
-
 ## Drop cache
 
 Sometimes it is useful to reinstall all gems, node modules and so-on without recreating databases, just use:
@@ -582,6 +551,10 @@ and give you an interactive terminal.
 $ make env
 $ docker-compose ps
 ```
+
+## Auxiliary Services
+
+For non-essential services and how to configure and run them, please refer to [README.aux.md](README.aux.md).
 
 ## Multiple installations
 
