@@ -358,12 +358,13 @@ services:
       - 2375
 
   postgres:
-    image: 'postgres:9-alpine'
+    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:postgres-${COMPOSE_KIT_REVISION}
+    build:
+      context: ./dockerfiles/postgres
     environment:
     - POSTGRES_PASSWORD=password
     volumes:
     - 'postgres:/var/lib/postgresql/data'
-    - './dockerfiles/postgres:/docker-entrypoint-initdb.d:ro'
     expose:
     - 5432
     mem_limit: 256M

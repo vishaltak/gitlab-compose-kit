@@ -86,6 +86,11 @@ test EE:
   variables:
     GITLAB_RAILS_BRANCH: master
 
+bats unit tests:
+  script:
+    - apk add -U bats
+    - su git -mc 'bats bats/'
+
 .smoke_test:
   script:
     - echo 'export USE_WEBPACK_DEV=false' >> gck.env
