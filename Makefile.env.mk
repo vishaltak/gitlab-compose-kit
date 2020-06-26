@@ -53,3 +53,7 @@ env:
 .PHONY: ports
 ports:
 	./scripts/proxy ./scripts/ports
+
+.PHONY: volumes-usage
+volumes-usage:
+	./scripts/proxy ./scripts/volumes-usage

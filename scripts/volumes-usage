@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PROJECT_NAME=$(basename "$PWD")
+
+echo
+echo Disk usage:
+echo
+
+docker volume ls -q | grep -E "${PROJECT_NAME}_*" | \
+while read VOLUME; do
+  docker run --rm -v "$VOLUME:/$VOLUME" alpine du -sh /$VOLUME
+done
+
+echo
