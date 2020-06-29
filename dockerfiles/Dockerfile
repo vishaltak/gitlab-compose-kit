@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
     apt-get install -y software-properties-common curl \
-      postgresql postgresql-contrib libpq-dev redis-server libicu-dev libssl-dev cmake \
+      libpq-dev redis-server libicu-dev libssl-dev cmake \
       build-essential libre2-dev libkrb5-dev ed pkg-config \
       sudo libsqlite3-dev openssh-server \
       libfontconfig1 chromium-chromedriver unzip \
@@ -32,6 +32,11 @@ RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add
 
 RUN wget -q -O - https://dl.google.com/go/go1.13.linux-amd64.tar.gz | \
     tar -zxC /usr/local
+
+RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    apt-add-repository "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" && \
+    apt-get update -y && \
+    apt-get install -y postgresql-11 postgresql-contrib-11
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
     chmod +x /usr/local/bin/dumb-init
