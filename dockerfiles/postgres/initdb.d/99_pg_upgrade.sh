@@ -20,20 +20,22 @@ if [[ -s "$PGROOT/PG_VERSION" ]]; then
   mv "$PGROOT"/[^0-9]* "$PGNEW/"
 fi
 
-# Migrate the `/var/lib/postgres/data/<old-version>`
-if [[ -d "$PGROOT/9.6" ]]; then
-  echo "Shutting down '$PGDATA'..."
-  pg_ctl -D "$PGDATA" -m fast -w stop
+for old_version in $UPGRADEABLE_PGVERSIONS; do
+  # Migrate the `/var/lib/postgres/data/<old-version>`
+  if [[ -d "$PGROOT/$old_version" ]]; then
+    echo "Shutting down '$PGDATA'..."
+    pg_ctl -D "$PGDATA" -m fast -w stop
 
-  echo "Migrating the "$PGROOT/9.6" to "$PGDATA"..."
-  pg_upgrade \
-    -d "$PGROOT/9.6" -b /pg96/usr/local/bin \
-    -D "$PGDATA" -B /usr/local/bin || \
-    ( cat pg_upgrade_server.log; exit 1 )
-  mv "$PGROOT/9.6" "$PGROOT/9.6-migrated"
+    echo "Migrating the '$PGROOT/$old_version' to '$PGDATA'..."
+    pg_upgrade \
+      -d "$PGROOT/$old_version" -b "/postgres/$old_version/usr/local/bin" \
+      -D "$PGDATA" -B /usr/local/bin || \
+      ( cat pg_upgrade_server.log; exit 1 )
+    mv "$PGROOT/$old_version" "$PGROOT/$old_version-migrated"
 
-  echo "Starting '$PGDATA'..."
-  pg_ctl -D "$PGDATA" -w start
-fi
+    echo "Starting '$PGDATA'..."
+    pg_ctl -D "$PGDATA" -w start
+  fi
+done
 
 popd
