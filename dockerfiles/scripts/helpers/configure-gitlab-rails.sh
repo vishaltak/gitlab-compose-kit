@@ -102,6 +102,9 @@ production: &production
         path_style: true # this is required as only DNS name exposed is minio
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
+  prometheus:
+    enable: true
+    listen_address: prometheus:9090
 
 development: *production
 EOF

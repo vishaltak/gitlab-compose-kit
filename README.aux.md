@@ -34,13 +34,13 @@ At GitLab we have started to productize Prometheus by bundling it with the app, 
 us to self-monitor GitLab at various levels. If you need to test features that rely on a
 running Prometheus instance, such as GitLab Self-Monitoring or Usage Ping, you can set up
 and run a local Prometheus as per the instructions below. Prometheus will scrape all metrics
-from running components as specified in `scape_configs`.
+from running components as specified in `scrape_configs`.
 
-### Enable Prometheus
+### Configure Prometheus
 
-For the GitLab application to recognize that Prometheus is running, you need to enable it
-via the `gitlab.yml` settings file. This file is managed by the GCK and rewritten frequently,
-so to make the necessary changes, edit `gck.yml` as follows:
+Prometheus is already configured to work with the main application out of the box, but you can 
+tweak its settings via `gitlab.yml`. This file is managed by the GCK and rewritten frequently,
+so to make the necessary changes, edit `gck.yml` instead, e.g.:
 
 ```yaml
 gitlab.yml:
@@ -50,12 +50,12 @@ gitlab.yml:
       listen_address: prometheus:9090
 ```
 
-This will ensure that the application is aware that a local Prometheus is running and where
-to reach it.
+Refer to [gitlab.yml.example](https://gitlab.com/gitlab-org/gitlab/-/blob/master/config/gitlab.yml.example)
+for the settings keys available here.
 
 ### Run Prometheus
 
-The Prometheus compose service is readily configured. You can start it as you would any other service:
+You can start Prometheus as you would any other service:
 
 ```bash
 $ make up-prometheus
