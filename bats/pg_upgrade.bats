@@ -27,6 +27,7 @@ setup() {
 }
 
 teardown() {
+  [[ -n "$ID" ]] && docker logs "$ID"
   [[ -n "$ID" ]] && docker rm -f "$ID"
   [[ -n "$IMAGE_ID" ]] && docker image rm -f "$IMAGE_ID"
   [[ -n "$DATA_ID" ]] && docker volume rm -f "$DATA_ID"
@@ -49,6 +50,7 @@ drop_db_container() {
   docker logs "$ID"
   docker stop "$ID"
   docker rm "$ID"
+  ID=""
 }
 
 wait_for() {
