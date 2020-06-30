@@ -34,28 +34,34 @@ workflow:
     # For tags, create a pipeline.
     - if: '$CI_COMMIT_TAG'
 
+.logs:
+  after_script:
+    - su git -mc 'make logs > logs.txt'
+  artifacts:
+    when: always
+    expire_in: 1 month
+    paths:
+      - logs.txt
+
 .dev:
   script:
     - su git -mc 'make deps'
     - su git -mc 'git -C gitlab-rails checkout $GITLAB_RAILS_BRANCH'
-    - su git -mc 'if ! make create-dev; then make logs > logs.txt; exit 1; fi'
-  artifacts:
-    paths:
-      - logs.txt
+    - su git -mc 'make create-dev'
 
 dev FOSS:
-  extends: .dev
+  extends: [.dev, .logs]
   variables:
     GITLAB_RAILS_BRANCH: master-foss
 
 dev CE:
-  extends: .dev
+  extends: [.dev, .logs]
   variables:
     GITLAB_RAILS_BRANCH: master
     FOSS_ONLY: 1
 
 dev EE:
-  extends: .dev
+  extends: [.dev, .logs]
   variables:
     GITLAB_RAILS_BRANCH: master
   # enabled, because of https://gitlab.com/gitlab-org/gitlab/merge_requests/15556
@@ -71,18 +77,18 @@ dev EE:
     COMMAND: bin/rspec spec/models/chat_name_spec.rb spec/features/issues/gfm_autocomplete_spec.rb:27
 
 test FOSS:
-  extends: .test
+  extends: [.test, .logs]
   variables:
     GITLAB_RAILS_BRANCH: master-foss
 
 test CE:
-  extends: .test
+  extends: [.test, .logs]
   variables:
     GITLAB_RAILS_BRANCH: master
     FOSS_ONLY: 1
 
 test EE:
-  extends: .test
+  extends: [.test, .logs]
   variables:
     GITLAB_RAILS_BRANCH: master
 
