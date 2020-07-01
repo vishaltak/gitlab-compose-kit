@@ -63,7 +63,7 @@ production: &production
     dev_server:
       enabled: ${USE_WEBPACK_DEV:-false}
       host: webpack
-      port: 3808
+      port: ${CUSTOM_WEBPACK_PORT}
   artifacts:
     enabled: true
     path: /data/shared/artifacts
