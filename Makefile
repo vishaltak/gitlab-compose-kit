@@ -14,6 +14,7 @@ export FORCE_BIND_MOUNT ?=
 export CUSTOM_WEB_PORT ?= 3000
 export CUSTOM_SSH_PORT ?= 2222
 export CUSTOM_REGISTRY_PORT ?= 5000
+export CUSTOM_WEBPACK_PORT ?= 3808
 export CUSTOM_WEB_CONFIG ?=
 
 export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails rev-parse HEAD 2>/dev/null || echo "unknown")

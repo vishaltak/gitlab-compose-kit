@@ -525,9 +525,15 @@ For simplicity you can set that in `gck.env`:
 export USE_WEBPACK_DEV=true
 ```
 
-In this mode Webpack is will be run in dev mode when starting webserver.
+In this mode Webpack will be run in dev mode when starting webserver.
 
-Since if running in `single` mode you might want to fire assets compilcation,
+To change the port the dev server listens on:
+
+```ruby
+export WEBPACK_CUSTOM_PORT=3808
+```
+
+Since if running in `single` mode you might want to fire assets compilation,
 you can use `webpack-compile` for that purpose:
 
 ```ruby

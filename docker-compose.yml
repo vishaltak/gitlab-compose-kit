@@ -39,6 +39,7 @@ services:
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
       CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
+      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
       CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
       ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
@@ -84,6 +85,7 @@ services:
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
       CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
+      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
       CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
       ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
@@ -124,6 +126,7 @@ services:
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
       CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
+      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
       ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
@@ -167,6 +170,7 @@ services:
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
       CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
+      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}
@@ -250,14 +254,14 @@ services:
       - src_gitlab_rails:/home/git/gitlab
       - cache:/data/cache
     environment:
-      DEV_SERVER_PORT: 3808
+      DEV_SERVER_PORT: ${CUSTOM_WEBPACK_PORT}
       DEV_SERVER_HOST: 0.0.0.0
       DEV_SERVER_LIVERELOAD: 'true'
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
       NODE_ENV: development
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
-    expose:
-      - 3808
+    ports:
+      - "${CUSTOM_WEBPACK_PORT}:${CUSTOM_WEBPACK_PORT}"
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --]
     command: [/scripts/startup/webpack.sh]
