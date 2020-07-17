@@ -7,6 +7,10 @@ read workers threads rest <<< "$CUSTOM_WEB_CONFIG"
 workers="${workers:-2}"
 threads="${threads:-4}"
 
+if [[ "${USE_CABLE_SERVER}" == "in_app" ]]; then
+  export ACTION_CABLE_IN_APP=true
+fi
+
 case "$USE_WEB_SERVER" in
     thin)
         echo "Starting Thin with single worker..."

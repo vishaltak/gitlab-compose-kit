@@ -364,6 +364,14 @@ export CUSTOM_WEB_CONFIG=3:6 # 3 workers, 6 threads
 export CUSTOM_WEB_CONFIG=1:3 # 1 worker, 3 threads
 ```
 
+## ActionCable standalone mode
+
+By default, ActionCable runs on the same Rails web server. To run it separately:
+
+```ruby
+export USE_CABLE_SERVER=standalone
+```
+
 ## Drop cache
 
 Sometimes it is useful to reinstall all gems, node modules and so-on without recreating databases, just use:

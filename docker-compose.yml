@@ -33,6 +33,7 @@ services:
       GITLAB_CHAOS_SECRET: secret
       USE_TRACING: ${USE_TRACING}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
+      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
       USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
@@ -79,6 +80,7 @@ services:
       GITLAB_ENABLE_CHAOS_ENDPOINTS: 0 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
       USE_TRACING: ${USE_TRACING}
       USE_WEB_SERVER: ${USE_WEB_SERVER}
+      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
       CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
@@ -188,6 +190,7 @@ services:
     environment:
       GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
       USE_TRACING: ${USE_TRACING}
     volumes:
       - home_git:/home/git
