@@ -83,6 +83,8 @@ git clone https://gitlab.com/gitlab-org/gitlab-compose-kit.git
 
 #### 1.1. Configure NFS (for macOS)
 
+**Note:** If you're using macOS 10.15+, do not clone the project into your `~/Documents`, `~/Downloads`, `~/Desktop` directories. `nfsd` has permission issues with your user folders and will run into `stale NFS file handle` errors when trying to create the Docker containers. For more context, see [these](https://objekt.click/2019/11/docker-the-problem-with-macos-catalina/) [articles](https://blog.docksal.io/nfs-access-issues-on-macos-10-15-catalina-75cd23606913).
+
 On macOS this project uses NFS to pass data between host and containers.
 It seems to be more performant than using [osxfs](https://docs.docker.com/docker-for-mac/osxfs-caching/#performance-implications-of-host-container-file-system-consistency).
 
