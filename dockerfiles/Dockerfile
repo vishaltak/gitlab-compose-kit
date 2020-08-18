@@ -8,7 +8,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       sudo libsqlite3-dev openssh-server \
       libfontconfig1 chromium-chromedriver unzip \
       moreutils smem \
-      exiftool # Required by workhorse to process image uploads 
+      exiftool graphicsmagick # Required by workhorse to process images 
 
 RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
 
