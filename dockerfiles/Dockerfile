@@ -48,7 +48,7 @@ ARG GID
 
 # Enable passwordless sudo for users under the "sudo" group
 RUN sed -i -e \
-    's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
+    's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=\(ALL\) NOPASSWD:ALL/g' \
     /etc/sudoers
 
 RUN groupadd -g "$GID" git || true
