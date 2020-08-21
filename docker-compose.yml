@@ -132,6 +132,8 @@ services:
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
       ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
+    stdin_open: true
+    tty: true
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/sidekiq.sh]
     restart: on-failure:1
