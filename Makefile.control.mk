@@ -129,3 +129,15 @@ tail:
 .PHONY: ps
 ps:
 	$(DOCKER_COMPOSE_AUX) ps
+
+.PHONY: attach
+attach:
+	./scripts/proxy bash -c 'ID=$$(docker ps -f "label=com.docker.compose.project=$$(basename "$$PWD")" -f "label=com.docker.compose.service=$(SERVICE)" -q) && docker attach "$${ID:-missing}"'
+
+.PHONY: attach-web
+attach-web: SERVICE=web
+attach-web: attach
+
+.PHONY: attach-sidekiq
+attach-sidekiq: SERVICE=sidekiq
+attach-sidekiq: attach
