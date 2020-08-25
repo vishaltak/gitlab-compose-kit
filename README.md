@@ -217,6 +217,39 @@ You can view these by `cd` into one of the directories and type `git remote -v`.
 
 Once you have finished developing you can use easily use this to deploy it back to the correct remote project.
 
+### Debugging
+
+While working on any of the Ruby GitLab services in GCK (`web`, `cable` and `sidekiq`), you can use `pry` to set breakpoints.
+This is somewhat complicated by the fact that you need to go through a Docker container now:
+
+1. Set a breakpoint via `binding.pry` in a Ruby source file.
+1. When the breakpoint is hit, run `make attach-<service_name>` to connect your `stdin` to `pry`.
+1. Enter `disable-pry` or press `Ctrl+d` when done debugging.
+
+Example:
+
+```
+[8:50:30] work/gl-gck::master ✗ make attach-web
+[1] pry(main)> whereami
+
+From: /home/git/gitlab/config/initializers/0_license.rb @ line 3 :
+
+    1: # frozen_string_literal: true
+    2: binding.pry
+ => 3: Gitlab.ee do
+    4:   public_key_file = File.read(Rails.root.join(".license_encryption_key.pub"))
+    5:   public_key = OpenSSL::PKey::RSA.new(public_key_file)
+    6:   Gitlab::License.encryption_key = public_key
+    7: rescue
+    8:   warn "WARNING: No valid license encryption key provided."
+```
+
+To detach, press `Ctrl+p Ctrl+q` in sequence.
+
+**NOTE**: Pressing `Ctrl+c` while attached will send `SIGKILL` to the container and cause it to shut down.
+
+For more information, see `$ docker help attach`.
+
 ## User GitLab config
 
 You sometimes want to configure additional configs.

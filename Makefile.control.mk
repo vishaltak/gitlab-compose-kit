@@ -138,6 +138,10 @@ attach:
 attach-web: SERVICE=web
 attach-web: attach
 
+.PHONY: attach-cable
+attach-cable: SERVICE=cable
+attach-cable: attach
+
 .PHONY: attach-sidekiq
 attach-sidekiq: SERVICE=sidekiq
 attach-sidekiq: attach
