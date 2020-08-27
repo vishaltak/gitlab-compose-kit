@@ -570,11 +570,19 @@ export USE_WEBPACK_DEV=true
 
 In this mode Webpack will be run in dev mode when starting webserver.
 
+**Important:** After enabling Webpack `dev` mode, delete the `gitlab-rails/public/assets`
+directory (if it exists). If this directory exists, Rails bypasses Webpack and serves
+frontend assets directly from this directory, causing changes to frontend files not
+to take effect.
+
 To change the port the dev server listens on:
 
 ```ruby
 export WEBPACK_CUSTOM_PORT=3808
 ```
+
+Reminder: If you use are running the GCK on a remote machine with a firewall,
+make sure you allow incoming traffic to the appropriate ports.
 
 Since if running in `single` mode you might want to fire assets compilation,
 you can use `webpack-compile` for that purpose:
