@@ -19,7 +19,7 @@ It currently supports:
 - GitLab Pages,
 - GitLab Runner,
 - Minio as Object Storage backend,
-- Rails 5,
+- Rails,
 - Jaeger,
 - Runs on Puma,
 - Prometheus with cAdvisor (to gather container metrics)
