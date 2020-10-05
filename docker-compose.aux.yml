@@ -16,7 +16,7 @@ services:
       COLLECTOR_ZIPKIN_HTTP_PORT: 9411
 
   pgadmin:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:pgadmin-${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:pgadmin-${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles/pgadmin
     expose:

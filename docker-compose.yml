@@ -367,7 +367,7 @@ services:
       - 2375
 
   postgres:
-    image: registry.gitlab.com/ayufan/gitlab-compose-kit/releases:postgres-${COMPOSE_KIT_REVISION}
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:postgres-${COMPOSE_KIT_REVISION}
     build:
       context: ./dockerfiles/postgres
     environment:
