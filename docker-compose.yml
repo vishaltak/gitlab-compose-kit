@@ -400,7 +400,7 @@ services:
       - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket && minio server /export"
 
   cadvisor:
-    image: google/cadvisor:v0.33.0
+    image: gcr.io/google_containers/cadvisor:v0.36.0
     expose:
       - 8080
     volumes:
