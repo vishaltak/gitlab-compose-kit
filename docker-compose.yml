@@ -325,7 +325,7 @@ services:
     command: [/scripts/startup/pages.sh]
 
   registry:
-    image: registry:2.4.1
+    image: registry:2.7.1
     volumes:
       - registry:/registry
       - home_git:/home/git
