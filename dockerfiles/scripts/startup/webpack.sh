@@ -24,7 +24,7 @@ if [[ "${USE_WEBPACK_DEV}" == "true" ]]; then
 fi
 
 echo 'Webpack dev-server disabled!'
-echo 'use `export ENABLE_WEBPACK_DEV=true` to enable hotreload!'
+echo 'use `export USE_WEBPACK_DEV=true` to enable hotreload!'
 
 if [[ "$GITLAB_RAILS_REVISION" == "$(cat /home/git/webpack-done || true)" ]]; then
   echo "Webpack resources are up-to date ($GITLAB_RAILS_REVISION)."
