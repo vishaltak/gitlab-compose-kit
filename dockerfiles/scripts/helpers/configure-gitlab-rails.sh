@@ -21,6 +21,10 @@ production: &production
   gitlab:
     host: ${CUSTOM_HOSTNAME}
     port: ${CUSTOM_WEB_PORT}
+    content_security_policy:
+      directives:
+        connect_src: "'self' http://${CUSTOM_HOSTNAME}:* ws://${CUSTOM_HOSTNAME}:* wss://${CUSTOM_HOSTNAME}:*"
+        script_src: "'self' 'unsafe-eval' http://${CUSTOM_HOSTNAME}:* https://www.google.com/recaptcha/ https://www.recaptcha.net/ https://www.gstatic.com/recaptcha/ https://apis.google.com"
   gitlab_shell:
     ssh_port: ${CUSTOM_SSH_PORT}
     secret_file: /home/git/shell-secret
