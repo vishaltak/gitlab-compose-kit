@@ -1,9 +1,7 @@
 version: '2.1'
+
 services:
   web:
-    extends:
-      file: docker-compose.common.yml
-      service: railsenv
     expose:
       - 8080
     depends_on:
@@ -17,9 +15,6 @@ services:
     command: [/scripts/startup/web.sh]
 
   cable:
-    extends:
-      file: docker-compose.common.yml
-      service: railsenv
     expose:
       - 8090
     depends_on:
@@ -32,9 +27,6 @@ services:
     command: [/scripts/startup/cable.sh]
 
   sidekiq:
-    extends:
-      file: docker-compose.common.yml
-      service: railsenv
     depends_on:
       - postgres
       - redis
@@ -43,9 +35,6 @@ services:
     command: [/scripts/startup/sidekiq.sh]
 
   spring:
-    extends:
-      file: docker-compose.common.yml
-      service: railsenv
     volumes:
       - src_gck:/gck
       - /tmp/.X11-unix:/tmp/.X11-unix
@@ -64,9 +53,6 @@ services:
     command: [cat]
 
   workhorse:
-    extends:
-      file: docker-compose.common.yml
-      service: railsimage
     environment:
       GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
@@ -92,9 +78,6 @@ services:
     command: [/scripts/startup/workhorse.sh]
 
   sshd:
-    extends:
-      file: docker-compose.common.yml
-      service: railsimage
     environment:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_TRACING: ${USE_TRACING}
@@ -112,9 +95,6 @@ services:
     command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
-    extends:
-      file: docker-compose.common.yml
-      service: railsimage
     volumes:
       - src_gitlab_rails:/home/git/gitlab
     environment:
@@ -131,9 +111,6 @@ services:
     command: [/scripts/startup/webpack.sh]
 
   gitaly:
-    extends:
-      file: docker-compose.common.yml
-      service: railsimage
     volumes:
       - src_gitaly:/home/git/gitaly
       - src_gitlab_rails:/home/git/gitlab
@@ -153,9 +130,6 @@ services:
     command: [/scripts/startup/gitaly.sh]
 
   pages:
-    extends:
-      file: docker-compose.common.yml
-      service: railsimage
     volumes:
       - home_git:/home/git
       - src_gitlab_pages:/home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
