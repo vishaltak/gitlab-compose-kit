@@ -34,4 +34,17 @@ fi
 
 source /scripts/helpers/configure-gitlab-tracing.sh
 
-exec "$@"
+echo
+
+# Detect old paths and write warning about them
+for path in /data/cache/bundle-*; do
+    [[ "$path" == "$GEM_HOME" ]] && continue
+
+    echo "!!! $path detected !!!"
+    echo "Since it was used by older versions of Ruby"
+    echo "consider removing to recycle disk space with:"
+    echo "$ rm -r $path"
+    echo ""
+done
+
+exec bundle exec "$@"
