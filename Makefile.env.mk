@@ -6,12 +6,12 @@ create-dev: deps
 .PHONY: create-test
 create-test: deps
 	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
-		spring /scripts/entrypoint/gitlab-rails-exec.sh bash -c 'bin/rake -t db:drop db:prepare'
+		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake -t db:drop db:prepare
 
 .PHONY: create-runner
 create-runner: deps
 	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
-		spring bin/rails runner "Ci::Runner.create(runner_type: :instance_type, token: 'SHARED_RUNNER_TOKEN')"
+		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails runner "Ci::Runner.create(runner_type: :instance_type, token: 'SHARED_RUNNER_TOKEN')"
 
 .PHONY: create
 create: create-dev create-test create-runner
@@ -19,12 +19,12 @@ create: create-dev create-test create-runner
 .PHONY: migrate-dev
 migrate-dev:
 	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
-		spring bash -c 'bin/rake db:migrate'
+		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake db:migrate
 
 .PHONY: migrate-test
 migrate-test:
 	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
-		spring bash -c 'bin/rake db:migrate'
+		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake db:migrate
 
 .PHONY: update-dev
 update-dev: update-repos
@@ -40,7 +40,7 @@ update: update-dev update-test
 .PHONY: assets-compile
 assets-compile:
 	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
-		spring bash -c 'bin/rake gitlab:assets:compile'
+		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake gitlab:assets:compile
 
 .PHONY: webpack-compile
 webpack-compile:
