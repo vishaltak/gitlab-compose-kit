@@ -1,20 +1,7 @@
 version: '2.1'
+
 services:
   web:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
-    volumes:
-      - home_git:/home/git
-      - src_gitlab_shell:/home/git/gitlab-shell
-      - src_gitlab_rails:/home/git/gitlab
-      - src_gitaly:/home/git/gitaly
-      - cache:/data/cache
-      - repositories:/data/repositories
-      - shared:/data/shared
     expose:
       - 8080
     depends_on:
@@ -24,47 +11,10 @@ services:
       - webpack
       - minio
     environment:
-      RAILS_ENV: ${RAILS_ENV}
       RAILS_HOSTS: "web"
-      FOSS_ONLY: ${FOSS_ONLY}
-      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
-      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
-      GITLAB_CHAOS_SECRET: secret
-      USE_TRACING: ${USE_TRACING}
-      USE_WEB_SERVER: ${USE_WEB_SERVER}
-      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
-      USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
-      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
-      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
-      CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
-      CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
-      CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
-      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
-      CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
-      ENABLE_RBTRACE: "1"
-    working_dir: /home/git/gitlab
-    stdin_open: true
-    tty: true
-    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/web.sh]
-    restart: on-failure:1
 
   cable:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
-    volumes:
-      - home_git:/home/git
-      - src_gitlab_shell:/home/git/gitlab-shell
-      - src_gitlab_rails:/home/git/gitlab
-      - src_gitaly:/home/git/gitaly
-      - cache:/data/cache
-      - repositories:/data/repositories
-      - shared:/data/shared
     expose:
       - 8090
     depends_on:
@@ -73,90 +23,21 @@ services:
       - gitaly
       - minio
     environment:
-      RAILS_ENV: ${RAILS_ENV}
       RAILS_HOSTS: "cable"
-      FOSS_ONLY: ${FOSS_ONLY}
-      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
-      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      GITLAB_ENABLE_CHAOS_ENDPOINTS: 0 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
-      USE_TRACING: ${USE_TRACING}
-      USE_WEB_SERVER: ${USE_WEB_SERVER}
-      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
-      USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
-      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
-      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
-      CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
-      CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
-      CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
-      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
-      CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
-      ENABLE_RBTRACE: "1"
-    working_dir: /home/git/gitlab
-    stdin_open: true
-    tty: true
-    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/cable.sh]
-    restart: on-failure:1
 
   sidekiq:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
-    volumes:
-      - home_git:/home/git
-      - src_gitlab_shell:/home/git/gitlab-shell
-      - src_gitlab_rails:/home/git/gitlab
-      - src_gitaly:/home/git/gitaly
-      - cache:/data/cache
-      - repositories:/data/repositories
-      - shared:/data/shared
     depends_on:
       - postgres
       - redis
       - gitaly
       - minio
-    environment:
-      RAILS_ENV: ${RAILS_ENV}
-      FOSS_ONLY: ${FOSS_ONLY}
-      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
-      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      USE_TRACING: ${USE_TRACING}
-      USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
-      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
-      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
-      CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
-      CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
-      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
-      CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
-      ENABLE_RBTRACE: "1"
-    working_dir: /home/git/gitlab
-    stdin_open: true
-    tty: true
-    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [/scripts/startup/sidekiq.sh]
-    restart: on-failure:1
 
   spring:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
     volumes:
-      - home_git:/home/git
       - src_gck:/gck
-      - src_gitlab_shell:/home/git/gitlab-shell
-      - src_gitlab_rails:/home/git/gitlab
-      - src_gitlab_workhorse:/home/git/gitlab-workhorse
-      - src_gitaly:/home/git/gitaly
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - cache:/data/cache
-      - repositories:/data/repositories
-      - shared:/data/shared
     depends_on:
       - postgres
       - redis
@@ -164,47 +45,23 @@ services:
       - webpack
       - minio
     environment:
-      ENABLE_SPRING: ${ENABLE_SPRING}
-      FOSS_ONLY: ${FOSS_ONLY}
       SPEC_OPTS: "--format documentation"
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "1" # disable https://github.com/rails/rails/blob/fc2684c9c012b95ce003cce22b378d5ea9ab56d3/activerecord/lib/active_record/tasks/database_tasks.rb#L58
-      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
-      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
-      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
-      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
-      CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
-      CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
-      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
-      CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}
-      ENABLE_RBTRACE: "1"
       HISTCONTROL: "ignoreboth:erasedups"
-    stdin_open: true
-    tty: true
-    working_dir: /home/git/gitlab
-    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
     command: [cat]
 
   workhorse:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
     environment:
       GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_CABLE_SERVER: ${USE_CABLE_SERVER}
       USE_TRACING: ${USE_TRACING}
     volumes:
-      - home_git:/home/git
       - src_gitlab_rails:/home/git/gitlab
       - src_gitlab_shell:/home/git/gitlab-shell
       - src_gitlab_workhorse:/home/git/gitlab-workhorse
-      - cache:/data/cache
       - repositories:/data/repositories
       - shared:/data/shared
     expose:
@@ -218,22 +75,13 @@ services:
       - cable
       - minio
     working_dir: /home/git/gitlab-workhorse
-    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/workhorse.sh]
-    restart: on-failure:3
 
   sshd:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
     environment:
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       USE_TRACING: ${USE_TRACING}
     volumes:
-      - home_git:/home/git
       - src_gitlab_shell:/home/git/gitlab-shell
       - repositories:/data/repositories
     expose:
@@ -244,21 +92,11 @@ services:
       - gitaly
       - redis
       - web
-    working_dir: /home/git
-    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [sudo, /scripts/startup/sshd.sh]
 
   webpack:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
     volumes:
-      - home_git:/home/git
       - src_gitlab_rails:/home/git/gitlab
-      - cache:/data/cache
     environment:
       DEV_SERVER_PORT: ${CUSTOM_WEBPACK_PORT}
       DEV_SERVER_HOST: 0.0.0.0
@@ -271,21 +109,12 @@ services:
     working_dir: /home/git/gitlab
     entrypoint: [/usr/local/bin/dumb-init, --]
     command: [/scripts/startup/webpack.sh]
-    restart: on-failure:3
 
   gitaly:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
     volumes:
-      - home_git:/home/git
       - src_gitaly:/home/git/gitaly
       - src_gitlab_rails:/home/git/gitlab
       - src_gitlab_shell:/home/git/gitlab-shell
-      - cache:/data/cache
       - repositories:/data/repositories
     depends_on:
       - redis
@@ -299,19 +128,11 @@ services:
     working_dir: /home/git/gitaly
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
-    restart: on-failure:3
 
   pages:
-    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
-    build:
-      context: ./dockerfiles
-      args:
-        UID: ${CUSTOM_UID}
-        GID: ${CUSTOM_GID}
     volumes:
       - home_git:/home/git
       - src_gitlab_pages:/home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
-      - cache:/data/cache
       - shared:/data/shared
     depends_on:
       - redis

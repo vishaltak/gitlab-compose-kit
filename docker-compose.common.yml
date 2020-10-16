@@ -1,0 +1,62 @@
+# This provides a baseline configuration for most of services
+
+version: '2.1'
+
+services:
+  web: &application_image
+    image: &imagename registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
+    build: &imagebuild
+      context: ./dockerfiles
+      args:
+        UID: ${CUSTOM_UID}
+        GID: ${CUSTOM_GID}
+    volumes:
+      - home_git:/home/git
+      - src_gitlab_shell:/home/git/gitlab-shell
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitaly:/home/git/gitaly
+      - repositories:/data/repositories
+      - cache:/data/cache
+      - shared:/data/shared
+    environment:
+      RAILS_ENV: ${RAILS_ENV}
+      RAILS_HOSTS: "" # undefined
+      FOSS_ONLY: ${FOSS_ONLY}
+      GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
+      GITLAB_CHAOS_SECRET: secret
+      USE_TRACING: ${USE_TRACING}
+      USE_WEB_SERVER: ${USE_WEB_SERVER}
+      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
+      USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
+      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
+      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
+      CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
+      CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
+      CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
+      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
+      CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
+      ENABLE_RBTRACE: "1"
+    working_dir: /home/git/gitlab
+    stdin_open: true
+    tty: true
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
+
+  cable: *application_image
+  sidekiq: *application_image
+  spring: *application_image
+  
+  workhorse: &generic_image
+    image: *imagename
+    build: *imagebuild
+    volumes:
+      - home_git:/home/git
+      - cache:/data/cache
+    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
+    restart: on-failure:1
+
+  webpack: *generic_image
+  gitaly: *generic_image
+  pages: *generic_image
+  sshd: *generic_image
