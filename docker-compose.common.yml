@@ -3,7 +3,7 @@
 version: '2.1'
 
 services:
-  web: &image_with_env
+  web: &application_image
     image: &imagename registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:${COMPOSE_KIT_REVISION}
     build: &imagebuild
       context: ./dockerfiles
@@ -43,11 +43,11 @@ services:
     tty: true
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
 
-  cable: *image_with_env
-  sidekiq: *image_with_env
-  spring: *image_with_env
+  cable: *application_image
+  sidekiq: *application_image
+  spring: *application_image
   
-  workhorse: &image_simple
+  workhorse: &generic_image
     image: *imagename
     build: *imagebuild
     volumes:
@@ -56,7 +56,7 @@ services:
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     restart: on-failure:1
 
-  webpack: *image_simple
-  gitaly: *image_simple
-  pages: *image_simple
-  sshd: *image_simple
+  webpack: *generic_image
+  gitaly: *generic_image
+  pages: *generic_image
+  sshd: *generic_image
