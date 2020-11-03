@@ -47,7 +47,7 @@ RUN wget -q -O - https://dl.google.com/go/go1.13.linux-amd64.tar.gz | \
 RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
     apt-add-repository "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" && \
     apt-get update -y && \
-    apt-get install -y postgresql-11 postgresql-contrib-11
+    apt-get install -y postgresql-12 postgresql-contrib-12
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
     chmod +x /usr/local/bin/dumb-init
