@@ -6,8 +6,8 @@ cd /home/git/gitlab
 
 echo gitlab_shell_secret | sponge /home/git/shell-secret
 
-if ! bundle install --quiet --local --without production --jobs=$(nproc); then
-  bundle install --without production --jobs=$(nproc)
+if ! bundle install --quiet --local --jobs=$(nproc); then
+  bundle install --jobs=$(nproc)
 fi
 
 git config --global core.autocrlf input
