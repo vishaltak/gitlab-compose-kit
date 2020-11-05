@@ -26,12 +26,16 @@ for old_version in $UPGRADEABLE_PGVERSIONS; do
     echo "Shutting down '$PGDATA'..."
     pg_ctl -D "$PGDATA" -m fast -w stop
 
+    export LD_LIBRARY_PATH="/usr/lib:/lib:/postgres/$old_version/usr/lib:/postgres/$old_version/lib"
+
     echo "Migrating the '$PGROOT/$old_version' to '$PGDATA'..."
     pg_upgrade \
       -d "$PGROOT/$old_version" -b "/postgres/$old_version/usr/local/bin" \
       -D "$PGDATA" -B /usr/local/bin || \
       ( cat pg_upgrade_server.log; exit 1 )
     mv "$PGROOT/$old_version" "$PGROOT/$old_version-migrated"
+
+    unset LD_LIBRARY_PATH
 
     echo "Starting '$PGDATA'..."
     pg_ctl -D "$PGDATA" -w start

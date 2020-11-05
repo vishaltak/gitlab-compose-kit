@@ -109,7 +109,7 @@ clean:
 # These commands do drop data
 .PHONY: drop-cache
 drop-cache:
-	$(DOCKER_COMPOSE_AUX) run --no-deps --rm --entrypoint="/bin/bash -c" spring "rm -rf /data/cache/*"
+	$(DOCKER_COMPOSE_AUX) run --no-deps --rm --entrypoint="/bin/bash -c" spring "sudo rm -rf /data/cache/*"
 	$(DOCKER_COMPOSE_AUX) kill
 	$(DOCKER_COMPOSE_AUX) rm
 
