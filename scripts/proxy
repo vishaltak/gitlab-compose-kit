@@ -30,6 +30,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "USE_WEB_SERVER=$USE_WEB_SERVER" "&&" \
     "export" "ENABLE_SPRING=$ENABLE_SPRING" "&&" \
     "export" "USE_WEBPACK_DEV=$USE_WEBPACK_DEV" "&&" \
+    "export" "FORCE_WEBPACK_COMPILE=$FORCE_WEBPACK_COMPILE" "&&" \
     "export" "USE_TRACING=$USE_TRACING" "&&" \
     "export" "COMPOSE_HTTP_TIMEOUT=$COMPOSE_HTTP_TIMEOUT" "&&" \
     "export" "RAILS_ENV=$RAILS_ENV" "&&" \

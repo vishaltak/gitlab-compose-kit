@@ -3,6 +3,7 @@ export GCK_HOME=$(CURDIR)
 export USE_WEB_SERVER ?= puma
 export USE_TRACING ?=
 export USE_WEBPACK_DEV ?= false
+export FORCE_WEBPACK_COMPILE ?= false
 export USE_CABLE_SERVER ?= in_app
 export CHROME_HEADLESS ?=
 export DISPLAY ?=
