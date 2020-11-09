@@ -30,6 +30,7 @@ exec /tmp/gitlab-workhorse/gitlab-workhorse \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
   -prometheusListenAddr="0.0.0.0:9229" \
+  -pprofListenAddr="0.0.0.0:6060" \
   -documentRoot="/home/git/gitlab/public" \
   -config="/home/git/workhorse-config.toml" \
   -secretPath="/home/git/workhorse-secret" \
