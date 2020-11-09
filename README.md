@@ -250,6 +250,26 @@ To detach, press `Ctrl+p Ctrl+q` in sequence.
 
 For more information, see `$ docker help attach`.
 
+### Profiling
+
+#### Rails / Sidekiq
+
+See https://docs.gitlab.com/ee/development/performance.html#profiling
+
+#### Workhorse
+
+In GCK, Workhorse runs a `pprof` server by default. You can connect to it via the `go tool pprof` command
+as described in https://golang.org/pkg/net/http/pprof/#pkg-overview.
+
+By default, the `pprof` server listens on container port `6060`. If you would like to reach it from
+your host machine, you need to also bind that port by adding an override rule in `docker-compose.override.yml`:
+
+```yaml
+workhorse:
+    ports:
+    - 6060:6060
+```
+
 ## User GitLab config
 
 You sometimes want to configure additional configs.

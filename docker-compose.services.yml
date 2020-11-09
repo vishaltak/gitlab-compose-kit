@@ -67,6 +67,7 @@ services:
       - shared:/data/shared
     expose:
       - 8181
+      - 6060 # pprof server
     ports:
       - "${CUSTOM_WEB_PORT}:8181"
     depends_on:
