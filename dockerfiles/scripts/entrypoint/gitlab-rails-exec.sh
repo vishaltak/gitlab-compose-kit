@@ -47,4 +47,4 @@ for path in /data/cache/bundle-*; do
     echo ""
 done
 
-exec bundle exec "$@"
+exec "$@"
