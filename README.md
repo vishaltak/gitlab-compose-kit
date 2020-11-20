@@ -720,7 +720,7 @@ This will add a `gck` command, with following subcommands:
 
 For most developers, the GDK will offer a more straightforward path. If you're looking for something requiring the lowest maintainence effort, [consider using the GDK via GitPod](https://gitlab.com/gitlab-org/gitlab-development-kit/-/blob/master/doc/howto/gitpod.md). If you're running Linux and want something container-based, GCK is a great option.
 
-The GCK is built with a completely different philosophy than the GDK, and this difference in architecture means the two are wholly incompatible. Since GCK is heavily Docker-based, maintainence of your local dev environment is significantly easier, however, being Docker based also means that it does not run natively on OSX and will pose problems during setup. There are two open issues that would solve some of the pain of running it on OSX, for those interested in contributing: 
+The GCK is built with a completely different philosophy than the GDK, and this difference in architecture means the two are wholly incompatible. Since GCK is heavily Docker-based, maintainence of your local dev environment is significantly easier, however, being Docker based also means that it does not run natively on OSX and will pose problems during setup. There are two open issues that would solve some of the pain of running it on macOS, for those interested in contributing: 
 
 - https://gitlab.com/gitlab-org/gitlab-compose-kit/-/issues/31
 - https://gitlab.com/gitlab-org/gitlab-compose-kit/-/merge_requests/97
