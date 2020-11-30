@@ -1,3 +1,8 @@
+
+> **Note:** For most developers working on the GitLab codebase, the recommended path is to use the [GitLab Development Kit](https://gitlab.com/gitlab-org/gitlab-development-kit/). More details under [Should I use GDK or GCK](#should-i-use-gdk-or-gck), below.
+
+---
+
 ## GitLab Development using Docker Compose
 
 This projects aims to ease GitLab Development,
@@ -710,6 +715,16 @@ This will add a `gck` command, with following subcommands:
   same. After finishing the execution of the Make target, the shell context is brought back to the initial directory.
   This command supports Bash completion, however it depends on `make help` target and doesn't show all the commands
   (which mostly means that it will not support `make up-something` and `make down-something`).
+
+## Should I use GDK or GCK
+
+For most developers, the GDK will offer a more straightforward path because it runs natively on your machine. If you're looking for something requiring the lowest maintainence effort, [consider using the GDK via GitPod](https://gitlab.com/gitlab-org/gitlab-development-kit/-/blob/master/doc/howto/gitpod.md). If you're running Linux and want something container-based, GCK is a great option.
+
+The GCK is built with a completely different philosophy than the GDK, and this difference in architecture means the two are wholly incompatible. Since GCK is heavily Docker-based, maintainence of your local dev environment is significantly easier, however, being Docker based also means that it does not run natively on OSX and may pose problems during setup. There are two open issues that would solve some of the pain of running it on macOS, for those interested in contributing: 
+
+- https://gitlab.com/gitlab-org/gitlab-compose-kit/-/issues/31
+- https://gitlab.com/gitlab-org/gitlab-compose-kit/-/merge_requests/97
+
 
 ## Author
 
