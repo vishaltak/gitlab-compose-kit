@@ -46,7 +46,7 @@ latest-master: repos
 	git -C gitlab-rails pull
 	git -C gitlab-rails checkout master
 	git -C gitlab-rails pull
-	git -C gitlab-shell checkout master
+	git -C gitlab-shell checkout main
 	git -C gitlab-shell pull
 	git -C gitlab-workhorse checkout master
 	git -C gitlab-workhorse pull
