@@ -4,19 +4,6 @@
 ## TESTS
 ##-------
 
-@test "Migrate PostgreSQL 9.6 to 12" {
-  # Start 9.6 and provision it with data
-  create_db_container "postgres:9.6-alpine"
-  psql -c "CREATE DATABASE my_database"
-  psql my_database -c "SELECT 1"
-  drop_db_container
-
-  # Start latest and expect data to be migrated
-  create_db_container "$IMAGE_ID"
-  psql my_database -c "SELECT 1"
-  drop_db_container
-}
-
 @test "Migrate PostgreSQL 11 to 12" {
   # Start 11 and provision it with data
   create_db_container "postgres:11-alpine"
