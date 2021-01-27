@@ -14,6 +14,11 @@ export BUNDLE_FLAGS=--local
 cd /home/git/gitaly
 make
 
+if [[ -n "$FORCE_GITALY_COMPILE" ]]; then
+  echo "Forced gitaly compile!"
+  exit 0
+fi
+
 # Remove: `gitlab_url=`
 # - some older gitaly versions do break as they require `url`
 # - will be fixed with https://gitlab.com/gitlab-org/gitaly/-/merge_requests/2240

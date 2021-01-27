@@ -43,8 +43,17 @@ assets-compile:
 		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake gitlab:assets:compile
 
 .PHONY: webpack-compile
-webpack-compile:
+webpack-compile: deps
 	$(DOCKER_COMPOSE) run -e FORCE_WEBPACK_COMPILE=true webpack
+
+.PHONY: gitaly-compile
+gitaly-compile: deps
+	$(DOCKER_COMPOSE) run -e FORCE_GITALY_COMPILE=true gitaly
+
+.PHONY: rails-compile
+rails-compile: deps
+	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
+		spring /scripts/entrypoint/gitlab-rails-exec.sh /bin/true
 
 .PHONY: env
 env:

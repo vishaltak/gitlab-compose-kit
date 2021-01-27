@@ -22,6 +22,7 @@ default:
     - echo "export DOCKER_HOST=$DOCKER_HOST" >> gck.env
     - adduser -h /home/git -D -u 1000 git
     - chown -R git:git .
+    - 'retry() { TRIES="$1"; shift; for i in $(seq $TRIES); do if "$@"; then return 0; fi; done; return 1; }'
   tags:
     - gitlab-org-docker
 
@@ -45,8 +46,16 @@ workflow:
 
 .dev:
   script:
-    - su git -mc 'make deps'
+    # checkout correct branch
+    - retry 5 su git -mc 'make deps'
     - su git -mc 'git -C gitlab-rails checkout $GITLAB_RAILS_BRANCH'
+  
+    # compile all components sequentially to ensure most predictable performance
+    - su git -mc 'make rails-compile'
+    - su git -mc 'make gitaly-compile'
+    - su git -mc 'make webpack-compile'
+
+    # create dev environment
     - su git -mc 'make create-dev'
 
 dev FOSS:
@@ -64,17 +73,24 @@ dev EE:
   extends: [.dev, .logs]
   variables:
     GITLAB_RAILS_BRANCH: master
-  # enabled, because of https://gitlab.com/gitlab-org/gitlab/merge_requests/15556
-  allow_failure: true
 
 .test:
   script:
-    - su git -mc 'make deps'
+    # checkout correct branch
+    - retry 5 su git -mc 'make deps'
     - su git -mc 'git -C gitlab-rails checkout $GITLAB_RAILS_BRANCH'
+  
+    # compile all components sequentially to ensure most predictable performance
+    - su git -mc 'make rails-compile'
+    - su git -mc 'make gitaly-compile'
+    - su git -mc 'make webpack-compile'
+
+    # run test
     - su git -mc 'make create-test'
     - su git -mc 'make command'
+
   variables:
-    COMMAND: bin/rspec spec/models/chat_name_spec.rb spec/features/projects/raw/user_interacts_with_raw_endpoint_spec.rb
+    COMMAND: bin/rspec spec/models/chat_name_spec.rb spec/features/projects/badges/pipeline_badge_spec.rb
 
 test FOSS:
   extends: [.test, .logs]
