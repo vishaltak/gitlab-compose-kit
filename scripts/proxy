@@ -36,6 +36,7 @@ if [[ -n "$SSH_TARGET_HOST" ]]; then
     "export" "RAILS_ENV=$RAILS_ENV" "&&" \
     "export" "FOSS_ONLY=$FOSS_ONLY" "&&" \
     "export" "METRICS_TOKEN=$METRICS_TOKEN" "&&" \
+    "export" "ADDITIONAL_DEPS=$ADDITIONAL_DEPS" "&&" \
     "mkdir" "-p" "$SSH_TARGET_DIR" "&&" \
     "cd" "$SSH_TARGET_DIR" "&&" \
     ./scripts/proxy $(ssh_escape "$@")

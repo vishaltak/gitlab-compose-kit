@@ -64,6 +64,11 @@ RUN groupadd -g "$GID" git || true
 RUN useradd -g "$GID" -G sudo -u "$UID" -m -d "/home/git" git
 RUN usermod -p '*' git
 
+ARG ADDITIONAL_DEPS
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt update -y && \
+    apt install -y $ADDITIONAL_DEPS
+
 USER git
 
 VOLUME ["/home/git", "/data/cache"]
