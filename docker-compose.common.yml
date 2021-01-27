@@ -10,6 +10,7 @@ services:
       args:
         UID: ${CUSTOM_UID}
         GID: ${CUSTOM_GID}
+        ADDITIONAL_DEPS: ${ADDITIONAL_DEPS}
     volumes:
       - home_git:/home/git
       - src_gitlab_shell:/home/git/gitlab-shell

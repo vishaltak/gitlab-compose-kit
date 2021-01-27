@@ -682,6 +682,19 @@ ssh://git@my.host:2222 (from gitlab-v2_sshd_1)
 http://my.host:3000 (from gitlab-v2_workhorse_1)
 ```
 
+## Install additional deps
+
+You might regularly want to have additional packages installed
+except a default installed into a container. You might always use
+the `sudo apt-get install <package>`, but this is something that
+you need to do every time since the containers are reinitialized.
+
+The better way is to add to `gck.env` (do not include quotes!):
+
+```bash
+ADDITIONAL_DEPS=gdb strace
+```
+
 ## Deprecation of `.env`
 
 Due to conflict with `docker-compose`, `GCK` does not allow
