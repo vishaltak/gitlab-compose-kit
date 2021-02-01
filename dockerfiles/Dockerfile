@@ -1,53 +1,13 @@
-FROM ubuntu:bionic
+ARG BASE_IMAGE=registry.gitlab.com/gitlab-org/gitlab-build-images:ruby-2.7.2-golang-1.14-git-2.29-lfs-2.9-chrome-87-node-14.15-yarn-1.22-postgresql-12-graphicsmagick-1.3.34
+FROM ${BASE_IMAGE}
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
-    apt-get install -y software-properties-common curl \
-      libpq-dev redis-server libicu-dev libssl-dev cmake \
-      build-essential libre2-dev libkrb5-dev ed pkg-config \
-      sudo libsqlite3-dev openssh-server \
-      libfontconfig1 chromium-chromedriver unzip \
-      moreutils smem strace lsof \
-      exiftool graphicsmagick # Required by workhorse to process images 
-
-RUN if [ ! -f /usr/bin/chromedriver ]; then ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver; fi
-
-RUN apt-add-repository ppa:git-core/ppa && \
-    apt-get update -y && \
-    apt-get install -y git
-
-ENV RUBY_VERSION=2.7
-
-# Workarounds:
-# 1. `dpkg-divert` is a fix for `warning: constant Gem::ConfigMap is deprecated`
-#    https://github.com/rubygems/rubygems/issues/3068
-#    An alternative is to use `DEBIAN_DISABLE_RUBYGEMS_INTEGRATION=true`,
-#    but Gitaly does selectively pass env variables to `bundle exec`:
-#    https://gitlab.com/gitlab-org/gitaly/blob/1fdfa49c8a43559a94ea1ee1960356261bd8d092/internal/gitaly/linguist/linguist.go#L23
-# 2. `ppa:ayufan/ruby-ppa` is to add `ruby2.7` since `ppa:brightbox/ruby-ng`
-#    does not have it yet
-
-RUN apt-add-repository ppa:brightbox/ruby-ng && \
-    apt-add-repository ppa:ayufan/ruby-ppa && \
-    apt-get update -y && \
-    apt-get install -y ruby${RUBY_VERSION} ruby${RUBY_VERSION}-dev && \
-    dpkg-divert --add --rename --divert /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb.bak /usr/lib/ruby/vendor_ruby/rubygems/defaults/operating_system.rb && \
-    gem install bundler -v "~>2.0" && \
-    gem install bundler -v "~>1.0"
-
-RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-    apt-add-repository "deb https://deb.nodesource.com/node_12.x bionic main" && \
-    apt-get update -y && \
-    apt-get install -y nodejs && \
-    npm install yarn -g --unsafe-perm
-
-RUN wget -q -O - https://dl.google.com/go/go1.13.linux-amd64.tar.gz | \
-    tar -zxC /usr/local
-
-RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    apt-add-repository "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" && \
-    apt-get update -y && \
-    apt-get install -y postgresql-12 postgresql-contrib-12
+    apt-get install -y \
+        software-properties-common curl \
+        build-essential pkg-config cmake \
+        sudo openssh-server \
+        moreutils smem strace lsof
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
     chmod +x /usr/local/bin/dumb-init
