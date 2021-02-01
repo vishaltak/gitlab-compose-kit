@@ -6,7 +6,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y \
         software-properties-common curl \
         build-essential pkg-config cmake \
-        sudo openssh-server \
+        sudo openssh-server redis-tools \
         moreutils smem strace lsof
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
