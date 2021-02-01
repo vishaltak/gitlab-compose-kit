@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -xeo pipefail
 
 export BUNDLE_JOBS=$(nproc)
 export BUILD_DIR=/tmp/gitlab-workhorse

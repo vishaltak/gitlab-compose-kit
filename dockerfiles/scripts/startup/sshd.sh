@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -xeo pipefail
 
 cat <<EOF > /etc/ssh/sshd_config
 AllowUsers git

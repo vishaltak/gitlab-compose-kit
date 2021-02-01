@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -xeo pipefail
 
 pushd ruby
 if ! bundle install --quiet --local; then
