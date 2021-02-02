@@ -3,13 +3,15 @@ FROM ${BASE_IMAGE}
 
 RUN [ -n "$RUBY_VERSION" ] || ( echo "*** RUBY_VERSION is required to be defined by base image"; exit 1 )
 
+ARG ADDITIONAL_DEPS
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update -y && \
     apt-get install -y \
         software-properties-common curl \
         build-essential pkg-config cmake \
         sudo openssh-server redis-tools \
-        moreutils smem strace lsof
+        moreutils smem strace lsof \
+        $ADDITIONAL_DEPS
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
     chmod +x /usr/local/bin/dumb-init
@@ -25,11 +27,6 @@ RUN sed -i -e \
 RUN groupadd -g "$GID" git || true
 RUN useradd -g "$GID" -G sudo -u "$UID" -m -d "/home/git" git
 RUN usermod -p '*' git
-
-ARG ADDITIONAL_DEPS
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt update -y && \
-    apt install -y $ADDITIONAL_DEPS
 
 USER git
 
