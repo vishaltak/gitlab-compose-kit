@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -xeo pipefail
 
 cd /home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
 go build

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -xeo pipefail
 
 /scripts/helpers/fix-perms.sh
 /scripts/helpers/fix-gitlab-tmp.sh

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -xeo pipefail
 
 cd /home/git/gitlab-shell
 
@@ -20,7 +20,7 @@ if [[ "$(git describe)" == "$(cat /home/git/gitlab-shell-done || true)" ]]; then
   exit 0
 fi
 
-set -xe
+set -xeo pipefail
 
 make setup
 

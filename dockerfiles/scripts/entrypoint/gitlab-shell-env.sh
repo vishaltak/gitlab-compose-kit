@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -xeo pipefail
 
 if ! gem list -i bundler; then
     gem install bundler
