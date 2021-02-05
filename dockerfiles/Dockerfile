@@ -9,7 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y \
         software-properties-common curl \
         build-essential pkg-config cmake \
-        sudo openssh-server redis-tools \
+        sudo openssh-server redis-tools libjemalloc2 \
         moreutils smem strace lsof \
         $ADDITIONAL_DEPS
 
@@ -49,6 +49,13 @@ ENV BUNDLE_SILENCE_ROOT_WARNING=1 \
     BUNDLE_WITHOUT=production \
     BUNDLE_JOBS=6 \
     BUNDLE_USER_HOME="$GEM_HOME/user-home"
+
+# Use jemalloc2
+# - As our production application uses it as well
+# - MALLOC_CONF is a new thing that makes a jemalloc2
+#   free memory as soon as possible
+ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2 \
+    MALLOC_CONF=dirty_decay_ms:0,muzzy_decay_ms:0
 
 ENV PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 
