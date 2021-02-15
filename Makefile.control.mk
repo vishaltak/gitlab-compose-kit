@@ -126,6 +126,9 @@ logs:
 tail:
 	$(DOCKER_COMPOSE_AUX) logs -f --tail=100
 
+tail-%:
+	$(DOCKER_COMPOSE_AUX) logs -f --tail=100 $*
+
 .PHONY: ps
 ps:
 	$(DOCKER_COMPOSE_AUX) ps
