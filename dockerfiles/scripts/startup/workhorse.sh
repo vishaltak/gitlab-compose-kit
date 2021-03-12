@@ -5,7 +5,7 @@ set -xeo pipefail
 export BUNDLE_JOBS=$(nproc)
 export BUILD_DIR=/tmp/gitlab-workhorse
 
-cd /home/git/gitlab-workhorse
+cd /home/git/gitlab/workhorse
 make
 
 # Workhorse secret has to be 32 bytes
