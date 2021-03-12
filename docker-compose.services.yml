@@ -62,7 +62,6 @@ services:
     volumes:
       - src_gitlab_rails:/home/git/gitlab
       - src_gitlab_shell:/home/git/gitlab-shell
-      - src_gitlab_workhorse:/home/git/gitlab-workhorse
       - repositories:/data/repositories
       - shared:/data/shared
     expose:
@@ -76,7 +75,7 @@ services:
       - web
       - cable
       - minio
-    working_dir: /home/git/gitlab-workhorse
+    working_dir: /home/git/gitlab/workhorse
     command: [/scripts/startup/workhorse.sh]
 
   sshd:
@@ -283,13 +282,6 @@ volumes:
         type: $SRC_MOUNT_TYPE
         o: $SRC_MOUNT_OPTS
         device: "$SRC_MOUNT_PATH/gitlab-pages"
-
-  src_gitlab_workhorse:
-    driver: local
-    driver_opts:
-        type: $SRC_MOUNT_TYPE
-        o: $SRC_MOUNT_OPTS
-        device: "$SRC_MOUNT_PATH/gitlab-workhorse"
 
   src_gitaly:
     driver: local
