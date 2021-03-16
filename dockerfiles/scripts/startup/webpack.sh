@@ -10,7 +10,7 @@ cd /home/git/gitlab
 run_yarn='yarn -s'
 
 # force compilation of webpack
-if [[ -n "${FORCE_WEBPACK_COMPILE}" ]]; then
+if [[ "${FORCE_WEBPACK_COMPILE}" == "true" ]]; then
   echo "Webpack forced compilation!"
   ${run_yarn} install
   ${run_yarn} webpack
