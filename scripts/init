@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 echo ">> Enter SSH_TARGET_HOST:"
 echo -n "[$SSH_TARGET_HOST]: "

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [[ $(uname -s) != "Darwin" ]]; then
   echo "This script is OSX-only. Please do not run it on any other Unix."
