@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 PROJECT_NAME=$(basename "$PWD")
 FILTER="label=com.docker.compose.project=$PROJECT_NAME"
