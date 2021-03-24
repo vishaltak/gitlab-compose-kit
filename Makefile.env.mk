@@ -26,6 +26,10 @@ migrate-test:
 	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake db:migrate
 
+.PHONY: debug-spring
+debug-spring:
+	$(DOCKER_COMPOSE) run -e RAILS_ENV=test spring /bin/bash
+
 .PHONY: update-dev
 update-dev: update-repos
 	make migrate-dev

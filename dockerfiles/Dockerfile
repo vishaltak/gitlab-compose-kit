@@ -28,6 +28,9 @@ RUN groupadd -g "$GID" git || true
 RUN useradd -g "$GID" -G sudo -u "$UID" -m -d "/home/git" git
 RUN usermod -p '*' git
 
+# allow Git user to modify directories in /usr/local
+RUN chown git:git $(find /usr/local -type d)
+
 USER git
 
 VOLUME ["/home/git", "/data/cache"]
