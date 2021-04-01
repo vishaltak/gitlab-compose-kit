@@ -52,6 +52,10 @@ prometheus: deps
 pgadmin:
 	$(DOCKER_COMPOSE_AUX) up pgadmin
 
+.PHONY: debug-shell
+debug-shell:
+	$(DOCKER_COMPOSE_AUX) run --no-deps --rm --entrypoint="/bin/bash" spring
+
 # These commands do re-use existing `spring` container to provide
 # a quick shell access
 .PHONY: shell
