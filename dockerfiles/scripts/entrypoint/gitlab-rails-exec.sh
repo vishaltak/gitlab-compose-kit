@@ -33,6 +33,7 @@ if [[ -z "$CHROME_HEADLESS" ]]; then
 fi
 
 source /scripts/helpers/configure-gitlab-tracing.sh
+source /scripts/helpers/configure-bundle-config.sh
 
 echo
 

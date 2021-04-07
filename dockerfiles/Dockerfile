@@ -47,12 +47,6 @@ ENV HOME=/home/git \
     WEBPACK_CACHE_PATH=/data/cache/webpack \
     BOOTSNAP_CACHE_PATH=/data/cache/bootsnap
 
-ENV BUNDLE_SILENCE_ROOT_WARNING=1 \
-    BUNDLE_APP_CONFIG="$GEM_HOME" \
-    BUNDLE_WITHOUT=production \
-    BUNDLE_JOBS=6 \
-    BUNDLE_USER_HOME="$GEM_HOME/user-home"
-
 # Use jemalloc2
 # - As our production application uses it as well
 # - MALLOC_CONF is a new thing that makes a jemalloc2
