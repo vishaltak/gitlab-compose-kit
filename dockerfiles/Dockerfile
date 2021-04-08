@@ -28,6 +28,9 @@ RUN groupadd -g "$GID" git || true
 RUN useradd -g "$GID" -G sudo -u "$UID" -m -d "/home/git" git
 RUN usermod -p '*' git
 
+# allow Git user to modify directories in /usr/local
+RUN chown git:git $(find /usr/local -type d)
+
 USER git
 
 VOLUME ["/home/git", "/data/cache"]
@@ -43,12 +46,6 @@ ENV HOME=/home/git \
     YARN_CACHE_FOLDER=/data/cache/yarn \
     WEBPACK_CACHE_PATH=/data/cache/webpack \
     BOOTSNAP_CACHE_PATH=/data/cache/bootsnap
-
-ENV BUNDLE_SILENCE_ROOT_WARNING=1 \
-    BUNDLE_APP_CONFIG="$GEM_HOME" \
-    BUNDLE_WITHOUT=production \
-    BUNDLE_JOBS=6 \
-    BUNDLE_USER_HOME="$GEM_HOME/user-home"
 
 # Use jemalloc2
 # - As our production application uses it as well
