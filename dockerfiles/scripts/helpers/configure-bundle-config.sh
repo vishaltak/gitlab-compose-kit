@@ -9,3 +9,6 @@ if [[ ! -f ~/.bundle/config.created ]]; then
   bundle config set --global path "${GEM_HOME}"
   touch ~/.bundle/config.created
 fi
+
+# This is needed by Gitaly as it uses custom HOME directory
+ln -sf ~/.bundle /data/cache/gitlab/tests/
