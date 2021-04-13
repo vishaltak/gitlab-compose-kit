@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=registry.gitlab.com/gitlab-org/gitlab-build-images:ruby-2.7.2.patched-golang-1.14-git-2.31-lfs-2.9-chrome-89-node-14.15-yarn-1.22-postgresql-12-graphicsmagick-1.3.36
+ARG BASE_IMAGE=registry.gitlab.com/gitlab-org/gitlab-build-images:ruby-2.7.2.patched-golang-1.16-git-2.31-lfs-2.9-chrome-89-node-14.15-yarn-1.22-postgresql-12-graphicsmagick-1.3.36
 FROM ${BASE_IMAGE}
 
 RUN [ -n "$RUBY_VERSION" ] || ( echo "*** RUBY_VERSION is required to be defined by base image"; exit 1 )
