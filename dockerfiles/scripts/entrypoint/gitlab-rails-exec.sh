@@ -32,6 +32,17 @@ if [[ -z "$CHROME_HEADLESS" ]]; then
   fi
 fi
 
+if [[ -z "$WEBDRIVER_HEADLESS" ]]; then
+  if [[ -n "$DISPLAY" ]]; then
+    export WEBDRIVER_HEADLESS=false
+    echo 'Running in `export WEBDRIVER_HEADLESS=false` mode.'
+  else
+    export WEBDRIVER_HEADLESS=true
+    echo 'Running in `export WEBDRIVER_HEADLESS=true` mode: as the `$DISPLAY` is missing.'
+  fi
+fi
+
+
 source /scripts/helpers/configure-gitlab-tracing.sh
 source /scripts/helpers/configure-bundle-config.sh
 
