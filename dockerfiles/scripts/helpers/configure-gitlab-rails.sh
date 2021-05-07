@@ -36,6 +36,7 @@ production: &production
     port: 80 # Set to 443 if you serve the pages with HTTPS
     https: false # Set to true if you serve the pages with HTTPS
     artifacts_server: true
+    path: /data/shared/pages
     object_store:
       enabled: true
       remote_directory: pages-bucket # The bucket name
