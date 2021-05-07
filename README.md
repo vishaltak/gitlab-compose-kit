@@ -1,4 +1,3 @@
-
 **Note:** For most developers working on the GitLab codebase, the recommended path is to use the [GitLab Development Kit](https://gitlab.com/gitlab-org/gitlab-development-kit/). The GDK will offer a more straightforward path because it runs natively on your machine. If you're looking for something requiring the lowest maintainence effort, [consider using the GDK via GitPod](https://gitlab.com/gitlab-org/gitlab-development-kit/-/blob/master/doc/howto/gitpod.md). If you're running Linux and want something container-based, GCK is a great option.
 
 The GCK is built with a completely different philosophy than the GDK, and this difference in architecture means the two are wholly incompatible. Since GCK is heavily Docker-based, maintainence of your local dev environment is significantly easier, however, being Docker based also means that it does not run natively on OSX and may pose problems during setup. There are two open issues that would solve some of the pain of running it on macOS, for those interested in contributing: 
@@ -436,6 +435,30 @@ By default, ActionCable runs on the same Rails web server. To run it separately:
 ```ruby
 export USE_CABLE_SERVER=standalone
 ```
+
+## Git over SSH
+
+You can push, pull or clone to/from the local server via HTTPS, but for debugging purposes you might
+want to use git over SSH instead, which takes a very different path. [This video](https://youtu.be/0kY0HPFn25o) is a good
+introduction if you would like to learn more.
+
+For git-over-ssh to work, you must start the `sshd` service, e.g.:
+
+```shell
+make up-sshd
+```
+
+This will bind to 2222 on localhost and listen for SSH clients. This integration works by running SSH hooks
+that launch various `gitlab-shell` commands, which in return perform tasks such as authenticating the
+current user, granting or denying authorization, and calling out to `gitaly`.
+
+To ensure this setup works, you must pair up an SSH keypair on your host machine with the keys managed by the server.
+The general steps for registering SSH keys are documented
+[here](https://docs.gitlab.com/ee/ssh/#add-an-ssh-key-to-your-gitlab-account).
+
+You can test this connection by running `ssh -Tv -p 2222 git@localhost`, which should output `Welcome to GitLab, @root!`.
+
+You should then be able to clone any repository you own from the local GitLab instance as usual.
 
 ## Drop cache
 
