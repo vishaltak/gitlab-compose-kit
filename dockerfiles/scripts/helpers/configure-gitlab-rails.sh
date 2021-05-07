@@ -172,7 +172,7 @@ staging:
 
 test:
   <<: *production
-  database: gitlabhq_test_<%= File.exist?('ee/app/models/license.rb') && !%w[true 1].include?(ENV['FOSS_ONLY'].to_s) ? 'ee' : 'ce' %>
+  database: gitlabhq_test_ee
 EOF
 
 /scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:cable.yml <<EOF | sponge config/cable.yml
