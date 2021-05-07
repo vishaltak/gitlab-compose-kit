@@ -72,11 +72,11 @@ console: up-spring
 
 .PHONY: dbconsole
 dbconsole: up-spring
-	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p
+	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bash -c 'PGPASSWORD=password psql --host=postgres -U postgres gitlabhq_development'
 
 .PHONY: dbconsole-test
 dbconsole-test: up-spring
-	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails dbconsole -p -e test
+	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bash -c 'PGPASSWORD=password psql --host=postgres -U postgres gitlabhq_test_ee'
 
 .PHONY: redisconsole
 redisconsole: up-spring
