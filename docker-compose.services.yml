@@ -221,7 +221,7 @@ services:
       MINIO_SECRET_KEY: TEST_SECRET
     entrypoint: /bin/sh -c
     command:
-      - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket && minio server /export"
+      - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket /export/pages-bucket && minio server /export"
 
   cadvisor:
     image: gcr.io/google_containers/cadvisor:v0.36.0
