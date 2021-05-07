@@ -36,6 +36,18 @@ production: &production
     port: 80 # Set to 443 if you serve the pages with HTTPS
     https: false # Set to true if you serve the pages with HTTPS
     artifacts_server: true
+    object_store:
+      enabled: true
+      remote_directory: pages-bucket # The bucket name
+      proxy_download: true # this is required as we cannot connect from external to minio
+      connection:
+        provider: AWS
+        endpoint: 'http://minio:9000'
+        path_style: true # this is required as only DNS name exposed is minio
+        aws_access_key_id: TEST_KEY
+        aws_secret_access_key: TEST_SECRET
+    local_store:
+      enabled: true
   mattermost:
     enabled: false
     host: 'https://mattermost.example.com'
@@ -61,8 +73,6 @@ production: &production
         gitaly_address: tcp://gitaly:9999
   gitlab_ci:
     builds_path: /data/shared/builds
-  pages:
-    path: /data/shared/pages
   webpack:
     dev_server:
       enabled: ${USE_WEBPACK_DEV:-false}
