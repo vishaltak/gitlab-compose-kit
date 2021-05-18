@@ -33,4 +33,10 @@ sed \
   -e 's|^gitlab_url .*|url = "http://web:8080"|' \
   config.toml.example | sponge /home/git/gitaly-config.toml
 
-exec ./gitaly /home/git/gitaly-config.toml
+# Gitaly does not install into top-level dir anymore
+# https://gitlab.com/gitlab-org/gitaly/-/commit/eb6fd60561cffdbb183e74456268439bad60b21c
+if [[ -e _build/bin/gitaly ]]; then
+  exec ./_build/bin/gitaly /home/git/gitaly-config.toml
+else
+  exec ./gitaly /home/git/gitaly-config.toml
+fi
