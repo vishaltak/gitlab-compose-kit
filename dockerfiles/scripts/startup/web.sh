@@ -7,7 +7,7 @@ read workers threads rest <<< "$CUSTOM_WEB_CONFIG"
 workers="${workers:-2}"
 threads="${threads:-4}"
 
-if [[ "${USE_CABLE_SERVER}" == "in_app" ]]; then
+if [[ "${USE_CABLE_SERVER}" == "true" ]]; then
   export ACTION_CABLE_IN_APP=true
 fi
 

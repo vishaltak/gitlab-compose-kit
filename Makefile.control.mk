@@ -22,15 +22,11 @@ db: deps
 
 .PHONY: web
 web: deps
-	$(DOCKER_COMPOSE_AUX) up workhorse web cable sshd webpack $(USE_TRACING)
+	$(DOCKER_COMPOSE_AUX) up workhorse web sshd webpack $(USE_TRACING)
 
 .PHONY: web-and-sidekiq
 web-and-sidekiq: deps
-	$(DOCKER_COMPOSE_AUX) up workhorse web cable sidekiq sshd webpack $(USE_TRACING)
-
-.PHONY: cable
-cable: deps
-	$(DOCKER_COMPOSE_AUX) up workhorse cable $(USE_TRACING)
+	$(DOCKER_COMPOSE_AUX) up workhorse web sidekiq sshd webpack $(USE_TRACING)
 
 .PHONY: sshd
 sshd: deps
@@ -152,10 +148,6 @@ attach:
 .PHONY: attach-web
 attach-web: SERVICE=web
 attach-web: attach
-
-.PHONY: attach-cable
-attach-cable: SERVICE=cable
-attach-cable: attach
 
 .PHONY: attach-sidekiq
 attach-sidekiq: SERVICE=sidekiq

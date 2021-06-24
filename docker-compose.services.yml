@@ -15,19 +15,6 @@ services:
       RAILS_HOSTS: "web"
     command: [/scripts/startup/web.sh]
 
-  cable:
-    expose:
-      - 8090
-    depends_on:
-      - postgres
-      - postgres-replica
-      - redis
-      - gitaly
-      - minio
-    environment:
-      RAILS_HOSTS: "cable"
-    command: [/scripts/startup/cable.sh]
-
   sidekiq:
     depends_on:
       - postgres
@@ -64,7 +51,6 @@ services:
     environment:
       GITLAB_WORKHORSE_REVISION: ${GITLAB_WORKHORSE_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
       USE_TRACING: ${USE_TRACING}
     volumes:
       - src_gitlab_rails:/home/git/gitlab
@@ -80,7 +66,6 @@ services:
       - gitaly
       - redis
       - web
-      - cable
       - minio
     working_dir: /home/git/gitlab/workhorse
     command: [/scripts/startup/workhorse.sh]
