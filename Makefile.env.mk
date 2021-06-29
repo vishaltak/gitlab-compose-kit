@@ -66,3 +66,12 @@ ports:
 .PHONY: volumes-usage
 volumes-usage:
 	./scripts/proxy ./scripts/volumes-usage
+
+.PHONY: recover-postgres-replica
+recover-postgres-replica:
+	# reset WAL
+	$(DOCKER_COMPOSE_AUX) stop postgres
+	$(DOCKER_COMPOSE_AUX) run --rm -u postgres postgres bash -c 'pg_resetwal -f "$$PGDATA"'
+	# recreate replica
+	$(DOCKER_COMPOSE_AUX) rm -v -f -s postgres-replica
+	$(DOCKER_COMPOSE_AUX) up -d postgres-replica
