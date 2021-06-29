@@ -308,10 +308,11 @@ gitlab.yml: # merge with `gitlab-rails/config/gitlab.yml`
 
 database.yml: # merge with `gitlab-rails/config/database.yml`
   development:
-    load_balancing:
-      hosts:
-        - postgres-replica
-        - postgres-replica
+    main:
+      load_balancing:
+        hosts:
+          - postgres-replica
+          - postgres-replica
 ```
 
 The above configures the following items:
@@ -715,10 +716,11 @@ to be configured `gck.yml`:
 ```yaml
 database.yml:
   development:
-    load_balancing:
-      hosts:
-      - postgres-replica
-      - postgres-replica
+    main:
+      load_balancing:
+        hosts:
+        - postgres-replica
+        - postgres-replica
 ```
 
 ### Useful commands
