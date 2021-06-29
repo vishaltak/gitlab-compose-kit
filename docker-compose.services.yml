@@ -6,6 +6,7 @@ services:
       - 8080
     depends_on:
       - postgres
+      - postgres-replica
       - redis
       - gitaly
       - webpack
@@ -19,6 +20,7 @@ services:
       - 8090
     depends_on:
       - postgres
+      - postgres-replica
       - redis
       - gitaly
       - minio
@@ -29,6 +31,7 @@ services:
   sidekiq:
     depends_on:
       - postgres
+      - postgres-replica
       - redis
       - gitaly
       - minio
@@ -51,6 +54,9 @@ services:
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}
       HISTCONTROL: "ignoreboth:erasedups"
+      PGHOST: postgres
+      PGUSER: postgres
+      PGPASSWORD: password
     command: [cat]
 
   workhorse:
@@ -202,6 +208,21 @@ services:
     expose:
     - 5432
     mem_limit: 256M
+
+  postgres-replica:
+    image: registry.gitlab.com/gitlab-org/gitlab-compose-kit/releases:postgres-${COMPOSE_KIT_REVISION}
+    build:
+      context: ./dockerfiles/postgres
+    environment:
+    - POSTGRES_PASSWORD=password
+    - POSTGRES_REPLICATION_LAG=1000
+    expose:
+    - 5432
+    depends_on:
+    - postgres
+    mem_limit: 256M
+    command: /entrypoint/postgres-replica.sh
+    restart: on-failure:3
 
   redis:
     image: 'redis:alpine'

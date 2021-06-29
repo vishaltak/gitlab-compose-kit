@@ -22,7 +22,7 @@ It currently supports:
 - GitLab Rails: Unicorn / Sidekiq,
 - GitLab Workhorse,
 - Gitaly,
-- PostgreSQL,
+- PostgreSQL with replication,
 - Redis,
 - SSH,
 - GitLab Pages,
@@ -310,8 +310,8 @@ database.yml: # merge with `gitlab-rails/config/database.yml`
   development:
     load_balancing:
       hosts:
-        - postgres
-        - postgres
+        - postgres-replica
+        - postgres-replica
 ```
 
 The above configures the following items:
@@ -703,6 +703,73 @@ Available mappings:
 
 ssh://git@my.host:2222 (from gitlab-v2_sshd_1)
 http://my.host:3000 (from gitlab-v2_workhorse_1)
+```
+
+## PostgreSQL with streaming/physical replication
+
+The usage of load balancing is disabled by default.
+To enable it, the usage of load balancing hosts needs
+to be configured `gck.yml`:
+
+```yaml
+database.yml:
+  development:
+    load_balancing:
+      hosts:
+      - postgres-replica
+      - postgres-replica
+```
+
+### Useful commands
+
+- `make dbconsole`: access a shell of DB primary (development DB)
+- `make dbconsole-test`: access a shell of DB primary (test DB)
+- `make dbconsole-replica`: access a shell of DB replica (development DB)
+- `make recover-postgres-replica`: reset and recover replication
+
+### Testing replication
+
+These commands can help testing replication status:
+
+```ruby
+$ make console
+> ActiveRecord::Base.connection.load_balancer.primary_write_location
+=> "4/73000148"
+> ActiveRecord::Base.connection.load_balancer.host.database_replica_location
+=> "4/73000148"
+```
+
+Additionally this can be tested using `dbconsole`:
+
+```shell
+$ make dbconsole
+SELECT pg_current_wal_insert_lsn()::text AS location;
+
+$ make dbconsole-replica
+SELECT pg_last_wal_replay_lsn()::text AS location;
+```
+
+### Recovery replication
+
+In some cases the DB replica can end-up in a recovery mode (a case of old or lost WAL).
+This does requires reseting replication status with:
+
+```shell
+make recover-postgres-replica
+```
+
+### Override replication lag setting
+
+A default 1s might not be desired. This setting can be overwritten with
+`docker-compose.override.yml`:
+
+```yaml
+version: '2.1'
+
+services:
+  postgres-replica:
+    environment:
+    - POSTGRES_REPLICATION_LAG=5000 # change to 5s
 ```
 
 ## Install additional deps

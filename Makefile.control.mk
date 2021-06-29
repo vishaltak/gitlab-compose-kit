@@ -12,6 +12,10 @@ up-%:
 run: deps # we use `DOCKER_COMPOSE` as we do not want to start AUX services
 	$(DOCKER_COMPOSE) up
 
+.PHONY: run-%
+run-%: deps
+	$(DOCKER_COMPOSE_AUX) up $*
+
 .PHONY: db
 db: deps
 	$(DOCKER_COMPOSE_AUX) up postgres redis
@@ -72,11 +76,15 @@ console: up-spring
 
 .PHONY: dbconsole
 dbconsole: up-spring
-	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bash -c 'PGPASSWORD=password psql --host=postgres -U postgres gitlabhq_development'
+	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh psql gitlabhq_development
 
 .PHONY: dbconsole-test
 dbconsole-test: up-spring
-	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bash -c 'PGPASSWORD=password psql --host=postgres -U postgres gitlabhq_test_ee'
+	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh psql gitlabhq_test_ee
+
+.PHONY: dbconsole-replica
+dbconsole-replica: up-postgres-replica up-spring
+	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh psql -h postgres-replica gitlabhq_development
 
 .PHONY: redisconsole
 redisconsole: up-spring
