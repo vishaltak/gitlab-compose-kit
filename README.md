@@ -1,6 +1,6 @@
 **Note:** For most developers working on the GitLab codebase, the recommended path is to use the [GitLab Development Kit](https://gitlab.com/gitlab-org/gitlab-development-kit/). The GDK will offer a more straightforward path because it runs natively on your machine. If you're looking for something requiring the lowest maintainence effort, [consider using the GDK via GitPod](https://gitlab.com/gitlab-org/gitlab-development-kit/-/blob/master/doc/howto/gitpod.md). If you're running Linux and want something container-based, GCK is a great option.
 
-The GCK is built with a completely different philosophy than the GDK, and this difference in architecture means the two are wholly incompatible. Since GCK is heavily Docker-based, maintainence of your local dev environment is significantly easier, however, being Docker based also means that it does not run natively on OSX and may pose problems during setup. There are two open issues that would solve some of the pain of running it on macOS, for those interested in contributing: 
+The GCK is built with a completely different philosophy than the GDK, and this difference in architecture means the two are wholly incompatible. Since GCK is heavily Docker-based, maintainence of your local dev environment is significantly easier, however, being Docker based also means that it does not run natively on OSX and may pose problems during setup. There are two open issues that would solve some of the pain of running it on macOS, for those interested in contributing:
 
 - https://gitlab.com/gitlab-org/gitlab-compose-kit/-/issues/31
 - https://gitlab.com/gitlab-org/gitlab-compose-kit/-/merge_requests/97
@@ -39,7 +39,7 @@ It allows to:
 - Run tests,
 - Easily teardown and start a new environment,
 - Run remote environment over SSH,
-- Run tests live in Chrome on Linux,
+- Run tests live in Chrome or Firefox on Linux,
 - Use single Compose Kit for both CE and EE development,
 - Simulate the Object Storage usage.
 
@@ -384,14 +384,15 @@ make migrate-test
 make migrate-dev
 ```
 
-## X11 and Chrome for testing
+## X11 and a Web Browser for testing
 
-When running on Linux GitLab Compose Kit shares `.X11-unix` with container and makes to run Chrome in non-headless mode. You will see all tests being executed live, in Chrome.
+When running on Linux GitLab Compose Kit shares `.X11-unix` with container and makes to run your web browser in non-headless mode.
+You will see all tests being executed live, in your prefered browser.
 
 You can disable it with (can be put in `gck.env`):
 
 ```ruby
-export CHROME_HEADLESS=true
+export WEBDRIVER_HEADLESS=true
 ```
 
 ## Use Rails server (thin) web-server

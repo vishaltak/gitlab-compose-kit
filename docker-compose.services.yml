@@ -50,6 +50,7 @@ services:
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "1" # disable https://github.com/rails/rails/blob/fc2684c9c012b95ce003cce22b378d5ea9ab56d3/activerecord/lib/active_record/tasks/database_tasks.rb#L58
       DISPLAY: ${DISPLAY}
       CHROME_HEADLESS: ${CHROME_HEADLESS}
+      WEBDRIVER_HEADLESS: ${WEBDRIVER_HEADLESS}
       HISTCONTROL: "ignoreboth:erasedups"
     command: [cat]
 

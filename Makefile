@@ -6,6 +6,7 @@ export USE_WEBPACK_DEV ?= false
 export FORCE_WEBPACK_COMPILE ?= false
 export USE_CABLE_SERVER ?= in_app
 export CHROME_HEADLESS ?=
+export WEBDRIVER_HEADLESS ?=
 export DISPLAY ?=
 export ENABLE_SPRING ?= 1
 export COMPOSE_HTTP_TIMEOUT ?= 3600
