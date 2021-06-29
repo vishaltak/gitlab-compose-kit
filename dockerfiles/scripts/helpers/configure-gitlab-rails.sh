@@ -155,24 +155,28 @@ EOF
 
 /scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:database.yml <<EOF | sponge config/database.yml
 production: &production
-  adapter: postgresql
-  encoding: unicode
-  database: gitlabhq_development
-  pool: 5
-  username: postgres
-  password: password
-  host: postgres
+  main: &main
+    adapter: postgresql
+    encoding: unicode
+    database: gitlabhq_development
+    pool: 5
+    username: postgres
+    password: password
+    host: postgres
 
 development:
-  <<: *production
+  main:
+    <<: *main
 
 staging:
-  <<: *production
-  database: gitlabhq_staging
+  main:
+    <<: *main
+    database: gitlabhq_staging
 
 test:
-  <<: *production
-  database: gitlabhq_test_ee
+  main:
+    <<: *main
+    database: gitlabhq_test_ee
 EOF
 
 /scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:cable.yml <<EOF | sponge config/cable.yml
