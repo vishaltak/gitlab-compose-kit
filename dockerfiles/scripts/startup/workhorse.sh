@@ -16,17 +16,11 @@ cat <<EOF | sponge /home/git/workhorse-config.toml
 URL = "tcp://redis:6379"
 EOF
 
-if [[ "${USE_CABLE_SERVER}" == "in_app" ]]; then
-  CABLE_BACKEND="http://web:8080"
-else
-  CABLE_BACKEND="http://cable:8090"
-fi
-
 export PATH="$BUILD_DIR:$PATH"
 
 exec /tmp/gitlab-workhorse/gitlab-workhorse \
   -authBackend="http://web:8080/" \
-  -cableBackend="${CABLE_BACKEND}" \
+  -cableBackend="http://web:8080/" \
   -developmentMode \
   -listenAddr="0.0.0.0:8181" \
   -prometheusListenAddr="0.0.0.0:9229" \

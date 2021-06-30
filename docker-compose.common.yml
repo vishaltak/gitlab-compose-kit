@@ -44,7 +44,6 @@ services:
     tty: true
     entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
 
-  cable: *application_image
   sidekiq: *application_image
   spring: *application_image
   

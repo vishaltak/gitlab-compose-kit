@@ -432,10 +432,10 @@ export CUSTOM_WEB_CONFIG=1:3 # 1 worker, 3 threads
 
 ## ActionCable standalone mode
 
-By default, ActionCable runs on the same Rails web server. To run it separately:
+By default, ActionCable runs on the same Rails web server. To disable:
 
 ```ruby
-export USE_CABLE_SERVER=standalone
+export USE_CABLE_SERVER=false
 ```
 
 ## Git over SSH
