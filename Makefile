@@ -13,6 +13,7 @@ export COMPOSE_HTTP_TIMEOUT ?= 3600
 export RAILS_ENV ?= development
 export FOSS_ONLY ?=
 export FORCE_BIND_MOUNT ?=
+export ADDITIONAL_DEPS ?= 
 
 export CUSTOM_WEB_PORT ?= 3000
 export CUSTOM_SSH_PORT ?= 2222
