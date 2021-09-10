@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd /home/git/gitlab
-exec bundle exec sidekiq -C "config/sidekiq_queues.yml" -e "$RAILS_ENV" "$@"
+exec bin/background_jobs start_foreground -e "$RAILS_ENV" "$@"
