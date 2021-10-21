@@ -38,6 +38,7 @@ services:
       CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
       CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
       CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
+      CUSTOM_REDIS_ALT_STORE: ${CUSTOM_REDIS_ALT_STORE}
       ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
     stdin_open: true

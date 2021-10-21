@@ -20,6 +20,7 @@ export CUSTOM_SSH_PORT ?= 2222
 export CUSTOM_REGISTRY_PORT ?= 5000
 export CUSTOM_WEBPACK_PORT ?= 3808
 export CUSTOM_WEB_CONFIG ?=
+export CUSTOM_REDIS_ALT_STORE ?=
 
 export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell rev-parse HEAD 2>/dev/null || echo "unknown")
