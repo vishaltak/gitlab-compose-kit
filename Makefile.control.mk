@@ -86,6 +86,10 @@ dbconsole-replica: up-postgres-replica up-spring
 redisconsole: up-spring
 	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh redis-cli -h redis
 
+.PHONY: redis-alt-console
+redis-alt-console: up-spring
+	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh redis-cli -h redis-alt
+
 # These commands do restart
 .PHONY: restart
 restart: deps

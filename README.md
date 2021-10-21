@@ -324,11 +324,6 @@ The above configures the following items:
 
 Then run GCK again with `make web`, `make up` or similar command.
 
-## Pages
-
-To access GitLab Pages you have to use HTTP proxy.
-The Pages proxy runs on `http://localhost:8989`.
-
 ## Performance
 
 It works great on Linux where the data can be natively shared between filesystems.
@@ -394,48 +389,6 @@ You can disable it with (can be put in `gck.env`):
 
 ```ruby
 export WEBDRIVER_HEADLESS=true
-```
-
-## Use Rails server (thin) web-server
-
-Sometimes it is desired to use Thin web server (one that comes with Rails). Before running any command just use:
-
-```ruby
-export USE_WEB_SERVER=thin
-```
-
-## Use Unicorn web-server (not longer default)
-
-```ruby
-export USE_WEB_SERVER=unicorn
-```
-
-Configure number of workers (default: 2 workers):
-
-```bash
-export CUSTOM_WEB_CONFIG=3 # 3 workers
-export CUSTOM_WEB_CONFIG=1 # 1 worker
-```
-
-## Use PUMA web-server (default)
-
-```ruby
-export USE_WEB_SERVER=puma
-```
-
-Configure number of workers and threads (default: 2 workers, 4 threads):
-
-```bash
-export CUSTOM_WEB_CONFIG=3:6 # 3 workers, 6 threads
-export CUSTOM_WEB_CONFIG=1:3 # 1 worker, 3 threads
-```
-
-## ActionCable standalone mode
-
-By default, ActionCable runs on the same Rails web server. To disable:
-
-```ruby
-export USE_CABLE_SERVER=false
 ```
 
 ## Git over SSH
@@ -610,7 +563,36 @@ You can set it dynamically, or put that into `gck.env` file.
 For **remote mode** this by default fallbacks to `$SSH_TARGET_HOST` which is your likely
 the hostname you gonna use.
 
-## Webpack
+## Service specific setup
+
+### Web server setup
+
+Sometimes it is desirable to use a different web server (the default is Puma).
+Set the desired web server in `gck.env`:
+
+```ruby
+USE_WEB_SERVER=thin
+```
+
+Accepted values are `thin` or `puma` (default).
+
+For servers that support concurrency such as Puma, you can
+configure the number of workers and threads (default: 2 workers, 4 threads):
+
+```bash
+export CUSTOM_WEB_CONFIG=3:6 # 3 workers, 6 threads
+export CUSTOM_WEB_CONFIG=1:3 # 1 worker, 3 threads
+```
+
+### ActionCable standalone mode
+
+By default, ActionCable runs on the same Rails web server. To disable:
+
+```ruby
+export USE_CABLE_SERVER=false
+```
+
+### Webpack
 
 Webpack by default runs in `single` mode. That means that it precompiles all assets once
 and exits. This configuration is ideal for working on application, but is bad if you modify
@@ -649,6 +631,109 @@ make webpack-compile
 **Notice:** Use that only when you want to make `gitlab-compose-kit`
 to use less resources as `webpack` is very CPU and memory hungry.
 
+### Redis
+
+By default, a single Redis container is started (called `redis`). In order to test
+data sharding where the application writes and reads data from multiple Redis nodes,
+an additional container, `redis-alt` can be started:
+
+```shell
+$ make up-redis-alt
+```
+
+To specify which Redis client will use this instance, define the store name in `gck.env`:
+
+```
+CUSTOM_REDIS_ALT_STORE=cache
+```
+
+The `web` container must be restarted when changing this setting.
+
+This will make the Rails application send all cache related operations to `redis-alt`.
+
+You can shell into this instance via:
+
+```shell
+$ make redis-alt-console
+```
+
+### Pages
+
+To access GitLab Pages you have to use HTTP proxy.
+The Pages proxy runs on `http://localhost:8989`.
+
+### PostgreSQL with streaming/physical replication
+
+The usage of load balancing is disabled by default.
+To enable it, the usage of load balancing hosts needs
+to be configured `gck.yml`:
+
+```yaml
+database.yml:
+  development:
+    main:
+      load_balancing:
+        hosts:
+        - postgres-replica
+        - postgres-replica
+```
+
+#### Useful commands
+
+- `make dbconsole`: access a shell of DB primary (development DB)
+- `make dbconsole-test`: access a shell of DB primary (test DB)
+- `make dbconsole-replica`: access a shell of DB replica (development DB)
+- `make recover-postgres-replica`: reset and recover replication
+
+#### Testing replication
+
+These commands can help testing replication status:
+
+```ruby
+$ make console
+> ActiveRecord::Base.connection.load_balancer.primary_write_location
+=> "4/73000148"
+> ActiveRecord::Base.connection.load_balancer.host.database_replica_location
+=> "4/73000148"
+```
+
+Additionally this can be tested using `dbconsole`:
+
+```shell
+$ make dbconsole
+SELECT pg_current_wal_insert_lsn()::text AS location;
+
+$ make dbconsole-replica
+SELECT pg_last_wal_replay_lsn()::text AS location;
+```
+
+#### Recovery replication
+
+In some cases the DB replica can end-up in a recovery mode (a case of old or lost WAL).
+This does requires reseting replication status with:
+
+```shell
+make recover-postgres-replica
+```
+
+#### Override replication lag setting
+
+A default 1s might not be desired. This setting can be overwritten with
+`docker-compose.override.yml`:
+
+```yaml
+version: '2.1'
+
+services:
+  postgres-replica:
+    environment:
+    - POSTGRES_REPLICATION_LAG=5000 # change to 5s
+```
+
+### Non-essential services
+
+For non-essential services and how to configure and run them, please refer to [README.aux.md](README.aux.md).
+
 ## Running `docker-compose` yourself
 
 Sometimes you might want to use `docker-compose`. Currently,
@@ -663,10 +748,6 @@ and give you an interactive terminal.
 $ make env
 $ docker-compose ps
 ```
-
-## Auxiliary Services
-
-For non-essential services and how to configure and run them, please refer to [README.aux.md](README.aux.md).
 
 ## Multiple installations
 
@@ -705,74 +786,6 @@ Available mappings:
 
 ssh://git@my.host:2222 (from gitlab-v2_sshd_1)
 http://my.host:3000 (from gitlab-v2_workhorse_1)
-```
-
-## PostgreSQL with streaming/physical replication
-
-The usage of load balancing is disabled by default.
-To enable it, the usage of load balancing hosts needs
-to be configured `gck.yml`:
-
-```yaml
-database.yml:
-  development:
-    main:
-      load_balancing:
-        hosts:
-        - postgres-replica
-        - postgres-replica
-```
-
-### Useful commands
-
-- `make dbconsole`: access a shell of DB primary (development DB)
-- `make dbconsole-test`: access a shell of DB primary (test DB)
-- `make dbconsole-replica`: access a shell of DB replica (development DB)
-- `make recover-postgres-replica`: reset and recover replication
-
-### Testing replication
-
-These commands can help testing replication status:
-
-```ruby
-$ make console
-> ActiveRecord::Base.connection.load_balancer.primary_write_location
-=> "4/73000148"
-> ActiveRecord::Base.connection.load_balancer.host.database_replica_location
-=> "4/73000148"
-```
-
-Additionally this can be tested using `dbconsole`:
-
-```shell
-$ make dbconsole
-SELECT pg_current_wal_insert_lsn()::text AS location;
-
-$ make dbconsole-replica
-SELECT pg_last_wal_replay_lsn()::text AS location;
-```
-
-### Recovery replication
-
-In some cases the DB replica can end-up in a recovery mode (a case of old or lost WAL).
-This does requires reseting replication status with:
-
-```shell
-make recover-postgres-replica
-```
-
-### Override replication lag setting
-
-A default 1s might not be desired. This setting can be overwritten with
-`docker-compose.override.yml`:
-
-```yaml
-version: '2.1'
-
-services:
-  postgres-replica:
-    environment:
-    - POSTGRES_REPLICATION_LAG=5000 # change to 5s
 ```
 
 ## Install additional deps
