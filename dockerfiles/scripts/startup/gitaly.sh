@@ -13,7 +13,7 @@ export BUNDLE_FLAGS=--local
 
 cd /home/git/gitaly
 make
-env -u GIT_VERSION make git
+make git
 
 if [[ -n "$FORCE_GITALY_COMPILE" ]]; then
   echo "Forced gitaly compile!"
