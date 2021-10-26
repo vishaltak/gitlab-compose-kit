@@ -1,6 +1,7 @@
 #!/bin/bash
 
-if [[ ! -f ~/.bundle/config.created ]]; then
+# Create or update bundle config
+if [[ ! -f ~/.bundle/config.created ]] || [[ $(bundle config get --parseable path) != "path=${GEM_HOME}" ]]; then
   bundle config set --global without production
   bundle config set --global silence_root_warning true
   bundle config set --global jobs "$(nproc)"

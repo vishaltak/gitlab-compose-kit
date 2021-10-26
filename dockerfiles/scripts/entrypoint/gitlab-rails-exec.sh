@@ -50,6 +50,8 @@ source /scripts/helpers/configure-gitaly-version-fix.sh
 echo
 
 # Detect old paths and write warning about them
+shopt -s nullglob # to resolve `bundle-*` to empty list
+
 for path in /data/cache/bundle-*; do
     [[ "$path" == "$GEM_HOME" ]] && continue
 
@@ -59,5 +61,7 @@ for path in /data/cache/bundle-*; do
     echo "$ rm -r $path"
     echo ""
 done
+
+shopt -u nullglob
 
 exec "$@"
