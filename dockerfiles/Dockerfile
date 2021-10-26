@@ -11,6 +11,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         build-essential pkg-config cmake \
         sudo openssh-server redis-tools libjemalloc2 \
         moreutils smem strace lsof \
+        ccache \
         $ADDITIONAL_DEPS
 
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
@@ -45,7 +46,8 @@ ENV HOME=/home/git \
     npm_config_prefix=/data/cache/node_modules \
     YARN_CACHE_FOLDER=/data/cache/yarn \
     WEBPACK_CACHE_PATH=/data/cache/webpack \
-    BOOTSNAP_CACHE_PATH=/data/cache/bootsnap
+    BOOTSNAP_CACHE_PATH=/data/cache/bootsnap \
+    CCACHE_DIR=/data/cache/ccache
 
 # Use jemalloc2
 # - As our production application uses it as well
@@ -54,6 +56,6 @@ ENV HOME=/home/git \
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2 \
     MALLOC_CONF=dirty_decay_ms:0,muzzy_decay_ms:0
 
-ENV PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+ENV PATH="$GOPATH/bin:$GOROOT/bin:/scripts/ccache:$PATH"
 
 ADD /scripts /scripts
