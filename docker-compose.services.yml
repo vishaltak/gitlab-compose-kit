@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2.2'
 
 services:
   web:
@@ -8,6 +8,7 @@ services:
       - postgres
       - postgres-replica
       - redis
+      - redis-alt
       - gitaly
       - webpack
       - minio
@@ -20,6 +21,7 @@ services:
       - postgres
       - postgres-replica
       - redis
+      - redis-alt
       - gitaly
       - minio
     command: [/scripts/startup/sidekiq.sh]
@@ -31,6 +33,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - redis-alt
       - gitaly
       - webpack
       - minio
@@ -65,6 +68,7 @@ services:
     depends_on:
       - gitaly
       - redis
+      - redis-alt
       - web
       - minio
     working_dir: /home/git/gitlab/workhorse
@@ -84,6 +88,7 @@ services:
     depends_on:
       - gitaly
       - redis
+      - redis-alt
       - web
     command: [sudo, /scripts/startup/sshd.sh]
 
@@ -216,7 +221,9 @@ services:
     - 6379
     mem_limit: 128M
 
-  redis-alt: *redis-default
+  redis-alt:
+    <<: *redis-default
+    scale: ${ENABLE_REDIS_ALT_STORE}
 
   minio:
     image: minio/minio

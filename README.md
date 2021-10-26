@@ -75,10 +75,11 @@ It still doesn't support:
 
 ### Requirements
 
-1. Docker Engine,
-2. Docker Compose,
-3. GNU Make,
-4. Linux machine (it might work on Docker for Mac, but not guaranteed).
+1. Docker Engine
+2. Docker Compose (at least version `1.25.0`)
+3. GNU Make
+4. Linux machine (the best served on `Ubuntu Focal (20.04 LTS)` or `Debian Bullseye (11.0)`)
+5. This might work on Docker for Mac, but not guaranteed
 
 ### Use it
 
@@ -474,7 +475,7 @@ $ bundle exec rbtrace -p $(ps auxf | pgrep ruby) -e 'GC.stat'
 
 ### 1. Prepare a remote machine with `rsync`, `docker` and `docker-compose` installed
 
-Use `Ubuntu Bionic`, as it has most of up-to date packages in default repository.
+Use `Ubuntu Focal (20.04 LTS)` or `Debian Bullseye (11.0)`, as it has most of up-to date packages in default repository.
 
 ```bash
 apt-get install -y rsync docker.io docker-compose

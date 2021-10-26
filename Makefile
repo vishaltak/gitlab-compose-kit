@@ -59,6 +59,13 @@ ifeq (,$(wildcard gck.yml))
 $(shell touch gck.yml)
 endif
 
+# Define if services should be enabled by default depending on configuration
+ifneq (,$(CUSTOM_REDIS_ALT_STORE))
+export ENABLE_REDIS_ALT_STORE = 1
+else
+export ENABLE_REDIS_ALT_STORE = 0
+endif
+
 all: help
 
 help:

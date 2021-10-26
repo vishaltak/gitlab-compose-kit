@@ -1,6 +1,6 @@
 # This provides a baseline configuration for most of services
 
-version: '2.1'
+version: '2.2'
 
 services:
   web: &application_image

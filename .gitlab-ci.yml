@@ -6,9 +6,9 @@ variables:
   DOCKER_DRIVER: 'overlay2'
   DOCKER_HOST: 'tcp://docker:2375'
 
-  # We test by default against 1.21.0 as this the latest version
-  # that is part of Debian/Buster and Ubuntu/Bionic
-  COMPOSE_VERSION: '1.21.0'
+  # We test by default against 1.25.0 as this the latest version
+  # that is part of Debian/Bullseye and Ubuntu/Focal
+  COMPOSE_VERSION: '1.25.0'
 
 default:
   image:
@@ -117,11 +117,6 @@ bats unit tests:
   script:
     - echo 'export USE_WEBPACK_DEV=false' >> gck.env
     - su git -mc 'make up-pgadmin'
-
-smoke-test compose:1.21:
-  extends: .smoke_test
-  variables:
-    COMPOSE_VERSION: '1.21.0'
 
 smoke-test compose:1.25:
   extends: .smoke_test
