@@ -24,6 +24,9 @@ services:
       - redis-alt
       - gitaly
       - minio
+    environment:
+      SIDEKIQ_WORKERS: ${SIDEKIQ_WORKERS}
+      SIDEKIQ_QUEUES: ${SIDEKIQ_QUEUES}
     command: [/scripts/startup/sidekiq.sh]
 
   spring:

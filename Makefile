@@ -22,6 +22,9 @@ export CUSTOM_WEBPACK_PORT ?= 3808
 export CUSTOM_WEB_CONFIG ?=
 export CUSTOM_REDIS_ALT_STORE ?=
 
+export SIDEKIQ_WORKERS ?=
+export SIDEKIQ_QUEUES ?=
+
 export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse rev-parse HEAD 2>/dev/null || echo "unknown")
