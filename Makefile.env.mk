@@ -57,15 +57,15 @@ rails-compile: deps
 
 .PHONY: env
 env:
-	./scripts/proxy bash
+	./scripts/env bash
 
 .PHONY: ports
 ports:
-	./scripts/proxy ./scripts/ports
+	./scripts/env ./scripts/ports
 
 .PHONY: volumes-usage
 volumes-usage:
-	./scripts/proxy ./scripts/volumes-usage
+	./scripts/env ./scripts/volumes-usage
 
 .PHONY: recover-postgres-replica
 recover-postgres-replica:

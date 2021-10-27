@@ -1,7 +1,33 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [[ -n "$DEBUG" ]]; then
-  set -xe
+  set -x
 fi
+
+if [[ -z "$CUSTOM_HOSTNAME" ]]; then
+  case "$(uname -s)" in
+    Linux)
+      export CUSTOM_HOSTNAME=$(hostname -I | cut -d' ' -f1)
+      ;;
+
+    Darwin)
+      export CUSTOM_HOSTNAME=$(ipconfig getifaddr en0 || ipconfig getifaddr en1 || ipconfig getifaddr en2 || ipconfig getifaddr en3)
+      ;;
+  esac
+fi
+
+if [[ -z "$CUSTOM_HOSTNAME" ]]; then
+  echo "Could not detect IP address. Consider setting this as an environment variable:"
+  echo "use export CUSTOM_HOSTNAME=<my-ip-address>"
+  echo "use export CUSTOM_HOSTNAME=<dns-hostname>"
+  echo "You can put it in gck.env file!"
+  exit 1
+fi
+
+export CUSTOM_CONFIG=$(cat gck.yml)
+export CUSTOM_UID=$(id -u)
+export CUSTOM_GID=$(id -g)
 
 exec "$@"

@@ -147,7 +147,7 @@ ps:
 
 .PHONY: attach
 attach:
-	./scripts/proxy bash -c 'ID=$$(docker ps -f "label=com.docker.compose.project=$$(basename "$$PWD")" -f "label=com.docker.compose.service=$(SERVICE)" -q) && docker attach "$${ID:-missing}"'
+	./scripts/env bash -c 'ID=$$(docker ps -f "label=com.docker.compose.project=$$(basename "$$PWD")" -f "label=com.docker.compose.service=$(SERVICE)" -q) && docker attach "$${ID:-missing}"'
 
 .PHONY: attach-web
 attach-web: SERVICE=web

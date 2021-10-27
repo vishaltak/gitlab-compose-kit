@@ -32,9 +32,9 @@ export GITLAB_GITALY_REVISION ?= $(shell git -C gitlab-gitaly rev-parse HEAD 2>/
 export GITLAB_PAGES_REVISION ?= $(shell git -C gitlab-pages rev-parse HEAD 2>/dev/null || echo "unknown")
 export COMPOSE_KIT_REVISION ?= $(shell git -C . rev-parse HEAD 2>/dev/null || echo "unknown")
 
-# If SSH_TARGET_HOST or FORCE_BIND_MOUNT is set
+# If FORCE_BIND_MOUNT is set
 # do mount using bind-mount
-ifeq (Darwin,$(shell uname -s)$(SSH_TARGET_HOST)$(FORCE_BIND_MOUNT))
+ifeq (Darwin,$(shell uname -s)$(FORCE_BIND_MOUNT))
 export SRC_MOUNT_TYPE ?= nfs
 export SRC_MOUNT_OPTS ?= addr=host.docker.internal,rw,nolock,hard,intr,nfsvers=3
 export SRC_MOUNT_PATH ?= \:$(CURDIR)

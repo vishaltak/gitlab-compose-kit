@@ -424,22 +424,6 @@ Sometimes it is useful to reinstall all gems, node modules and so-on without rec
 make drop-cache
 ```
 
-## Remote environment
-
-This project can use `lsyncd` to run remote environment.
-
-To configure the use of remote environment create a file `gck.env`:
-
-```bash
-export SSH_TARGET_DIR=gitlab-compose-kit
-export SSH_TARGET_USER=gitlab
-export SSH_TARGET_HOST=my-remote-server
-export SSH_TARGET_PORT=22 # default: 22
-```
-
-On remote environment you have to run as unprivileged user.
-It can be any user `gitlab`, `ubuntu` as long as it is not `root`.
-
 ## Running `production`-like
 
 It is possible to run application in `production`-like environment.
@@ -478,7 +462,7 @@ $ bundle exec rbtrace -p $(ps auxf | pgrep ruby) -e 'GC.stat'
 Use `Ubuntu Focal (20.04 LTS)` or `Debian Bullseye (11.0)`, as it has most of up-to date packages in default repository.
 
 ```bash
-apt-get install -y rsync docker.io docker-compose
+apt-get install -y docker.io docker-compose
 ```
 
 ### 2. Add a new account on remote server and copy ssh keys
@@ -504,45 +488,7 @@ systemctl enable zram-config
 systemctl start zram-config
 ```
 
-### 3. Create `gck.env` and fill it with details
-
-```bash
-export SSH_TARGET_DIR=gitlab-compose-kit
-export SSH_TARGET_USER=gitlab
-export SSH_TARGET_HOST=my-remote-server
-export SSH_TARGET_PORT=22 # default: 22
-```
-
-### 4. Prepare and install `lsyncd` on local machine
-
-```bash
-# Debian/Ubuntu
-apt-get install -y lsyncd
-
-# Mac
-brew install lsyncd
-```
-
-### 5. Ryn sync process
-
-```bash
-make sync
-```
-
-### 6. Wait for the initial sync to finish
-
-```
-22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-pages/" finished: 0
-22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-workhorse/" finished: 0
-22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-shell/" finished: 0
-22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/" finished: 0
-22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitaly/" finished: 0
-22:58:52 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-runner/" finished: 0
-22:58:53 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/gitlab-rails/" finished: 0
-22:58:54 Normal: Startup of "/home/ayufan/Sources/gitlab-v2/data/" finished: 0
-```
-
-### 7. Setup and develop
+### 3. Setup and develop
 
 You can now use regular commands (locally) to develop everything remotely:
 
@@ -781,7 +727,7 @@ on a host and print that in a user readable form:
 
 ```bash
 $ make ports
-./scripts/proxy ./scripts/ports
+./scripts/env ./scripts/ports
 
 Available mappings:
 
