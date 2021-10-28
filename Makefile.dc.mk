@@ -9,7 +9,7 @@ ifneq (,$(wildcard docker-compose.aux.override.yml))
 AUX_COMPOSE_FILES += -f docker-compose.aux.override.yml
 endif
 
-DOCKER_COMPOSE := ./scripts/proxy docker-compose $(COMPOSE_FILES)
+DOCKER_COMPOSE := ./scripts/env docker-compose $(COMPOSE_FILES)
 DOCKER_COMPOSE_AUX := $(DOCKER_COMPOSE) $(AUX_COMPOSE_FILES)
 
 .PHONY: dc-config
