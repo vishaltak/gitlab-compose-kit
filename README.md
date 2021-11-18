@@ -392,6 +392,16 @@ You can disable it with (can be put in `gck.env`):
 export WEBDRIVER_HEADLESS=true
 ```
 
+## Use Firefox for testing instead of Chrome
+
+Sometimes it is desired to use Firefox instead of Chrome. The GCK comes bundled with `firefox-esr` and `geckodriver`.
+
+You can enabled it with in your current terminal session (`make shell`) or can be put in `gck.env`:
+
+```ruby
+export WEBDRIVER=firefox
+```
+
 ## Git over SSH
 
 You can push, pull or clone to/from the local server via HTTPS, but for debugging purposes you might
