@@ -14,6 +14,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         ccache \
         $ADDITIONAL_DEPS
 
+RUN apt-get install -y firefox-esr && \
+    curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar -zxC /usr/local/bin
+
 RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
     chmod +x /usr/local/bin/dumb-init
 
