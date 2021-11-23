@@ -402,6 +402,14 @@ You can enabled it with in your current terminal session (`make shell`) or can b
 export WEBDRIVER=firefox
 ```
 
+## Configuring an instance CI Runner
+
+The Runner is already running by default in GCK but GitLab. In cases where GitLab does not accept credentials of the runner, run the below command to configure GitLab and therefore enable the instance runner run:
+
+```shell
+make create-runner
+```
+
 ## Git over SSH
 
 You can push, pull or clone to/from the local server via HTTPS, but for debugging purposes you might
