@@ -168,7 +168,7 @@ services:
       - "${CUSTOM_REGISTRY_PORT}:5000"
 
   runner:
-    image: gitlab/gitlab-runner:alpine-bleeding
+    image: gitlab/gitlab-runner
     environment:
       DOCKER_HOST: tcp://dind:2375
       CI_SERVER_URL: http://${CUSTOM_HOSTNAME}:3000/
