@@ -12,8 +12,7 @@ popd
 export BUNDLE_FLAGS=--local
 
 cd /home/git/gitaly
-make
-make git
+make WITH_BUNDLED_GIT=YesPlease
 
 if [[ -n "$FORCE_GITALY_COMPILE" ]]; then
   echo "Forced gitaly compile!"
@@ -33,7 +32,7 @@ sed \
   -e 's|^secret_file .*|secret_file = "/home/git/shell-secret"|' \
   -e 's|^gitlab_url .*|url = "http://web:8080"|' \
   -e 's|^# \[git\]|[git]|' \
-  -e 's|^# bin_path .*|bin_path = "/home/git/gitaly/_build/deps/git/install/bin/git"|' \
+  -e 's|^# bin_path .*|use_bundled_binaries = true|' \
   config.toml.example | sponge /home/git/gitaly-config.toml
 
 # Gitaly does not install into top-level dir anymore
