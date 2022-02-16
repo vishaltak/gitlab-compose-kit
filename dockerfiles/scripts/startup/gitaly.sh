@@ -2,6 +2,8 @@
 
 set -xeo pipefail
 
+source /scripts/helpers/configure-jemalloc2.sh
+
 pushd ruby
 if ! bundle install --quiet --local; then
   bundle install

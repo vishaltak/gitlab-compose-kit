@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=registry.gitlab.com/gitlab-org/gitlab-build-images:ruby-2.7.patched-golang-1.16-git-2.31-lfs-2.9-chrome-89-node-14.15-yarn-1.22-postgresql-12-graphicsmagick-1.3.36
+ARG BASE_IMAGE=registry.gitlab.com/gitlab-org/gitlab-build-images:debian-bullseye-ruby-2.7.patched-golang-1.16-git-2.33-lfs-2.9-chrome-97-node-14.15-yarn-1.22-postgresql-12-graphicsmagick-1.3.36
 FROM ${BASE_IMAGE}
 
 RUN [ -n "$RUBY_VERSION" ] || ( echo "*** RUBY_VERSION is required to be defined by base image"; exit 1 )
@@ -51,13 +51,6 @@ ENV HOME=/home/git \
     WEBPACK_CACHE_PATH=/data/cache/webpack \
     BOOTSNAP_CACHE_PATH=/data/cache/bootsnap \
     CCACHE_DIR=/data/cache/ccache
-
-# Use jemalloc2
-# - As our production application uses it as well
-# - MALLOC_CONF is a new thing that makes a jemalloc2
-#   free memory as soon as possible
-ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2 \
-    MALLOC_CONF=dirty_decay_ms:0,muzzy_decay_ms:0
 
 ENV PATH="$GOPATH/bin:$GOROOT/bin:/scripts/ccache:$PATH"
 
