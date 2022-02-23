@@ -19,3 +19,8 @@ dc-config:
 .PHONY: dc-config-aux
 dc-config-aux:
 	$(DOCKER_COMPOSE_AUX) config
+
+.PHONY: dc-pull
+dc-pull: COMPOSE_PULL_IMAGE_SERVICES=redis minio jaeger prometheus registry dind node-exporter cadvisor runner
+dc-pull:
+	$(DOCKER_COMPOSE_AUX) pull --ignore-pull-failures $(COMPOSE_PULL_IMAGE_SERVICES)

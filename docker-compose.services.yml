@@ -226,6 +226,7 @@ services:
 
   redis-alt:
     <<: *redis-default
+    image: 'redis:alpine'
     scale: ${ENABLE_REDIS_ALT_STORE}
 
   minio:
