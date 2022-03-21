@@ -175,18 +175,29 @@ production: &production
     username: postgres
     password: password
     host: postgres
+  ci:
+    <<: *main
+    database: gitlabhq_development
 
 development:
   main:
+    <<: *main
+  ci:
     <<: *main
 
 staging:
   main:
     <<: *main
     database: gitlabhq_staging
+  ci:
+    <<: *main
+    database: gitlabhq_staging
 
 test:
   main:
+    <<: *main
+    database: gitlabhq_test_ee
+  ci:
     <<: *main
     database: gitlabhq_test_ee
 EOF
