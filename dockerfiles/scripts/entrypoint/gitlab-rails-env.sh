@@ -12,6 +12,7 @@ source /scripts/helpers/configure-gitaly-version-fix.sh
 
 /scripts/helpers/fix-perms.sh
 /scripts/helpers/fix-gitlab-tmp.sh
+/scripts/helpers/configure-gitlab-metrics-exporter.sh
 /scripts/helpers/configure-gitlab-shell.sh
 /scripts/helpers/configure-gitlab-rails.sh
 /scripts/helpers/install-gettext.sh
