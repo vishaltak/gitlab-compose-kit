@@ -236,13 +236,13 @@ services:
     expose:
     - 9000
     ports:
-      - 9001:9001
+      - ${CUSTOM_MINIO_CONSOLE_PORT}:${CUSTOM_MINIO_CONSOLE_PORT}
     environment:
       MINIO_ROOT_USER: TEST_KEY
       MINIO_ROOT_PASSWORD: TEST_SECRET
     entrypoint: /bin/sh -c
     command:
-      - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket /export/pages-bucket && minio server /export --console-address :9001"
+      - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket /export/pages-bucket && minio server /export --console-address :${CUSTOM_MINIO_CONSOLE_PORT}"
 
   cadvisor:
     image: gcr.io/google_containers/cadvisor:v0.36.0
