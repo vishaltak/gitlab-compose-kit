@@ -92,11 +92,13 @@ production: &production
         path_style: true # this is required as only DNS name exposed is minio
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
+
   lfs:
     enabled: true
     storage_path: /data/shared/lfs
     object_store:
       enabled: true
+      direct_upload: true
       remote_directory: lfs-bucket # The bucket name
       proxy_download: true # this is required as we cannot connect from external to minio
       connection:
@@ -106,9 +108,11 @@ production: &production
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
   uploads:
+    enabled: true
     storage_path: /home/git/gitlab/public/
     object_store:
       enabled: true
+      direct_upload: true
       remote_directory: uploads-bucket # The bucket name
       proxy_download: true # this is required as we cannot connect from external to minio
       connection:
