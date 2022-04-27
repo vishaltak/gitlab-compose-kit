@@ -235,12 +235,14 @@ services:
     - object-storage:/export
     expose:
     - 9000
+    ports:
+      - 9001:9001
     environment:
-      MINIO_ACCESS_KEY: TEST_KEY
-      MINIO_SECRET_KEY: TEST_SECRET
+      MINIO_ROOT_USER: TEST_KEY
+      MINIO_ROOT_PASSWORD: TEST_SECRET
     entrypoint: /bin/sh -c
     command:
-      - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket /export/pages-bucket && minio server /export"
+      - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket /export/pages-bucket && minio server /export --console-address :9001"
 
   cadvisor:
     image: gcr.io/google_containers/cadvisor:v0.36.0

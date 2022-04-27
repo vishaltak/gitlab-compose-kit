@@ -14,6 +14,13 @@ echo -n 12345678901234567890123456789012 | base64 | sponge /home/git/workhorse-s
 cat <<EOF | sponge /home/git/workhorse-config.toml
 [redis]
 URL = "tcp://redis:6379"
+
+[object_storage]
+  provider = "AWS"
+
+[object_storage.s3]
+  aws_access_key_id = "TEST_KEY"
+  aws_secret_access_key = "TEST_SECRET"
 EOF
 
 export PATH="$BUILD_DIR:$PATH"
