@@ -108,7 +108,6 @@ production: &production
         aws_access_key_id: TEST_KEY
         aws_secret_access_key: TEST_SECRET
   uploads:
-    enabled: true
     storage_path: /home/git/gitlab/public/
     object_store:
       enabled: true
