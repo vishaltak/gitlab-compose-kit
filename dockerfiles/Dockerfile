@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=registry.gitlab.com/gitlab-org/gitlab-build-images:debian-bullseye-ruby-2.7.patched-golang-1.17-git-2.33-lfs-2.9-chrome-97-node-16.14-yarn-1.22-postgresql-12-graphicsmagick-1.3.36
+ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
 RUN [ -n "$RUBY_VERSION" ] || ( echo "*** RUBY_VERSION is required to be defined by base image"; exit 1 )
@@ -15,10 +15,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         firefox-esr \
         $ADDITIONAL_DEPS
 
+# TODO: Make arm64 compatible
 RUN curl -L https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz | tar -zxC /usr/local/bin
 
-RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 && \
-    chmod +x /usr/local/bin/dumb-init
+RUN cd /tmp && \
+    wget https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_$(dpkg --print-architecture).deb  && \
+    dpkg -i dumb-init_*.deb && \
+    rm -f dumb-init_*.deb
 
 ARG UID
 ARG GID

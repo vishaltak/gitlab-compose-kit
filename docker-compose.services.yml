@@ -110,7 +110,7 @@ services:
     ports:
       - "${CUSTOM_WEBPACK_PORT}:${CUSTOM_WEBPACK_PORT}"
     working_dir: /home/git/gitlab
-    entrypoint: [/usr/local/bin/dumb-init, --]
+    entrypoint: [/usr/bin/dumb-init, --]
     command: [/scripts/startup/webpack.sh]
 
   gitaly:
@@ -129,7 +129,7 @@ services:
       GITALY_GITLAB_SHELL_DIR: "/home/git/gitlab-shell"
       USE_TRACING: ${USE_TRACING}
     working_dir: /home/git/gitaly
-    entrypoint: [/usr/local/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
+    entrypoint: [/usr/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
 
   pages:
@@ -146,7 +146,7 @@ services:
     environment:
       GITLAB_PAGES_REVISION: ${GITLAB_PAGES_REVISION}
     working_dir: /home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
-    entrypoint: [/usr/local/bin/dumb-init, --]
+    entrypoint: [/usr/bin/dumb-init, --]
     command: [/scripts/startup/pages.sh]
 
   registry:
