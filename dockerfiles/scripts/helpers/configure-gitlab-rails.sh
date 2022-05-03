@@ -180,15 +180,16 @@ production: &production
     host: postgres
   ci:
     <<: *main
-    database: gitlabhq_development
-    database_tasks: false
+    database: gitlabhq_development_ci
+    database_tasks: true
 
 development:
   main:
     <<: *main
   ci:
     <<: *main
-    database_tasks: false
+    database: gitlabhq_development_ci
+    database_tasks: true
 
 staging:
   main:
@@ -196,8 +197,8 @@ staging:
     database: gitlabhq_staging
   ci:
     <<: *main
-    database: gitlabhq_staging
-    database_tasks: false
+    database: gitlabhq_staging_ci
+    database_tasks: true
 
 test:
   main:
@@ -205,8 +206,8 @@ test:
     database: gitlabhq_test_ee
   ci:
     <<: *main
-    database: gitlabhq_test_ee
-    database_tasks: false
+    database: gitlabhq_test_ee_ci
+    database_tasks: true
 EOF
 
 /scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:cable.yml <<EOF | sponge config/cable.yml
