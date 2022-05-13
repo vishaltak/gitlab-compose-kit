@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source /scripts/helpers/configure-jemalloc2.sh
+source /scripts/helpers/configure-gitlab-metrics-exporter.sh
 
 cd /home/git/gitlab
 
