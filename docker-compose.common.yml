@@ -46,6 +46,10 @@ services:
     working_dir: /home/git/gitlab
     stdin_open: true
     tty: true
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 16384
     entrypoint: [/usr/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
 
   sidekiq: *application_image
