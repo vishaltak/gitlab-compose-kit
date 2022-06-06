@@ -14,6 +14,7 @@ services:
         ADDITIONAL_DEPS: ${ADDITIONAL_DEPS}
     volumes:
       - home_git:/home/git
+      - src_gck:/gck
       - src_gitlab_shell:/home/git/gitlab-shell
       - src_gitlab_rails:/home/git/gitlab
       - src_gitaly:/home/git/gitaly
@@ -50,6 +51,8 @@ services:
       nofile:
         soft: 1024
         hard: 16384
+    cap_add:
+      - SYS_PTRACE
     entrypoint: [/usr/bin/dumb-init, --, /scripts/entrypoint/gitlab-rails-env.sh]
 
   sidekiq: *application_image
