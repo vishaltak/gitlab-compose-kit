@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]];  then
+  echo
+  echo "GCK is not currently on master branch. Skipping automatic update."
+  echo
+  exit 0
+fi
+
+if [[ $(git diff --name-only | wc -l) != "0" ]]; then
+  echo
+  echo "Local modifications exist in your GCK. Skipping automatic update."
+  echo
+  exit 0
+fi
+
+echo
+echo "Implicitly updating the GCK..."
+git pull
+echo
