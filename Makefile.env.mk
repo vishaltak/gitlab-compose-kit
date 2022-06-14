@@ -34,12 +34,8 @@ update-dev: update-repos
 update-test: update-repos
 	make migrate-test
 
-.PHONY: update-gck
-update-gck:
-	./scripts/env ./scripts/update-gck
-
 .PHONY: update
-update: update-gck update-dev update-test
+update: update-dev update-test
 
 .PHONY: assets-compile
 assets-compile:
