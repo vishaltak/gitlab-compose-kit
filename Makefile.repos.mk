@@ -33,6 +33,7 @@ deps: repos
 
 .PHONY: update-repos
 update-repos: repos
+	git pull
 	git -C gitaly pull
 	git -C gitlab-rails pull
 	git -C gitlab-shell pull
