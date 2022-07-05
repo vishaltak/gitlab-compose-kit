@@ -244,13 +244,14 @@ services:
       - "mkdir -p /export/artifacts-bucket /export/lfs-bucket /export/uploads-bucket /export/pages-bucket && minio server /export --console-address :${CUSTOM_MINIO_CONSOLE_PORT}"
 
   cadvisor:
-    image: gcr.io/google_containers/cadvisor:v0.36.0
+    image: gcr.io/cadvisor/cadvisor
     expose:
       - 8080
     volumes:
       - /:/rootfs:ro
-      - /var/run:/var/run:rw
+      - /var/run:/var/run:ro
       - /sys:/sys:ro
+      - /dev/disk/:/dev/disk:ro
       - /var/lib/docker/:/var/lib/docker:ro
     command: ["-store_container_labels=false", "-docker_only"]
     depends_on:
