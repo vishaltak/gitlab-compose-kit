@@ -11,6 +11,5 @@ if [[ ! -f ~/.bundle/config.created ]] || [[ $(bundle config get --parseable pat
   touch ~/.bundle/config.created
 fi
 
-mkdir -p /data/cache/gitlab/tests
 # This is needed by Gitaly as it uses custom HOME directory
 ln -sf ~/.bundle /data/cache/gitlab/tests/

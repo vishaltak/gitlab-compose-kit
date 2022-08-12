@@ -7,6 +7,7 @@ if ! gem list -i bundler; then
 fi
 
 /scripts/helpers/fix-perms.sh
+/scripts/helpers/fix-gitlab-tmp.sh
 
 source /scripts/helpers/configure-gitlab-tracing.sh
 source /scripts/helpers/configure-bundle-config.sh
