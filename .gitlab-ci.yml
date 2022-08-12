@@ -81,8 +81,8 @@ dev EE:
     - su git -mc 'git -C gitlab-rails checkout $GITLAB_RAILS_BRANCH'
   
     # compile all components sequentially to ensure most predictable performance
-    - su git -mc 'make rails-compile'
     - su git -mc 'make gitaly-compile'
+    - su git -mc 'make rails-compile'
     - su git -mc 'make webpack-compile'
 
     # run test
