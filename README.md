@@ -410,6 +410,22 @@ The Runner is already running by default in GCK but GitLab. In cases where GitLa
 make create-runner
 ```
 
+## Scaling services
+
+Under some circumstances you may wish to scale an instance, for example, the CI Runner. To do so, create a docker-compose.override.yml and use the `scale: num` syntax for the appropriate service. For example:
+
+```yaml
+version: "2.2"
+
+services:
+  runner:
+    scale: 4
+```
+
+This snippet will instruct docker-compose to spawn 4 CI runner containers, which should be handy if you're running a lot of CI jobs.
+
+Note: This will only be a functional or a good idea with services which are functionally idempotent such as the CI Runner, or Puma and Sidekiq workers. Other services will either not benefit from this, or even interfere with standard operation of the GCK.
+
 ## Git over SSH
 
 You can push, pull or clone to/from the local server via HTTPS, but for debugging purposes you might
