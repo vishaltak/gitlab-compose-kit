@@ -20,7 +20,11 @@ fi
 
 # run webpack dev-server
 if [[ "${USE_WEBPACK_DEV}" == "true" ]]; then
-  echo "Webpack dev-server enabled with hotreload!"
+  export DEV_SERVER_LIVERELOAD=${DEV_SERVER_LIVERELOAD:-true}
+  export DEV_SERVER_INCREMENTAL=${DEV_SERVER_INCREMENTAL:-true}
+
+  echo "Webpack dev-server enabled (hotreload: ${DEV_SERVER_LIVERELOAD} incremental: ${DEV_SERVER_INCREMENTAL})"
+
   ${run_yarn} install
   exec ${run_yarn} dev-server
 fi

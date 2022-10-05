@@ -3,6 +3,7 @@
 set -e
 
 export ENABLE_SPRING=0
+export SKIP_TEST_DATABASE=1 # make development not to change test
 
 echo "Dropping data..."
 rm -rf /data/repositories/* /data/shared/*
