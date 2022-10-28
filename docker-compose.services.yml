@@ -50,7 +50,9 @@ services:
       PGHOST: postgres
       PGUSER: postgres
       PGPASSWORD: password
-    command: [cat]
+    command: [/scripts/startup/spring.sh]
+    stop_signal: SIGTERM
+    stop_grace_period: 15s
 
   workhorse:
     environment:
