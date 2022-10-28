@@ -30,9 +30,9 @@ sed \
   -e 's|^# prometheus_listen_addr.*|prometheus_listen_addr = "0.0.0.0:9236"|' \
   -e 's|^# listen_addr.*|listen_addr = "0.0.0.0:9999"|' \
   -e 's|^path .*|path = "/data/repositories"|' \
-  -e 's|^url .*|url = "http://web:8080"|' \
+  -e 's|^url .*|url = "http://workhorse:8181"|' \
   -e 's|^secret_file .*|secret_file = "/home/git/shell-secret"|' \
-  -e 's|^gitlab_url .*|url = "http://web:8080"|' \
+  -e 's|^gitlab_url .*|url = "http://workhorse:8181"|' \
   -e 's|^# \[git\]|[git]|' \
   -e 's|^# bin_path .*|use_bundled_binaries = true|' \
   config.toml.example | sponge /home/git/gitaly-config.toml
