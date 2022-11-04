@@ -182,7 +182,7 @@ services:
     command: [run-single]
 
   dind:
-    image: docker:19.03-dind
+    image: docker:dind
     environment:
       DOCKER_TLS_CERTDIR: ''
     volumes:
