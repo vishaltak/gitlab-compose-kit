@@ -34,8 +34,8 @@ RUN sed -i -e \
     's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=\(ALL\) NOPASSWD:ALL/g' \
     /etc/sudoers
 
-RUN groupadd -g "$GID" git || true
-RUN useradd -g "$GID" -G sudo -u "$UID" -m -d "/home/git" git
+RUN groupadd -g "$GID" git || groupadd git || true
+RUN useradd -g git -G sudo -u "$UID" -m -d "/home/git" git
 RUN usermod -p '*' git
 
 # allow Git user to modify directories in /usr/local
