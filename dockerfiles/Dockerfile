@@ -10,7 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
         software-properties-common curl \
         build-essential pkg-config cmake \
         sudo openssh-server redis-tools libjemalloc2 \
-        moreutils smem strace lsof ltrace gdb sysstat \
+        moreutils smem strace lsof gdb sysstat \
         ccache docker.io \
         firefox-esr \
         apache2-utils inetutils-ping dnsutils tcpdump net-tools \
