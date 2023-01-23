@@ -1,7 +1,7 @@
 .PHONY: build
 build:
 	@echo Building environment...
-	@$(DOCKER_COMPOSE) build
+	@$(DOCKER_COMPOSE) build --pull
 
 .PHONY: rebuild
 rebuild:
