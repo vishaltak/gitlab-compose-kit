@@ -8,8 +8,9 @@ rm -f .gitlab_shell_secret
 echo gitlab_shell_secret | sponge /home/git/shell-secret
 
 /scripts/helpers/merge-yaml.rb config.yml.example /dev/stdin <<EOF | sponge config.yml
-gitlab_url: "http://web:8080/"
+gitlab_url: "http://workhorse:8181/"
 secret_file: /home/git/shell-secret
+log_file: "/home/git/gitlab-shell/gitlab-shell.log"
 redis:
   host: redis
   port: 6379

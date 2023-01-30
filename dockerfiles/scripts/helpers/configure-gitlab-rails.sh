@@ -159,14 +159,14 @@ EOF
 # Drop all existing redis.[store].yml files because they might be lingering from
 # previous runs if CUSTOM_REDIS_ALT_STORE changed to a new store name.
 rm -f config/redis.*.yml
-if [[ -n "${CUSTOM_REDIS_ALT_STORE}" ]]; then
-  /scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:redis.${CUSTOM_REDIS_ALT_STORE}.yml <<EOF | sponge config/redis.${CUSTOM_REDIS_ALT_STORE}.yml
+for alt_store in ${CUSTOM_REDIS_ALT_STORE}; do
+  /scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:redis.${alt_store}.yml <<EOF | sponge config/redis.${alt_store}.yml
   production: &production
     url: redis://redis-alt:6379
   development: *production
   test: *production
 EOF
-fi
+done
 
 /scripts/helpers/merge-yaml.rb /dev/stdin /home/git/gck-custom.yml:database.yml <<EOF | sponge config/database.yml
 production: &production

@@ -51,7 +51,9 @@ services:
       PGHOST: postgres
       PGUSER: postgres
       PGPASSWORD: password
-    command: [cat]
+    command: [/scripts/startup/spring.sh]
+    stop_signal: SIGTERM
+    stop_grace_period: 15s
 
   workhorse:
     environment:
@@ -181,7 +183,7 @@ services:
     command: [run-single]
 
   dind:
-    image: docker:19.03-dind
+    image: docker:dind
     environment:
       DOCKER_TLS_CERTDIR: ''
     volumes:
