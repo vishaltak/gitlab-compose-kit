@@ -30,6 +30,7 @@ services:
     command: [/scripts/startup/sidekiq.sh]
 
   spring:
+    container_name: ${COMPOSE_PROJECT_NAME}_spring-${GITLAB_SPRING_REVISION}
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     depends_on:
