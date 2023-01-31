@@ -12,8 +12,6 @@ git config --global core.autocrlf input
 git config --global gc.auto 0
 git config --global repack.writeBitmaps true
 
-echo "$CUSTOM_CONFIG" | sponge /tmp/gck-custom.yml
-
 /scripts/helpers/merge-yaml.rb config/gitlab.yml.example /scripts/templates/gitlab.yml /tmp/gck-custom.yml:gitlab.yml |
   sponge config/gitlab.yml
 
