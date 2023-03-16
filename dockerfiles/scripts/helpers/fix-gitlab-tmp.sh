@@ -1,21 +1,20 @@
 #!/bin/bash
 
-# migrate old paths
-pushd /home/git/gitlab
+pushd /home/git/gitlab >/dev/null
 
-if [[ -d tmp/tests ]]; then
-  rm -rf tmp/tests
-fi
+CACHE_DIR=/data/cache/gitlab
 
-mkdir -p /data/cache/node_modules
-ln -sf /data/cache/node_modules || true
+for cached in node_modules tmp/cache tmp/tests; do
+  [[ -L "$cached" ]] && [[ -e "$cached" ]] && continue
 
-mkdir -p /data/cache/gitlab/cache
-ln -sf /data/cache/gitlab/cache tmp/ || true
+  echo ">> Ensuring that '$PWD/${cached}' is cached..."
+  name=$(basename "$cached")
 
-mkdir -p /data/cache/gitlab/tests
-ln -sf /data/cache/gitlab/tests tmp/ || true
+  rm -rf "$cached"
+  mkdir -p "$CACHE_DIR/$name"
+  ln -sf "$CACHE_DIR/$name" "$cached"
+done
 
-popd
+popd >/dev/null
 
 exit 0
