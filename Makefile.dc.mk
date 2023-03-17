@@ -1,5 +1,8 @@
 COMPOSE_FILES += -f docker-compose.common.yml
 COMPOSE_FILES += -f docker-compose.services.yml
+ifneq (,$(CELL))
+COMPOSE_FILES += -f docker-compose.cells.yml
+endif
 ifneq (,$(wildcard docker-compose.override.yml))
 COMPOSE_FILES += -f docker-compose.override.yml
 endif

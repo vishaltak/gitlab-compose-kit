@@ -61,6 +61,7 @@ help:
 	@echo 'Available targets:'
 	@sed -n 's/^.PHONY: \(.*\)$$/- \1/p' Makefile*
 
+include Makefile.cells.mk
 include Makefile.dc.mk
 include Makefile.repos.mk
 include Makefile.deps.mk

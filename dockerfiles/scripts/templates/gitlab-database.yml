@@ -20,6 +20,12 @@ development:
     <<: *main
     database: gitlabhq_development_ci
     database_tasks: true
+  <% if ENV['CELL'].to_i > 0 %>
+  main_clusterwide:
+    <<: *main
+    host: cluster_postgres
+    database_tasks: false
+  <% end %>
 
 staging:
   main:

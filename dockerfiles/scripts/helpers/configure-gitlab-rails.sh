@@ -49,6 +49,14 @@ for alt_store in ${CUSTOM_REDIS_ALT_STORE}; do
     sponge config/redis.${alt_store}.yml
 done
 
+# Configure Rails to share "some" state between Cells
+if [[ -n "$CELL" ]]; then
+  for shared_state in ${CUSTOM_REDIS_CLUSTER_STORE}; do
+    /scripts/helpers/merge-yaml.rb /scripts/templates/gitlab-redis-cluster.yml /tmp/gck-custom.yml:redis.${shared_state}.yml |
+      sponge "config/redis.$shared_state.yml"
+  done
+fi
+
 /scripts/helpers/merge-yaml.rb /scripts/templates/gitlab-database.yml /tmp/gck-custom.yml:database.yml |
   sponge config/database.yml
 
