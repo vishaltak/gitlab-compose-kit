@@ -32,16 +32,16 @@ sed \
   -e 's|^# listen_addr.*|listen_addr = "0.0.0.0:9999"|' \
   -e 's|^path .*|path = "/data/repositories"|' \
   -e 's|^url .*|url = "http://workhorse:8181"|' \
-  -e 's|^secret_file .*|secret_file = "/home/git/shell-secret"|' \
+  -e 's|^secret_file .*|secret_file = "/scripts/templates/gitlab-shell-secret"|' \
   -e 's|^gitlab_url .*|url = "http://workhorse:8181"|' \
   -e 's|^# \[git\]|[git]|' \
   -e 's|^# bin_path .*|use_bundled_binaries = true|' \
-  config.toml.example | sponge /home/git/gitaly-config.toml
+  config.toml.example | sponge /tmp/gitaly-config.toml
 
 # Gitaly does not install into top-level dir anymore
 # https://gitlab.com/gitlab-org/gitaly/-/commit/eb6fd60561cffdbb183e74456268439bad60b21c
 if [[ -e _build/bin/gitaly ]]; then
-  exec ./_build/bin/gitaly /home/git/gitaly-config.toml
+  exec ./_build/bin/gitaly /tmp/gitaly-config.toml
 else
-  exec ./gitaly /home/git/gitaly-config.toml
+  exec ./gitaly /tmp/gitaly-config.toml
 fi
