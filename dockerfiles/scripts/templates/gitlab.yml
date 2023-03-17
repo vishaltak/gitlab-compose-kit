@@ -1,0 +1,107 @@
+production: &production
+  gitlab:
+    host: <%= ENV['CUSTOM_HOSTNAME'] %>
+    port: <%= ENV['CUSTOM_WEB_PORT'] %>
+    content_security_policy:
+      directives:
+        connect_src: "'self' http://<%= ENV['CUSTOM_HOSTNAME'] %>:* ws://<%= ENV['CUSTOM_HOSTNAME'] %>:* wss://<%= ENV['CUSTOM_HOSTNAME'] %>:*"
+        script_src: "'self' 'unsafe-eval' http://<%= ENV['CUSTOM_HOSTNAME'] %>:* https://www.google.com/recaptcha/ https://www.recaptcha.net/ https://www.gstatic.com/recaptcha/ https://apis.google.com"
+  gitlab_shell:
+    ssh_port: <%= ENV['CUSTOM_SSH_PORT'] %>
+    secret_file: /scripts/templates/gitlab-shell-secret
+  workhorse:
+    secret_file: /scripts/templates/workhorse-secret
+  pages:
+    enabled: true
+    host: gitlab-example.com
+    port: 80 # Set to 443 if you serve the pages with HTTPS
+    https: false # Set to true if you serve the pages with HTTPS
+    artifacts_server: true
+    path: /data/shared/pages
+    object_store:
+      enabled: true
+      remote_directory: pages-bucket # The bucket name
+      proxy_download: true # this is required as we cannot connect from external to minio
+      connection:
+        provider: AWS
+        endpoint: 'http://minio:9000'
+        path_style: true # this is required as only DNS name exposed is minio
+        aws_access_key_id: TEST_KEY
+        aws_secret_access_key: TEST_SECRET
+    local_store:
+      enabled: true
+  mattermost:
+    enabled: false
+    host: 'https://mattermost.example.com'
+  registry:
+    enabled: true
+    host: <%= ENV['CUSTOM_HOSTNAME'] %>
+    port: <%= ENV['CUSTOM_REGISTRY_PORT'] %>
+    api_url: http://registry:5000/ # internal address to the registry, will be used by GitLab to directly communicate with API
+    key: /home/git/registry-auth.key
+    issuer: gitlab-issuer
+    # path: shared/registry
+  monitoring:
+    ip_whitelist:
+      - 0.0.0.0/0
+    sidekiq_exporter:
+      enabled: true
+      address: 0.0.0.0
+      port: 3807
+  repositories:
+    storages:
+      default:
+        path: /data/repositories/
+        gitaly_address: tcp://gitaly:9999
+  gitlab_ci:
+    builds_path: /data/shared/builds
+  webpack:
+    dev_server:
+      enabled: <%= (ENV['USE_WEBPACK_DEV'] || false).to_s %>
+      host: webpack
+      port: <%= ENV['CUSTOM_WEBPACK_PORT'].to_i %>
+  artifacts:
+    enabled: true
+    path: /data/shared/artifacts
+    object_store:
+      enabled: false # not yet supported natively
+      remote_directory: artifacts-bucket # The bucket name
+      proxy_download: true # this is required as we cannot connect from external to minio
+      connection:
+        provider: AWS
+        endpoint: 'http://minio:9000'
+        path_style: true # this is required as only DNS name exposed is minio
+        aws_access_key_id: TEST_KEY
+        aws_secret_access_key: TEST_SECRET
+  lfs:
+    enabled: true
+    storage_path: /data/shared/lfs
+    object_store:
+      enabled: true
+      direct_upload: true
+      remote_directory: lfs-bucket # The bucket name
+      proxy_download: true # this is required as we cannot connect from external to minio
+      connection:
+        provider: AWS
+        endpoint: 'http://minio:9000'
+        path_style: true # this is required as only DNS name exposed is minio
+        aws_access_key_id: TEST_KEY
+        aws_secret_access_key: TEST_SECRET
+  uploads:
+    storage_path: /home/git/gitlab/public/
+    object_store:
+      enabled: true
+      direct_upload: true
+      remote_directory: uploads-bucket # The bucket name
+      proxy_download: true # this is required as we cannot connect from external to minio
+      connection:
+        provider: AWS
+        endpoint: 'http://minio:9000'
+        path_style: true # this is required as only DNS name exposed is minio
+        aws_access_key_id: TEST_KEY
+        aws_secret_access_key: TEST_SECRET
+  prometheus:
+    enable: true
+    listen_address: prometheus:9090
+
+development: *production

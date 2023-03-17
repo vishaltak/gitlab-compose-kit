@@ -25,6 +25,7 @@ fi
 # - some older gitaly versions do break as they require `url`
 # - will be fixed with https://gitlab.com/gitlab-org/gitaly/-/merge_requests/2240
 
+# TODO: merge toml files
 sed \
   -e 's|^socket_path|# socket_path|' \
   -e 's|^# prometheus_listen_addr.*|prometheus_listen_addr = "0.0.0.0:9236"|' \

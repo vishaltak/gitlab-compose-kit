@@ -1,0 +1,4 @@
+production: &production
+  url: redis://redis-alt:6379
+development: *production
+test: *production

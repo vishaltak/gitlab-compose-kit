@@ -1,0 +1,10 @@
+production: &production
+  adapter: redis
+  url: redis://redis:6379
+  channel_prefix: gitlab_production
+development:
+  <<: *production
+  channel_prefix: gitlab_development
+test:
+  <<: *production
+  channel_prefix: gitlab_test

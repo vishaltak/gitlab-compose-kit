@@ -1,0 +1,9 @@
+[redis]
+URL = "tcp://redis:6379"
+
+[object_storage]
+  provider = "AWS"
+
+[object_storage.s3]
+  aws_access_key_id = "TEST_KEY"
+  aws_secret_access_key = "TEST_SECRET"

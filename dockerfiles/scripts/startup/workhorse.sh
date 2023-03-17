@@ -8,21 +8,6 @@ export BUILD_DIR=/tmp/gitlab-workhorse
 cd /home/git/gitlab/workhorse
 make
 
-# Workhorse secret has to be 32 bytes
-echo -n 12345678901234567890123456789012 | base64 | sponge /home/git/workhorse-secret
-
-cat <<EOF | sponge /home/git/workhorse-config.toml
-[redis]
-URL = "tcp://redis:6379"
-
-[object_storage]
-  provider = "AWS"
-
-[object_storage.s3]
-  aws_access_key_id = "TEST_KEY"
-  aws_secret_access_key = "TEST_SECRET"
-EOF
-
 export PATH="$BUILD_DIR:$PATH"
 
 exec /tmp/gitlab-workhorse/gitlab-workhorse \
@@ -33,6 +18,6 @@ exec /tmp/gitlab-workhorse/gitlab-workhorse \
   -prometheusListenAddr="0.0.0.0:9229" \
   -pprofListenAddr="0.0.0.0:6060" \
   -documentRoot="/home/git/gitlab/public" \
-  -config="/home/git/workhorse-config.toml" \
-  -secretPath="/home/git/workhorse-secret" \
+  -config="/scripts/templates/workhorse-config.toml" \
+  -secretPath="/scripts/templates/workhorse-secret" \
   "$@"
