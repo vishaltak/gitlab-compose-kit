@@ -43,7 +43,7 @@ RUN chown git:git $(find /usr/local -type d)
 
 USER git
 
-VOLUME ["/home/git", "/data/cache"]
+VOLUME ["/home/git", "/data/cache", "/data/repositories", "/data/shared"]
 
 # install things globally, for great justice
 # and don't create ".bundle" in all our apps
