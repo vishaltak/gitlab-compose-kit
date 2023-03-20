@@ -15,6 +15,7 @@ source /scripts/helpers/configure-gitaly-version-fix.sh
 /scripts/helpers/configure-gitlab-shell.sh
 /scripts/helpers/configure-gitlab-rails.sh
 /scripts/helpers/install-gettext.sh
+/scripts/helpers/upgrade-gck.sh
 
 touch /tmp/gitlab-rails-env-started
 
