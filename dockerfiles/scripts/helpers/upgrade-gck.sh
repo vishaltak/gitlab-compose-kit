@@ -8,9 +8,11 @@ mkdir -p "$UPGRADES_DIR"
 if [[ ! -e "$UPGRADES_DIR/gitlab-dual-db-done" ]]; then
   echo ">> Running migration from a single DB to dual DB (main => main + CI). Data will be duplicated."
 
+  /scripts/helpers/wait-for-service.sh tcp postgres 5432
+
   # Due to adding multiple databases in GCK by default
   # this is used to clone existing database to CI
-  cat <<EOF | psql
+  cat <<EOF | PGHOST=postgres PGUSER=postgres PGPASSWORD=password psql
     SELECT 'CREATE DATABASE gitlabhq_development_ci WITH TEMPLATE gitlabhq_development'
       WHERE EXISTS (SELECT FROM pg_database WHERE datname = 'gitlabhq_development') AND
         NOT EXISTS (SELECT FROM pg_database WHERE datname = 'gitlabhq_development_ci')\gexec

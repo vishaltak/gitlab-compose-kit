@@ -2,27 +2,8 @@
 
 source /scripts/helpers/configure-custom-env.sh
 
-echo -n "Waiting for gitlab-rails env"
-for i in $(seq 1 1000); do
-  if [[ -f /tmp/gitlab-rails-env-started ]]; then
-    break
-  fi
-
-  echo -n "."
-  sleep 1s
-done
-echo " Done"
-
-echo -n "Waiting for gitaly"
-for i in $(seq 1 1000); do
-  if timeout 1 bash -c "</dev/tcp/gitaly/9999" 2>/dev/null; then
-    break
-  fi
-
-  echo -n "."
-  sleep 1s
-done
-echo " Done"
+/scripts/helpers/wait-for-service.sh file gitlab-rails-env /tmp/gitlab-rails-env-started || exit 1
+/scripts/helpers/wait-for-service.sh tcp gitaly 9999 || exit 1
 
 if [[ -z "$CHROME_HEADLESS" ]]; then
   if [[ -n "$DISPLAY" ]]; then
