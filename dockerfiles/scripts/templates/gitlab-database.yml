@@ -1,0 +1,39 @@
+production: &production
+  main: &main
+    adapter: postgresql
+    encoding: unicode
+    database: gitlabhq_development
+    pool: 5
+    username: postgres
+    password: password
+    host: postgres
+  ci:
+    <<: *main
+    database: gitlabhq_development_ci
+    database_tasks: true
+
+development:
+  main:
+    <<: *main
+  ci:
+    <<: *main
+    database: gitlabhq_development_ci
+    database_tasks: true
+
+staging:
+  main:
+    <<: *main
+    database: gitlabhq_staging
+  ci:
+    <<: *main
+    database: gitlabhq_staging_ci
+    database_tasks: true
+
+test:
+  main:
+    <<: *main
+    database: gitlabhq_test_ee
+  ci:
+    <<: *main
+    database: gitlabhq_test_ee_ci
+    database_tasks: true

@@ -1,0 +1,7 @@
+gitlab_url: "http://workhorse:8181/"
+secret_file: /scripts/templates/gitlab-shell-secret
+log_file: "/home/git/gitlab-shell/gitlab-shell.log"
+redis:
+  host: redis
+  port: 6379
+  socket: nil

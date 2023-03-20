@@ -1,0 +1,17 @@
+AllowUsers git
+AuthenticationMethods publickey
+HostKey /etc/ssh/ssh_host_rsa_key
+PidFile none
+ListenAddress 0.0.0.0:2222
+LogLevel VERBOSE
+PasswordAuthentication no
+PidFile none
+Protocol 2
+StrictModes no
+UseLogin no
+UsePAM no
+
+Match User git
+AuthorizedKeysFile none
+AuthorizedKeysCommand /gitlab-shell/bin/gitlab-shell-authorized-keys-check git %u %k
+AuthorizedKeysCommandUser git
