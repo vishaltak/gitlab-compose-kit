@@ -58,6 +58,6 @@ ENV HOME=/home/git \
     BOOTSNAP_CACHE_PATH=/data/cache/bootsnap \
     CCACHE_DIR=/data/cache/ccache
 
-ENV PATH="$GOPATH/bin:$GOROOT/bin:/scripts/ccache:$PATH"
+ENV PATH="$GEM_HOME/bin:$GOPATH/bin:$GOROOT/bin:/scripts/ccache:$PATH"
 
 ADD /scripts /scripts

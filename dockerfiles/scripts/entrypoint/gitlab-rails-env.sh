@@ -6,6 +6,7 @@ if ! gem list -i bundler; then
     gem install bundler
 fi
 
+source /scripts/helpers/configure-custom-env.sh
 source /scripts/helpers/configure-gitlab-tracing.sh
 source /scripts/helpers/configure-bundle-config.sh
 source /scripts/helpers/configure-gitaly-version-fix.sh

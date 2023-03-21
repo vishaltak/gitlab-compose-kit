@@ -25,6 +25,7 @@ export CUSTOM_WEBPACK_PORT ?= 3808
 export CUSTOM_MINIO_CONSOLE_PORT ?= 9001
 export CUSTOM_WEB_CONFIG ?=
 export CUSTOM_REDIS_ALT_STORE ?=
+export CUSTOM_ENV ?=
 
 export SIDEKIQ_WORKERS ?=
 export SIDEKIQ_QUEUES ?=
@@ -62,13 +63,15 @@ $(error "`gitlab.yml` file is not supported, use `gck.yml` file instead")
 endif
 
 # Include configs
-ifneq (,$(wildcard gck.env))
-include gck.env
+ifeq (,$(wildcard gck.env))
+$(shell touch gck.env)
 endif
 
 ifeq (,$(wildcard gck.yml))
 $(shell touch gck.yml)
 endif
+
+include gck.env
 
 # Define if services should be enabled by default depending on configuration
 ifneq (,$(CUSTOM_REDIS_ALT_STORE))

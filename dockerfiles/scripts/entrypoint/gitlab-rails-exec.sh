@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /scripts/helpers/configure-custom-env.sh
+
 echo -n "Waiting for gitlab-rails env"
 for i in $(seq 1 1000); do
   if [[ -f /tmp/gitlab-rails-env-started ]]; then
