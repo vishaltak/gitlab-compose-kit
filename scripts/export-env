@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -eo pipefail
+
+# This script compares environment variables
+# as saved in `DO_NOT_EXPORT_VARIABLES` with environment variables
+# persisted. Exports env variables set if they differ.
+
+if [[ -z "$DO_NOT_EXPORT_VARIABLES" ]]; then
+  echo "usage: $0"
+  echo '>> Missing DO_NOT_EXPORT_VARIABLES with content of `compgen -e`'
+  exit 1
+fi
+
+# Do not export make or shell specific env variables
+export -n MFLAGS MAKEFLAGS MAKE_TERMOUT MAKE_TERMERR MAKELEVEL MAKEOVERRIDES
+export -n _ SHLVL
+
+# Do not export some GCK specific env variables
+export -n GCK_HOME COMPOSE_PROJECT_NAME COMPOSE_HTTP_TIMEOUT
+export -n SRC_MOUNT_TYPE SRC_MOUNT_OPTS SRC_MOUNT_PATH
+export -n DO_NOT_EXPORT_VARIABLES
+
+# Ignore all other variables
+[[ -n "$DO_NOT_EXPORT_VARIABLES" ]] && export -n $DO_NOT_EXPORT_VARIABLES
+
+# Output in bash format:
+# declare -x CUSTOM_GID="1000"
+# declare -x CUSTOM_MINIO_CONSOLE_PORT="9001"
+
+declare -p $(compgen -e)

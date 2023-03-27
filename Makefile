@@ -1,12 +1,13 @@
 export GCK_HOME=$(CURDIR)
 
+export DO_NOT_EXPORT_VARIABLES := $(shell bash -c 'compgen -e')
+
 export BASE_IMAGE_REPOSITORY ?= registry.gitlab.com/gitlab-org/gitlab-build-images/debian-bullseye-ruby-3.0.patched-golang-1.19-node-16.14-postgresql-12
 export BASE_IMAGE_TAG ?= rubygems-3.2-git-2.36-lfs-2.9-chrome-106-yarn-1.22-graphicsmagick-1.3.36
 export BASE_IMAGE ?= ${BASE_IMAGE_REPOSITORY}:${BASE_IMAGE_TAG}
 export USE_WEB_SERVER ?= puma
 export USE_TRACING ?=
 export USE_WEBPACK_DEV ?= false
-export FORCE_WEBPACK_COMPILE ?= false
 export USE_CABLE_SERVER ?= true
 export CHROME_HEADLESS ?=
 export WEBDRIVER_HEADLESS ?=
@@ -71,7 +72,9 @@ ifeq (,$(wildcard gck.yml))
 $(shell touch gck.yml)
 endif
 
+# Include custom env and export all
 include gck.env
+export
 
 # Define if services should be enabled by default depending on configuration
 ifneq (,$(CUSTOM_REDIS_ALT_STORE))

@@ -26,9 +26,9 @@ if [[ -z "$CUSTOM_HOSTNAME" ]]; then
   exit 1
 fi
 
-export CUSTOM_CONFIG=$(cat gck.yml)
-export CUSTOM_ENV=$(cat gck.env; export CUSTOM_HOSTNAME)
 export CUSTOM_UID=$(id -u)
 export CUSTOM_GID=$(id -g)
+export CUSTOM_ENV=$(scripts/export-env)
+export CUSTOM_CONFIG=$(cat gck.yml)
 
 exec "$@"
