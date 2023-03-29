@@ -1,35 +1,8 @@
 export GCK_HOME=$(CURDIR)
 
-export DO_NOT_EXPORT_VARIABLES := $(shell bash -c 'compgen -e')
-
-export BASE_IMAGE_REPOSITORY ?= registry.gitlab.com/gitlab-org/gitlab-build-images/debian-bullseye-ruby-3.0.patched-golang-1.19-node-16.14-postgresql-12
-export BASE_IMAGE_TAG ?= rubygems-3.2-git-2.36-lfs-2.9-chrome-106-yarn-1.22-graphicsmagick-1.3.36
-export BASE_IMAGE ?= ${BASE_IMAGE_REPOSITORY}:${BASE_IMAGE_TAG}
-export USE_WEB_SERVER ?= puma
-export USE_TRACING ?=
-export USE_WEBPACK_DEV ?= false
-export USE_CABLE_SERVER ?= true
-export CHROME_HEADLESS ?=
-export WEBDRIVER_HEADLESS ?=
-export DISPLAY ?=
-export ENABLE_SPRING ?= 1
+export COMPOSE_PROJECT_NAME ?= $(notdir $(CURDIR))
+export COMPOSE_KIT_REVISION ?= $(shell git -C . rev-parse HEAD 2>/dev/null || echo "unknown")
 export COMPOSE_HTTP_TIMEOUT ?= 3600
-export RAILS_ENV ?= development
-export FOSS_ONLY ?=
-export FORCE_BIND_MOUNT ?=
-export ADDITIONAL_DEPS ?=
-
-export CUSTOM_WEB_PORT ?= 3000
-export CUSTOM_SSH_PORT ?= 2222
-export CUSTOM_REGISTRY_PORT ?= 5000
-export CUSTOM_WEBPACK_PORT ?= 3808
-export CUSTOM_MINIO_CONSOLE_PORT ?= 9001
-export CUSTOM_WEB_CONFIG ?=
-export CUSTOM_REDIS_ALT_STORE ?=
-export CUSTOM_ENV ?=
-
-export SIDEKIQ_WORKERS ?=
-export SIDEKIQ_QUEUES ?=
 
 export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell rev-parse HEAD 2>/dev/null || echo "unknown")
@@ -37,9 +10,6 @@ export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse rev-parse HE
 export GITLAB_GITALY_REVISION ?= $(shell git -C gitlab-gitaly rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_PAGES_REVISION ?= $(shell git -C gitlab-pages rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_METRICS_EXPORTER_REVISION ?= $(shell git -C gitlab-metrics-exporter rev-parse HEAD 2>/dev/null || echo "unknown")
-export COMPOSE_KIT_REVISION ?= $(shell git -C . rev-parse HEAD 2>/dev/null || echo "unknown")
-
-export COMPOSE_PROJECT_NAME ?= $(notdir $(CURDIR))
 export GITLAB_SPRING_REVISION ?= $(shell git -C gitlab-rails rev-parse --short HEAD || echo "unknown")
 
 # If FORCE_BIND_MOUNT is set
@@ -73,6 +43,9 @@ $(shell touch gck.yml)
 endif
 
 # Include custom env and export all
+export
+export DO_NOT_EXPORT_VARIABLES := $(shell bash -c 'compgen -e')
+include defaults.mk
 include gck.env
 export
 

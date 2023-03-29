@@ -24,9 +24,6 @@ services:
       - redis-alt
       - gitaly
       - minio
-    environment:
-      SIDEKIQ_WORKERS: ${SIDEKIQ_WORKERS}
-      SIDEKIQ_QUEUES: ${SIDEKIQ_QUEUES}
     command: [/scripts/startup/sidekiq.sh]
 
   spring:
@@ -44,9 +41,6 @@ services:
       ENABLE_SPRING: 1
       SPEC_OPTS: "--format documentation"
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "1" # disable https://github.com/rails/rails/blob/fc2684c9c012b95ce003cce22b378d5ea9ab56d3/activerecord/lib/active_record/tasks/database_tasks.rb#L58
-      DISPLAY: ${DISPLAY}
-      CHROME_HEADLESS: ${CHROME_HEADLESS}
-      WEBDRIVER_HEADLESS: ${WEBDRIVER_HEADLESS}
       HISTCONTROL: "ignoreboth:erasedups"
       PGHOST: postgres
       PGUSER: postgres
@@ -127,7 +121,6 @@ services:
       GITLAB_GITALY_REVISION: ${GITLAB_GITALY_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       GITALY_GITLAB_SHELL_DIR: "/home/git/gitlab-shell"
-      USE_TRACING: ${USE_TRACING}
     working_dir: /home/git/gitaly
     entrypoint: [/usr/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]

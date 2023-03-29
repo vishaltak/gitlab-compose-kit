@@ -25,25 +25,13 @@ services:
     environment:
       RAILS_ENV: ${RAILS_ENV}
       RAILS_HOSTS: "" # undefined
-      FOSS_ONLY: ${FOSS_ONLY}
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       GITLAB_METRICS_EXPORTER_REVISION: ${GITLAB_METRICS_EXPORTER_REVISION}
       GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
       GITLAB_CHAOS_SECRET: secret
-      USE_TRACING: ${USE_TRACING}
-      USE_WEB_SERVER: ${USE_WEB_SERVER}
-      USE_CABLE_SERVER: ${USE_CABLE_SERVER}
-      USE_WEBPACK_DEV: ${USE_WEBPACK_DEV}
-      CUSTOM_HOSTNAME: ${CUSTOM_HOSTNAME}
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
       CUSTOM_ENV: ${CUSTOM_ENV}
-      CUSTOM_WEB_PORT: ${CUSTOM_WEB_PORT}
-      CUSTOM_SSH_PORT: ${CUSTOM_SSH_PORT}
-      CUSTOM_REGISTRY_PORT: ${CUSTOM_REGISTRY_PORT}
-      CUSTOM_WEBPACK_PORT: ${CUSTOM_WEBPACK_PORT}
-      CUSTOM_WEB_CONFIG: ${CUSTOM_WEB_CONFIG}
-      CUSTOM_REDIS_ALT_STORE: ${CUSTOM_REDIS_ALT_STORE}
       ENABLE_RBTRACE: "1"
     working_dir: /home/git/gitlab
     stdin_open: true
@@ -62,6 +50,9 @@ services:
   workhorse: &generic_image
     image: *imagename
     build: *imagebuild
+    environment:
+      CUSTOM_CONFIG: ${CUSTOM_CONFIG}
+      CUSTOM_ENV: ${CUSTOM_ENV}
     volumes:
       - home_git:/home/git
       - cache:/data/cache
