@@ -1,29 +1,34 @@
 .PHONY: create-dev
+create-dev: RAILS_ENV=development
 create-dev: deps
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
+	$(DOCKER_COMPOSE) run \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh /scripts/helpers/create-dev-env.sh
 
 .PHONY: create-test
+create-test: RAILS_ENV=test
 create-test: deps
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
+	$(DOCKER_COMPOSE) run \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake -t db:drop db:prepare
 
 .PHONY: create-runner
+create-runner: RAILS_ENV=development
 create-runner: deps
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
+	$(DOCKER_COMPOSE) run \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rails runner "Ci::Runner.create(runner_type: :instance_type, token: 'SHARED_RUNNER_TOKEN')"
 
 .PHONY: create
 create: create-dev create-test create-runner
 
 .PHONY: migrate-dev
+migrate-dev: RAILS_ENV=development
 migrate-dev:
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
+	$(DOCKER_COMPOSE) run \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake db:migrate
 
 .PHONY: migrate-test
+migrate-test: RAILS_ENV=test
 migrate-test:
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
+	$(DOCKER_COMPOSE) run \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake db:migrate
 
 .PHONY: update-dev
@@ -38,8 +43,9 @@ update-test: update-repos
 update: update-dev update-test
 
 .PHONY: assets-compile
+assets-compile: RAILS_ENV=test
 assets-compile:
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=test \
+	$(DOCKER_COMPOSE) run \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh bin/rake gitlab:assets:compile
 
 .PHONY: webpack-compile
@@ -51,8 +57,9 @@ gitaly-compile: deps
 	$(DOCKER_COMPOSE) run -e FORCE_GITALY_COMPILE=true gitaly
 
 .PHONY: rails-compile
+rails-compile: RAILS_ENV=development
 rails-compile: deps
-	$(DOCKER_COMPOSE) run -e RAILS_ENV=development \
+	$(DOCKER_COMPOSE) run \
 		spring /scripts/entrypoint/gitlab-rails-exec.sh /bin/true
 
 .PHONY: env
