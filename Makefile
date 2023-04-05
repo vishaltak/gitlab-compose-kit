@@ -44,7 +44,7 @@ endif
 
 # Include custom env and export all
 export
-export DO_NOT_EXPORT_VARIABLES := $(shell bash -c 'compgen -e')
+export DO_NOT_EXPORT_VARIABLES := $(.VARIABLES)
 include defaults.mk
 include gck.env
 export
