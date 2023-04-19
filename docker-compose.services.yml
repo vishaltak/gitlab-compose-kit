@@ -15,6 +15,7 @@ services:
     environment:
       RAILS_HOSTS: "web"
     command: [/scripts/startup/web.sh]
+    hostname: gitlab-rails-web
 
   sidekiq:
     depends_on:
@@ -24,10 +25,8 @@ services:
       - redis-alt
       - gitaly
       - minio
-    environment:
-      SIDEKIQ_WORKERS: ${SIDEKIQ_WORKERS}
-      SIDEKIQ_QUEUES: ${SIDEKIQ_QUEUES}
     command: [/scripts/startup/sidekiq.sh]
+    hostname: gitlab-rails-sidekiq
 
   spring:
     container_name: ${COMPOSE_PROJECT_NAME}_spring-${GITLAB_SPRING_REVISION}
@@ -44,9 +43,6 @@ services:
       ENABLE_SPRING: 1
       SPEC_OPTS: "--format documentation"
       DISABLE_DATABASE_ENVIRONMENT_CHECK: "1" # disable https://github.com/rails/rails/blob/fc2684c9c012b95ce003cce22b378d5ea9ab56d3/activerecord/lib/active_record/tasks/database_tasks.rb#L58
-      DISPLAY: ${DISPLAY}
-      CHROME_HEADLESS: ${CHROME_HEADLESS}
-      WEBDRIVER_HEADLESS: ${WEBDRIVER_HEADLESS}
       HISTCONTROL: "ignoreboth:erasedups"
       PGHOST: postgres
       PGUSER: postgres
@@ -54,6 +50,7 @@ services:
     command: [/scripts/startup/spring.sh]
     stop_signal: SIGTERM
     stop_grace_period: 15s
+    hostname: gitlab-rails-spring
 
   workhorse:
     environment:
@@ -78,6 +75,7 @@ services:
       - minio
     working_dir: /home/git/gitlab/workhorse
     command: [/scripts/startup/workhorse.sh]
+    hostname: gitlab-workhorse
 
   sshd:
     environment:
@@ -96,6 +94,7 @@ services:
       - redis-alt
       - web
     command: [sudo, /scripts/startup/sshd.sh]
+    hostname: gitlab-sshd
 
   webpack:
     volumes:
@@ -112,6 +111,7 @@ services:
     working_dir: /home/git/gitlab
     entrypoint: [/usr/bin/dumb-init, --]
     command: [/scripts/startup/webpack.sh]
+    hostname: gitlab-webpack
 
   gitaly:
     volumes:
@@ -127,10 +127,10 @@ services:
       GITLAB_GITALY_REVISION: ${GITLAB_GITALY_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
       GITALY_GITLAB_SHELL_DIR: "/home/git/gitlab-shell"
-      USE_TRACING: ${USE_TRACING}
     working_dir: /home/git/gitaly
     entrypoint: [/usr/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
+    hostname: gitlab-gitaly
 
   pages:
     volumes:
@@ -148,6 +148,7 @@ services:
     working_dir: /home/git/go/src/gitlab.com/gitlab-org/gitlab-pages
     entrypoint: [/usr/bin/dumb-init, --]
     command: [/scripts/startup/pages.sh]
+    hostname: gitlab-pages
 
   registry:
     image: registry:2.7.1
@@ -166,6 +167,7 @@ services:
       - 5000
     ports:
       - "${CUSTOM_REGISTRY_PORT}:5000"
+    hostname: gitlab-registry
 
   runner:
     image: gitlab/gitlab-runner
@@ -180,6 +182,7 @@ services:
     depends_on:
       - dind
     command: [run-single]
+    hostname: gitlab-runner
 
   dind:
     image: docker:dind
