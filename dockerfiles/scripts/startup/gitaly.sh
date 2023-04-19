@@ -2,16 +2,18 @@
 
 set -xeo pipefail
 
-source /scripts/helpers/configure-jemalloc2.sh
+if [[ -e ruby/Gemfile ]]; then
+  source /scripts/helpers/configure-jemalloc2.sh
 
-pushd ruby
-if ! bundle install --quiet --local; then
-  bundle install
+  pushd ruby
+  if ! bundle install --quiet --local; then
+    bundle install
+  fi
+  popd
+
+  # ensure that we do not re-install all dependencies
+  export BUNDLE_FLAGS=--local
 fi
-popd
-
-# ensure that we do not re-install all dependencies
-export BUNDLE_FLAGS=--local
 
 cd /home/git/gitaly
 make WITH_BUNDLED_GIT=YesPlease
