@@ -29,6 +29,7 @@ for old_version in $UPGRADEABLE_PGVERSIONS; do
     export LD_LIBRARY_PATH="/usr/lib:/lib:/postgres/$old_version/usr/lib:/postgres/$old_version/lib"
 
     echo "Migrating the '$PGROOT/$old_version' to '$PGDATA'..."
+    rm -f "$PGROOT/$old_version/postmaster.pid" "$PGDATA/postmaster.pid"
     pg_upgrade \
       -d "$PGROOT/$old_version" -b "/postgres/$old_version/usr/local/bin" \
       -D "$PGDATA" -B /usr/local/bin || \
@@ -39,6 +40,7 @@ for old_version in $UPGRADEABLE_PGVERSIONS; do
 
     echo "Starting '$PGDATA'..."
     pg_ctl -D "$PGDATA" -w start
+    break
   fi
 done
 
