@@ -4,9 +4,9 @@
 ## TESTS
 ##-------
 
-@test "Migrate PostgreSQL 11 to 12" {
-  # Start 11 and provision it with data
-  create_db_container "postgres:11-alpine"
+@test "Migrate PostgreSQL 12 to 13" {
+  # Start 12 and provision it with data
+  create_db_container "postgres:12-alpine"
   psql -c "CREATE DATABASE my_database"
   psql my_database -c "SELECT 1"
   drop_db_container
