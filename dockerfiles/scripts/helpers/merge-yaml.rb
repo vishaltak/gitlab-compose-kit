@@ -73,10 +73,17 @@ config = ARGV.inject({}) do |config, arg|
     end
   end
 
-  content = YAML.load(content) || {}
-  content = content.dig(*digs) if digs.any?
+  begin
+    content = Psych.unsafe_load(content, filename: file_name) || {}
+    content = content.dig(*digs) if digs.any?
 
-  deep_merge(config, content || {})
+    deep_merge(config, content || {})
+  rescue => e
+    STDERR.puts "EXCEPTION:"
+    STDERR.puts "#{file_name}: #{e.message}"
+    STDERR.puts e.backtrace
+    exit 1
+  end
 end
 
 puts config.to_yaml
