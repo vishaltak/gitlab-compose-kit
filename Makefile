@@ -10,7 +10,7 @@ export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse rev-parse HE
 export GITLAB_GITALY_REVISION ?= $(shell git -C gitlab-gitaly rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_PAGES_REVISION ?= $(shell git -C gitlab-pages rev-parse HEAD 2>/dev/null || echo "unknown")
 export GITLAB_METRICS_EXPORTER_REVISION ?= $(shell git -C gitlab-metrics-exporter rev-parse HEAD 2>/dev/null || echo "unknown")
-export GITLAB_SPRING_REVISION ?= $(shell git -C gitlab-rails rev-parse --short HEAD || echo "unknown")
+export GITLAB_SPRING_REVISION ?= $(shell git -C gitlab-rails rev-parse --short HEAD 2>/dev/null || echo "unknown")
 
 # If FORCE_BIND_MOUNT is set
 # do mount using bind-mount
