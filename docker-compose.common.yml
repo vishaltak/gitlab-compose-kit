@@ -61,5 +61,6 @@ services:
 
   webpack: *generic_image
   gitaly: *generic_image
+  praefect: *generic_image
   pages: *generic_image
   sshd: *generic_image

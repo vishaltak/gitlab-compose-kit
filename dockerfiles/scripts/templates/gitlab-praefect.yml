@@ -1,0 +1,8 @@
+production: &production
+  repositories:
+    storages:
+      praefect:
+        path: /data/repositories/@praefect/
+        gitaly_address: tcp://praefect:10000
+
+development: *production
