@@ -15,6 +15,19 @@ git config --global repack.writeBitmaps true
 /scripts/helpers/merge-yaml.rb config/gitlab.yml.example /scripts/templates/gitlab.yml /tmp/gck-custom.yml:gitlab.yml |
   sponge config/gitlab.yml
 
+if [[ "$ENABLE_PRAEFECT" == "1" ]]; then
+  /scripts/helpers/merge-yaml.rb config/gitlab.yml.example \
+    /scripts/templates/gitlab.yml \
+    /scripts/templates/gitlab-praefect.yml \
+    /tmp/gck-custom.yml:gitlab.yml |
+    sponge config/gitlab.yml
+else
+  /scripts/helpers/merge-yaml.rb config/gitlab.yml.example \
+    /scripts/templates/gitlab.yml \
+    /tmp/gck-custom.yml:gitlab.yml |
+    sponge config/gitlab.yml
+fi
+
 if [[ ! -e /home/git/registry-auth.crt ]]; then
   openssl req -newkey rsa:2048 -x509 -nodes -days 3560 \
     -subj "/CN=gitlab.development.kit" \

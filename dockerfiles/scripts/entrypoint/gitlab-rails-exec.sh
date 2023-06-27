@@ -3,7 +3,7 @@
 source /scripts/helpers/configure-custom-env.sh
 
 /scripts/helpers/wait-for-service.sh file gitlab-rails-env /tmp/gitlab-rails-env-started || exit 1
-/scripts/helpers/wait-for-service.sh tcp gitaly 9999 || exit 1
+/scripts/helpers/wait-for-service.sh tcp gitaly 10000 || exit 1
 
 if [[ -z "$CHROME_HEADLESS" ]]; then
   if [[ -n "$DISPLAY" ]]; then

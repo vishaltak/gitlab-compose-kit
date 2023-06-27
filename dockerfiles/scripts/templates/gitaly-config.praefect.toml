@@ -1,0 +1,50 @@
+# Example Praefect configuration file
+# # TCP address to listen on
+listen_addr = "0.0.0.0:10000"
+
+# Optional: export metrics via Prometheus
+prometheus_listen_addr = "0.0.0.0:11000"
+
+[replication]
+batch_size = 10 # configures the number of replication jobs to dequeue and lock in a batch
+
+[reconciliation]
+# Duration value specifying an interval at which to run the automatic repository reconciler.
+# Automatic reconciliation is disabled if set to 0. Example: "1m" for reconciliation every minute.
+scheduling_interval = 0 
+# Scheduling duration histogram buckets.
+histogram_buckets = [0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10] 
+
+[failover]
+enabled = true
+
+[[virtual_storage]]
+name = 'praefect'
+
+[[virtual_storage.node]]
+  storage = "praefect-git-100"
+  address = "tcp://localhost:10100"
+
+[[virtual_storage.node]]
+  storage = "praefect-git-101"
+  address = "tcp://localhost:10101"
+
+[[virtual_storage.node]]
+  storage = "praefect-git-102"
+  address = "tcp://localhost:10102"
+
+[yamux]
+# MaximumStreamWindowSizeBytes sets the maximum window size in bytes used for yamux streams.
+# Higher value can increase throughput at the cost of more memory usage.
+maximum_stream_window_size_bytes = 262144
+# AcceptBacklog sets the maximum number of stream openings in-flight
+# before further openings block.
+accept_backlog = 256
+
+[database]
+host = "postgres"
+port = 5432
+user = "postgres"
+password = "password"
+dbname = "gitlab_prafect"
+sslmode = "disable"

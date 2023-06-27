@@ -10,6 +10,7 @@ services:
       - redis
       - redis-alt
       - gitaly
+      - praefect
       - webpack
       - minio
     environment:
@@ -24,6 +25,7 @@ services:
       - redis
       - redis-alt
       - gitaly
+      - praefect
       - minio
     command: [/scripts/startup/sidekiq.sh]
     hostname: gitlab-rails-sidekiq
@@ -37,6 +39,7 @@ services:
       - redis
       - redis-alt
       - gitaly
+      - praefect
       - webpack
       - minio
     environment:
@@ -69,6 +72,7 @@ services:
       - "${CUSTOM_WEB_PORT}:8181"
     depends_on:
       - gitaly
+      - praefect
       - redis
       - redis-alt
       - web
@@ -90,6 +94,7 @@ services:
       - "${CUSTOM_SSH_PORT}:2222"
     depends_on:
       - gitaly
+      - praefect
       - redis
       - redis-alt
       - web
@@ -122,7 +127,8 @@ services:
     depends_on:
       - redis
     expose:
-      - 9999
+      - 10000
+      - 11000
     environment:
       GITLAB_GITALY_REVISION: ${GITLAB_GITALY_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
@@ -131,6 +137,28 @@ services:
     entrypoint: [/usr/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
     command: [/scripts/startup/gitaly.sh]
     hostname: gitlab-gitaly
+
+  praefect:
+    volumes:
+      - src_gitaly:/home/git/gitaly
+      - src_gitlab_rails:/home/git/gitlab
+      - src_gitlab_shell:/home/git/gitlab-shell
+      - repositories:/data/repositories
+    depends_on:
+      - redis
+      - postgres
+    expose:
+      - 10000
+      - 11000
+    environment:
+      GITLAB_GITALY_REVISION: ${GITLAB_GITALY_REVISION}
+      GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
+      GITALY_GITLAB_SHELL_DIR: "/home/git/gitlab-shell"
+    working_dir: /home/git/gitaly
+    entrypoint: [/usr/bin/dumb-init, --, /scripts/entrypoint/gitlab-shell-env.sh]
+    command: [/scripts/startup/praefect.sh]
+    hostname: gitlab-praefect
+    scale: ${ENABLE_PRAEFECT:-0}
 
   pages:
     volumes:

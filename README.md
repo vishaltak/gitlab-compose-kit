@@ -21,7 +21,7 @@ It currently supports:
 
 - GitLab Rails: Unicorn / Sidekiq,
 - GitLab Workhorse,
-- Gitaly,
+- Gitaly with Praefect,
 - PostgreSQL with replication,
 - Redis,
 - SSH,
@@ -637,6 +637,14 @@ You can shell into this instance via:
 ```shell
 $ make redis-alt-console
 ```
+
+### Gitaly
+
+By adding `ENABLE_PRAEFECT=1` to `gck.env` the additional 3 Gitalies with Praefect will be
+run under `praefect` host.
+
+Then go to `Admin Area > Settings > Repository > Repository storage`
+to make `praefect` to receive new repositories.
 
 ### Pages
 

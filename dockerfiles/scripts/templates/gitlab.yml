@@ -52,7 +52,7 @@ production: &production
     storages:
       default:
         path: /data/repositories/
-        gitaly_address: tcp://gitaly:9999
+        gitaly_address: tcp://gitaly:10000
   gitlab_ci:
     builds_path: /data/shared/builds
   webpack:
