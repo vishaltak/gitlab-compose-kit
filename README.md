@@ -227,6 +227,62 @@ You can view these by `cd` into one of the directories and type `git remote -v`.
 
 Once you have finished developing you can use easily use this to deploy it back to the correct remote project.
 
+### Connecting to other docker-compose systems
+
+Over time, GitLab has deployed more and more systems that cooperate with gitlab-rails and that are
+developed in separate repositories but are not managed by our development kits. Examples include
+[CustomersDot](https://gitlab.com/gitlab-org/customers-gitlab-com) and [AI services](https://gitlab.com/gitlab-org/modelops/applied-ml/code-suggestions/ai-assist/).
+
+Running any of these systems in Docker containers using Docker networks means that they cannot see
+each other. In order to see each other, some or all of these services must join the same Docker
+network.
+
+This can be accomplished as follows:
+
+1. In GCK:
+   1. In `docker-compose.override.yml`, define a new shared network:
+      ```yaml
+      networks:
+        shared:
+          name: gck-shared
+          driver: bridge
+      ```
+   1. In `docker-compose.override.yml`, for each service that must see or be seen by an external service,
+      add it to both the `default` and `shared` networks:
+      ```yaml
+       # To make gitlab-rails accessible to other systems as `gitlab-workhorse`
+       workhorse:
+         networks:
+           - default
+           - shared
+
+       # To let gitlab-rails contact other systems
+       web:
+         networks:
+           - default
+           - shared
+
+       # To let sidekiq contact other systems
+       sidekiq:
+         networks:
+           - default
+           - shared
+      ```
+1. For each system that should be linked:
+   1. In its respective `docker-compose.yml`, make the shared network visible:
+      ```yaml
+      networks:
+        gck-shared:
+          external: true
+      ```
+   1. For each service to see or been seen by GCK services:
+      ```yaml
+      service-name:
+        networks:
+          - default
+          - gck-shared
+      ```
+
 ### Debugging
 
 While working on any of the Ruby GitLab services in GCK (`web`, `cable` and `sidekiq`), you can use `pry` to set breakpoints.
