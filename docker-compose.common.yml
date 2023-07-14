@@ -18,7 +18,6 @@ services:
       - src_gitlab_shell:/home/git/gitlab-shell
       - src_gitlab_rails:/home/git/gitlab
       - src_gitaly:/home/git/gitaly
-      - src_gitlab_metrics_exporter:/home/git/gitlab-metrics-exporter
       - repositories:/data/repositories
       - cache:/data/cache
       - shared:/data/shared
@@ -27,7 +26,6 @@ services:
       RAILS_HOSTS: "" # undefined
       GITLAB_RAILS_REVISION: ${GITLAB_RAILS_REVISION}
       GITLAB_SHELL_REVISION: ${GITLAB_SHELL_REVISION}
-      GITLAB_METRICS_EXPORTER_REVISION: ${GITLAB_METRICS_EXPORTER_REVISION}
       GITLAB_ENABLE_CHAOS_ENDPOINTS: 1 # https://gitlab.com/gitlab-org/gitlab/blob/master/doc/development/chaos_endpoints.md
       GITLAB_CHAOS_SECRET: secret
       CUSTOM_CONFIG: ${CUSTOM_CONFIG}
@@ -46,7 +44,7 @@ services:
 
   sidekiq: *application_image
   spring: *application_image
-  
+
   workhorse: &generic_image
     image: *imagename
     build: *imagebuild
