@@ -341,10 +341,3 @@ volumes:
         type: $SRC_MOUNT_TYPE
         o: $SRC_MOUNT_OPTS
         device: "$SRC_MOUNT_PATH/gitaly"
-
-  src_gitlab_metrics_exporter:
-    driver: local
-    driver_opts:
-        type: $SRC_MOUNT_TYPE
-        o: $SRC_MOUNT_OPTS
-        device: "$SRC_MOUNT_PATH/gitlab-metrics-exporter"

@@ -5,7 +5,6 @@
 /gitlab-pages
 /gitlab-runner
 /gitaly
-/gitlab-metrics-exporter
 /tmp
 /www-gitlab-com
 /.sync.control*
