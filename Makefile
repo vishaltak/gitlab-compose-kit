@@ -4,12 +4,12 @@ export COMPOSE_PROJECT_NAME ?= $(notdir $(CURDIR))
 export COMPOSE_KIT_REVISION ?= $(shell git -C . rev-parse HEAD 2>/dev/null || echo "unknown")
 export COMPOSE_HTTP_TIMEOUT ?= 3600
 
-export GITLAB_RAILS_REVISION ?= $(shell git -C gitlab-rails rev-parse HEAD 2>/dev/null || echo "unknown")
-export GITLAB_SHELL_REVISION ?= $(shell git -C gitlab-shell rev-parse HEAD 2>/dev/null || echo "unknown")
-export GITLAB_WORKHORSE_REVISION ?= $(shell git -C gitlab-workhorse rev-parse HEAD 2>/dev/null || echo "unknown")
-export GITLAB_GITALY_REVISION ?= $(shell git -C gitlab-gitaly rev-parse HEAD 2>/dev/null || echo "unknown")
-export GITLAB_PAGES_REVISION ?= $(shell git -C gitlab-pages rev-parse HEAD 2>/dev/null || echo "unknown")
-export GITLAB_SPRING_REVISION ?= $(shell git -C gitlab-rails rev-parse --short HEAD 2>/dev/null || echo "unknown")
+export GITLAB_RAILS_REVISION := $(shell git -C gitlab-rails rev-parse HEAD 2>/dev/null || echo "unknown")
+export GITLAB_SHELL_REVISION := $(shell git -C gitlab-shell rev-parse HEAD 2>/dev/null || echo "unknown")
+export GITLAB_WORKHORSE_REVISION := $(shell git -C gitlab-workhorse rev-parse HEAD 2>/dev/null || echo "unknown")
+export GITLAB_GITALY_REVISION := $(shell git -C gitlab-gitaly rev-parse HEAD 2>/dev/null || echo "unknown")
+export GITLAB_PAGES_REVISION := $(shell git -C gitlab-pages rev-parse HEAD 2>/dev/null || echo "unknown")
+export GITLAB_SPRING_REVISION := $(shell git -C gitlab-rails rev-parse --short HEAD 2>/dev/null || echo "unknown")
 
 # If FORCE_BIND_MOUNT is set
 # do mount using bind-mount
