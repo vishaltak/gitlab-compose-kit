@@ -1,0 +1,68 @@
+version: '2.2'
+
+services:
+  # link postgres to shared network
+  postgres:
+    networks:
+      default:
+        aliases:
+          - postgres_cell_local
+      shared:
+        aliases:
+          - postgres_cell_${CELL}
+
+  redis:
+    networks:
+      default:
+        aliases:
+          - redis_cell_local
+      shared:
+        aliases:
+          - redis_cell_${CELL}
+
+  # expose `cluster_*` hostname to automatically forward requests to main cell
+  cluster_postgres:
+    image: alpine/socat
+    ports:
+      - 5432
+    networks:
+      default:
+      shared:
+    command: ['tcp-listen:5432,reuseaddr,fork', 'tcp-connect:postgres_cell_1:5432']
+
+  cluster_redis:
+    image: alpine/socat
+    ports:
+      - 6379
+    networks:
+      default:
+      shared:
+    command: ['tcp-listen:6379,reuseaddr,fork', 'tcp-connect:redis_cell_1:6379']
+
+  # link cluster containers
+  web: &cell_cluster
+    environment:
+      CELL: ${CELL}
+      CUSTOM_REDIS_ALT_STORE: ${CUSTOM_REDIS_ALT_STORE}
+      # currently gitlab does not support `db:validate_config` for `main_clusterwide`
+      GITLAB_VALIDATE_DATABASE_CONFIG: 'false'
+    depends_on:
+      - cluster_postgres
+      - cluster_redis
+    hostname: web-cell-${CELL}
+
+  sidekiq:
+    <<: *cell_cluster
+    hostname: sidekiq-cell-${CELL}
+
+  spring:
+    <<: *cell_cluster
+    hostname: spring-cell-${CELL}
+
+networks:
+  shared:
+    name: ${ORG_COMPOSE_PROJECT_NAME}_shared
+
+volumes:
+  cache:
+    name: ${ORG_COMPOSE_PROJECT_NAME}_cache

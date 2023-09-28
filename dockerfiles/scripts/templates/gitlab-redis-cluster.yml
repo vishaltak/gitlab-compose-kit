@@ -1,0 +1,4 @@
+production: &production
+  url: redis://cluster_redis:6379
+development: *production
+test: *production

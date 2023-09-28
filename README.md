@@ -885,6 +885,42 @@ This will add a `gck` command, with following subcommands:
   This command supports Bash completion, however it depends on `make help` target and doesn't show all the commands
   (which mostly means that it will not support `make up-something` and `make down-something`).
 
+## GitLab Cells
+
+The `gitlab-compose-kit` can be conveniently used to simulate [cellular architecture of GitLab](https://docs.gitlab.com/ee/architecture/blueprints/cells/):
+
+- Cells will be accessible on `http://<hostname>:3000` (Cell 1), `http://<hostname>:3001` (Cell 2), etc.
+- Cells will share user accounts, and user sessions.
+- Cells will have separate repositories.
+- Cells will share application source code.
+- Cells will share bundle and Go cache.
+
+For that purpose run the following to run GitLab with the Cells:
+
+1. Provision Cells:
+
+    ```bash
+    # Provision as many cells as you need
+    make create-dev CELL=1
+    make create-dev CELL=2
+    ```
+
+2. Run Cells interactively via separate terminals:
+
+    ```bash
+    # Terminal 1
+    make web-and-sidekiq CELL=1
+    # Terminal 2
+    make web-and-sidekiq CELL=2
+    ```
+
+3. Run Cells in background:
+
+    ```bash
+    make up CELL=1
+    make up CELL=2
+    ```
+
 ## Author
 
 Kamil Trzciński, 2017, GitLab
