@@ -11,6 +11,7 @@ fi
 git config --global core.autocrlf input
 git config --global gc.auto 0
 git config --global repack.writeBitmaps true
+git config --add safe.directory /home/git/gitlab
 
 /scripts/helpers/merge-yaml.rb config/gitlab.yml.example /scripts/templates/gitlab.yml /tmp/gck-custom.yml:gitlab.yml |
   sponge config/gitlab.yml
