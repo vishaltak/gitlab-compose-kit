@@ -4,17 +4,12 @@
 ## TESTS
 ##-------
 
-@test "Migrate PostgreSQL 12 to 13" {
-  # Start 12 and provision it with data
-  create_db_container "postgres:12-alpine"
-  psql -c "CREATE DATABASE my_database"
-  psql my_database -c "SELECT 1"
-  drop_db_container
+@test "Migrate PostgreSQL 12 to 14" {
+  migrate_from_pg_major "12"
+}
 
-  # Start latest and expect data to be migrated
-  create_db_container "$IMAGE_ID"
-  psql my_database -c "SELECT 1"
-  drop_db_container
+@test "Migrate PostgreSQL 13 to 14" {
+  migrate_from_pg_major "13"
 }
 
 ##-------------
@@ -36,6 +31,20 @@ teardown() {
 ##---------
 ## HELPERS
 ##---------
+
+migrate_from_pg_major() {
+  let pg_major=$1
+
+  create_db_container "postgres:${pg_major}-alpine"
+  psql -c "CREATE DATABASE my_database"
+  psql my_database -c "SELECT 1"
+  drop_db_container
+
+  # Start latest and expect data to be migrated
+  create_db_container "$IMAGE_ID"
+  psql my_database -c "SELECT 1"
+  drop_db_container
+}
 
 psql() {
   docker exec -i "$ID" psql -U postgres -h 127.0.0.1 "$@"
