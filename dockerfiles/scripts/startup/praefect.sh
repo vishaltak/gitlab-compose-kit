@@ -18,6 +18,7 @@ if [[ -e ruby/Gemfile ]]; then
 fi
 
 cd /home/git/gitaly
+git config --add safe.directory /home/git/gitaly || true
 make WITH_BUNDLED_GIT=YesPlease
 
 if [[ -n "$FORCE_GITALY_COMPILE" ]]; then
