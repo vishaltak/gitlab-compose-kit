@@ -540,7 +540,7 @@ If you want to connect for example to `Unicorn` and execute some command in that
 ```bash
 # find a name of `unicorn_1` process, like `gitlab-v2_unicorn_1`
 $ docker ps -a
-$ docker exec -it gitlab-v2_unicorn_1 /bin/bash
+$ docker exec -it gitlab-v2_unicorn_1 bash
 
 # now in Unicorn container:
 $ ps auxf | pgrep unicorn # or puma, or sidekiq
@@ -558,7 +558,7 @@ apt-get install -y docker.io docker-compose
 ### 2. Add a new account on remote server and copy ssh keys
 
 ```bash
-useradd -s /bin/bash -m -G docker gitlab
+useradd -s $(which bash) -m -G docker gitlab
 ```
 
 Optionally copy your SSH identities:

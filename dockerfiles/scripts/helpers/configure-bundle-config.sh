@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Create or update bundle config
 if [[ ! -f ~/.bundle/config.created ]] || [[ $(bundle config get --parseable path) != "path=${GEM_HOME}" ]]; then

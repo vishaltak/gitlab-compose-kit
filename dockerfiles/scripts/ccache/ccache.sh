@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Ccache does provide the `/usr/lib/ccache`, but since this is symlink to
 # `/usr/bin/ccache` some compilation tools (like cmake) might readlink

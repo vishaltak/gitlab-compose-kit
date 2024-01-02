@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # The `CUSTOM_ENV` contains a bash compatible export
 # of environment variables from host system that are

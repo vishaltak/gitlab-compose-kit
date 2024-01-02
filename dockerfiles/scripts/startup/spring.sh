@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 _term() { 
   echo "Caught SIGTERM signal! Sending kill to all processes"
