@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 source /scripts/helpers/configure-custom-env.sh
 

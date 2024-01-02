@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 sudo chown git /data
 sudo chown git /data/{cache,repositories,shared}

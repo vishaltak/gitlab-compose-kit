@@ -54,13 +54,13 @@ pgadmin:
 
 .PHONY: debug-shell
 debug-shell:
-	$(DOCKER_COMPOSE_AUX) run --no-deps --rm --entrypoint="/bin/bash" spring
+	$(DOCKER_COMPOSE_AUX) run --no-deps --rm --entrypoint="/usr/bin/env bash" spring
 
 # These commands do re-use existing `spring` container to provide
 # a quick shell access
 .PHONY: shell
 shell: up-spring
-	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh /bin/bash
+	$(DOCKER_COMPOSE_AUX) exec spring /scripts/entrypoint/gitlab-rails-exec.sh bash
 
 .PHONY: command
 command: up-spring
@@ -121,7 +121,7 @@ clean:
 # These commands do drop data
 .PHONY: drop-cache
 drop-cache:
-	$(DOCKER_COMPOSE_AUX) run --no-deps --rm --entrypoint="/bin/bash -c" spring "sudo rm -rf /data/cache/*"
+	$(DOCKER_COMPOSE_AUX) run --no-deps --rm --entrypoint="/usr/bin/env bash -c" spring "sudo rm -rf /data/cache/*"
 	$(DOCKER_COMPOSE_AUX) kill
 	$(DOCKER_COMPOSE_AUX) rm
 
