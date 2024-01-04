@@ -3,8 +3,6 @@
 set -xeo pipefail
 
 if [[ -e ruby/Gemfile ]]; then
-  source /scripts/helpers/configure-jemalloc2.sh
-
   pushd ruby
   if ! bundle install --quiet --local; then
     bundle install

@@ -5,8 +5,6 @@ set -xeo pipefail
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/.."
 
 if [[ -e ruby/Gemfile ]]; then
-  source $SCRIPT_DIR/helpers/configure-jemalloc2.sh
-
   pushd ruby
   if ! bundle install --quiet --local; then
     bundle install

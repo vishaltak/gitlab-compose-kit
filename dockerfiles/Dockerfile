@@ -9,7 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get install -y \
         software-properties-common curl \
         build-essential pkg-config cmake \
-        sudo openssh-server redis-tools libjemalloc2 \
+        sudo openssh-server redis-tools \
         moreutils smem strace lsof gdb sysstat \
         ccache docker.io \
         firefox-esr \
@@ -40,6 +40,9 @@ RUN usermod -p '*' git
 
 # allow Git user to modify directories in /usr/local
 RUN chown git:git $(find /usr/local -type d)
+
+# For best performance require that Ruby is compiled with jemalloc2
+RUN ldd $(which ruby) | grep libjemalloc.so.2
 
 USER git
 
