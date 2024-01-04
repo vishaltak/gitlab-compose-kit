@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source /scripts/helpers/configure-jemalloc2.sh
-
 cd /home/git/gitlab
 
 IFS=':'
