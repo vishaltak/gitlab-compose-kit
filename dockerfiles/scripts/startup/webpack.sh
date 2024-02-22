@@ -46,6 +46,9 @@ echo '>> Use `export USE_WEBPACK_DEV=true` to enable hotreload!'
 echo ">> Installing nodejs packages..."
 ${run_yarn} install
 
+echo ">> Building CSS..."
+${run_yarn} build:css
+
 echo ">> Running webpack dev-server..."
 ${run_yarn} webpack
 
