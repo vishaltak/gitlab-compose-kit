@@ -14,7 +14,7 @@ services:
       - webpack
       - minio
     environment:
-      RAILS_HOSTS: "web"
+      RAILS_HOSTS: "web,workhorse"
     command: [/scripts/startup/web.sh]
     hostname: gitlab-rails-web
 
